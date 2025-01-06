@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
@@ -231,15 +232,17 @@ public class UptakeStep2 {
 				solubleContent, initOrgProp);
 		context.add(bud);
 		bud.speed = 1d / bud.size;
-		bud.heading = Math.random()*360;// heading random
+		bud.headingP = Math.random()*360;// heading random
+		bud.headingA = Math.random()*360;
 		bud.tickCount = 1;
 //		Endosome.endosomeShape(bud);
 //		The new ERGIC can be anywhere in the cell
-		double x = Math.random()* (50 - 8 * cellLimit);
-		double y = Math.random()* (50 - 8 * cellLimit);
+		double x = Math.random()* (CellBuilder.xWorld - 8 * cellLimit);
+		double y = Math.random()* (CellBuilder.yWorld - 8 * cellLimit);
+		double z = CellBuilder.zWorld/2;
 
-		space.moveTo(bud, x,y);
-		grid.moveTo(bud, (int) x, (int) y);
+		space.moveTo(bud, x,y,z);
+		grid.moveTo(bud, (int) x, (int) y, (int)z);
 		
 //					System.out.println(area + "  NEW ERGIC " + bud.membraneContent);
 		//			try {
@@ -415,57 +418,63 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 				solubleContent, initOrgProp);
 		context.add(bud);
 		bud.speed = 0;//1d / bud.size;
-		bud.heading = Math.random()*360;// heading random
+		
+        double[] point = selectRandomPointOnOblateSurface(a, c);
+        double[] angles = calculateAnglesTowardCenter(point[0], point[1], point[2]);
+        bud.xcoor = point[0];
+        bud.ycoor = point[1];        
+        bud.zcoor = point[2];
+        bud.headingP = angles[0];// heading to the center of the cell
+		bud.headingA = angles[1];// heading
 		bud.tickCount =1;
-		//Endosome.endosomeShape(bud);
-////		Position random in a circle around the center of the cell
-//		double where = Math.random()*360;
-//		double xposition = 25 + (25-2*cellLimit)* Math.sin(where*Math.PI/180);
-//		double yposition = 25 + (25-2*cellLimit)* Math.cos(where*Math.PI/180);
-		double xend =0;
-		double yend =0;
-		int randomSide = (int) Math.floor(Math.random()*4);
-		switch (randomSide) {
-		case 0 : {
-			xend = 2*cellLimit;
-			yend = Math.random()*(50-2*cellLimit);
-			break;
-		}
-		case 1 : {
-			xend = 50-2*cellLimit;
-			yend = Math.random()*(50-2*cellLimit);
-			break;
-		}
-		case 2 : {
-			xend = Math.random()*(50-2*cellLimit);
-			yend = 2*cellLimit;
-			break;
-		}
-		case 3 : {
-			xend = Math.random()*(50-2*cellLimit);
-			yend = 50-2*cellLimit;
-			break;
-		}
-		}		
-		bud.heading = Math.atan2(xend-25, yend-25)*180/Math.PI; //;
-//		System.out.println(xend + " donde lo pongo " + yend);
-		bud.getSpace().moveTo(bud, xend, yend);
-		bud.getGrid().moveTo(bud, (int) xend, (int) yend);
-
-//		space.moveTo(bud, xposition, yposition);
-//		grid.moveTo(bud, (int) xposition, (int) yposition);
-
+        
+		bud.getSpace().moveTo(bud, point[0], point[1], point[2]);
+		bud.getGrid().moveTo(bud, (int) point[0], (int) point[1], (int) point[2]);
+		
+		System.out.println(point + " EEEEEEEEEE NEW UPTAKE ");
+//					try {
+//					TimeUnit.SECONDS.sleep(5);
+//				} catch (InterruptedException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 	PlasmaMembrane.getInstance().getPlasmaMembraneTimeSeries().clear();
-	
-//				System.out.println(area + "NEW UPTAKE" + bud.membraneContent);
-//				try {
-//				TimeUnit.SECONDS.sleep(5);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		
 	}
+    public static double[] selectRandomPointOnOblateSurface(double a, double c) {
+        Random random = new Random();
+
+        // Generate random spherical angles
+        double phi = 2 * Math.PI * random.nextDouble(); // Azimuthal angle (0 to 2π)
+        double theta = Math.acos(2 * random.nextDouble() - 1); // Polar angle (0 to π)
+
+        // Convert spherical coordinates to Cartesian coordinates
+        double x = a * Math.sin(theta) * Math.cos(phi);
+        double y = a * Math.sin(theta) * Math.sin(phi);
+        double z = c * Math.cos(theta);
+
+        return new double[]{x, y, z};
+    }
+    
+    // Calculate polar and azimuthal angles relative to the center
+    public static double[] calculateAnglesTowardCenter(double x, double y, double z) {
+        x = x - CellBuilder.xWorld/2;
+        y = y - CellBuilder.yWorld/2;
+        z = z - CellBuilder.zWorld/2;
+    	double r = Math.sqrt(x * x + y * y + z * z); // Distance to center
+        if (r == 0) {
+            return new double[]{0, 0}; // Point is at the center
+        }
+
+        // Polar angle theta (angle from z-axis)
+        double theta = Math.acos(z / r) * 180 / Math.PI;
+
+        // Azimuthal angle phi (angle in the x-y plane)
+        double phi = Math.atan2(y, x) * 180 / Math.PI;
+
+        return new double[]{theta, phi};
+    }
+
 
 	private static void newOrganelle(Cell cell, String selectedRab, HashMap<String, String> rabCode) {
 		String kind = rabCode.get(selectedRab);
@@ -521,13 +530,14 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 					bud.area = area; 
 					bud.volume = volume; 
 					bud.speed = 1d / bud.size;
-					bud.heading = -90;// heading down
+					bud.headingP = -90;// heading down
+					bud.headingA = -90;// heading down
 					//Endosome.endosomeShape(bud);
 					bud.tickCount = 1;
 					// NdPoint myPoint = space.getLocation(bud);
 					double rnd = Math.random();
-					space.moveTo(bud, rnd * 50, 5d);
-					grid.moveTo(bud, (int) rnd * 50, (int) (5));
+					space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld, CellBuilder.zWorld/2);
+					grid.moveTo(bud, (int) (rnd * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int) (CellBuilder.zWorld/2));
 
 
 //					System.out.println(membraneContent + " " + solubleContent + " " + rabContent+" " + initOrgProp);
@@ -594,11 +604,14 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 		bud.tickCount = 1;
 		//Endosome.endosomeShape(bud);
 		bud.speed = 1d / bud.size;
-		bud.heading = -90;// heading down
+		bud.headingP = -90;// heading down
+		bud.headingA = -90;// heading down
+
 		// NdPoint myPoint = space.getLocation(bud);
 		double rnd = Math.random();
-		space.moveTo(bud, rnd * 50, 10 + rnd* 30);
-		grid.moveTo(bud, (int) rnd * 50, (int) (10 + rnd* 30));
+		space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld, CellBuilder.zWorld/2);
+		grid.moveTo(bud, (int) (rnd * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int) (CellBuilder.zWorld/2));
+
 		}
 	}
 		

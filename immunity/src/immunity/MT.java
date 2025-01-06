@@ -92,8 +92,8 @@ public class MT {
 		double y = (yend + yorigin)/2 ;//25 * Math.sin(mtheading*Math.PI / 180);
 //		double y = 25+;
 //		double x = 24.5;//xorigin + 25 * Math.cos(mtheading * Math.PI / 180);
-		space.moveTo(mt, x, y);
-		grid.moveTo(mt, (int) x, (int) y);
+		space.moveTo(mt, x, y, 4);
+		grid.moveTo(mt, (int) x, (int) y, 4);
 		length = Math.sqrt((xend-xorigin)*(xend-xorigin)+(yend-yorigin)*(yend-yorigin));
 //System.out.println(mtheading + "  "+xend +" XY al azar del cuadrado  "+ yend);		
 //writing to a xml file.  It works, but I will not be able to use to strart a simulation

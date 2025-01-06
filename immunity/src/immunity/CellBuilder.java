@@ -40,7 +40,11 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 	public static final IndexedIterable getCollectionER() {
 		return collectionER;
 	}
-
+	static double xWorld = 50;
+	static double yWorld = 50;
+	static double zWorld = 8;
+// PRUEBA DE CAMBIO. Espacio 3D.  La célula va a ser un esferoide tipo oblato, 
+//	El alto del oblato es zWorld (eje de giro) y el ancho es xWorld = yWorld
 // Create two spaces, one for PM where Agents are molecules and other for the Intracellular transport.  
 	@Override
 	public Context build(Context<Object> context) {
@@ -55,13 +59,13 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace(
 										"space", context, new RandomCartesianAdder<Object>(),
 										new repast.simphony.space.continuous.BouncyBorders(), 
-										50,50);
+										xWorld, yWorld, zWorld);
 
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context,
 							new GridBuilderParameters<Object>(new WrapAroundBorders(),
 							new SimpleGridAdder<Object>(), true,
-							50, 50));
+							(int) xWorld, (int) yWorld, (int) zWorld));
 		
 // PM space
 //		ContinuousSpace<Object> spacePM = spaceFactory.createContinuousSpace(
@@ -91,7 +95,9 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 		context.add(initialOrganelles);	
 		
 		
-		// Microtubules
+		// Microtubules (MT)
+//		Los MT están en el plano xy (z= zWorld/2) y llegan al borde de la elipse del plano central
+//		del oblato
 		for (int i = 0; i < (int)6* 1/Cell.orgScale; i++) {// change the number of MT 3 for 6 MT
 //			for (int i = 0; i < 10; i++) {// change the number of MT 3 for 6 MT
 			context.add(new MT(space, grid));
@@ -229,8 +235,9 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 						context.add(end);
 						double x = initOrgProp.get("xcoor");
 						double y = initOrgProp.get("ycoor");
-						space.moveTo(end, x, y);
-						grid.moveTo(end, (int) x, (int) y);	
+						double z = initOrgProp.get("zcoor");
+						space.moveTo(end, x, y, z);
+						grid.moveTo(end, (int) x, (int) y, (int) z);	
 						//Endosome.endosomeShape(end);
 
 			}
@@ -285,17 +292,17 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 				grid.moveTo(obj, (int) xcoor, (int) ycoor);
 			}
 			else if (obj instanceof PlasmaMembrane) {
-				space.moveTo(obj, 25, 25);
-				grid.moveTo(obj, (int) 25, (int) 25);
+				space.moveTo(obj, xWorld/2, yWorld/2, zWorld/2);
+				grid.moveTo(obj, (int) xWorld/2, (int) yWorld/2, (int) zWorld/2);
 			}
 //			else if (obj instanceof EndoplasmicReticulum) {
 //				space.moveTo(obj, 24.5, .5);
 //				grid.moveTo(obj, (int) 24, (int) 0);
 //			}
 			else if (obj instanceof Scale) {
-				space.moveTo(obj, Scale.getScale500nm()/2d-(0.4)+7.5, 49.65);
+				space.moveTo(obj, Scale.getScale500nm()/2d-(0.4)+7.5, 49.65, zWorld/2);
 //				System.out.println ("SCALE SCALE "+Scale.getScale500nm()/2d);
-				grid.moveTo(obj, (int) (Scale.getScale500nm()/2d), (int) 49);
+				grid.moveTo(obj, (int) (Scale.getScale500nm()/2d), (int) 49, (int) zWorld);
 			}
 			else if (obj instanceof MT) {
 				((MT) obj).changePosition((MT)obj);
@@ -304,8 +311,8 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 			else if (obj instanceof EndoplasmicReticulum) {
 				double x = 25;//((EndoplasmicReticulum) obj).getXcoor();
 				double y = 25;// ((EndoplasmicReticulum) obj).getYcoor();
-				space.moveTo(obj, x, y);
-				grid.moveTo(obj, (int) x, (int) y);					
+				space.moveTo(obj, x, y, zWorld/2);
+				grid.moveTo(obj, (int) x, (int) y, (int) zWorld/2);					
 //				System.out.println(((EndoplasmicReticulum) obj).area + "  " +
 //						((EndoplasmicReticulum) obj).getMembraneRecycle());
 			} 

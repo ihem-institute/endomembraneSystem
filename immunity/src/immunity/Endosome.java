@@ -62,6 +62,7 @@ public class Endosome {
 	
 	public double xcoor = 0d;
 	public double ycoor = 0d;
+	public double zcoor = 0d;
 	
 	// Endosomal
 	ModelProperties cellProperties = ModelProperties.getInstance();
@@ -74,8 +75,8 @@ public class Endosome {
 	double c = 0; // length;
 	double size;// = Math.pow(volume * 3d / 4d / Math.PI, (1d / 3d));
 	double speed;// = 5d / size; // initial value, but should change
-	double heading = 0;// = Math.random() * 360d; // initial value, but should
-						// change
+	double headingP = 0;// = Math.random() * 360d; // initial value, but should
+	double headingA;				// change
 	
 	double cellLimit = 3 * Cell.orgScale;
 	double mvb;// = 0; // number of internal vesices
@@ -144,7 +145,8 @@ public class Endosome {
 											// 30d; // initial value, but
 		size = Math.pow(volume * 3d / 4d / Math.PI, (1d / 3d));
 		speed = Cell.orgScale / size; // initial value, but should change
-		heading = Math.random() * 360d - 180; // initial value, but should change
+		headingP = Math.random() * 360d - 180; // initial value, but should change
+		headingA = 0;
 		double mvb = 0; // number of internal vesicles
 	}
 //    @ProbeID
@@ -161,6 +163,12 @@ public class Endosome {
 	}
 	public void setYcoor(double ycoor) {
 		this.ycoor = ycoor;	
+	}
+	public final double getZcoor() {
+		return zcoor;
+	}
+	public void setZcoor(double zcoor) {
+		this.zcoor = zcoor;	
 	}
 	public ContinuousSpace<Object> getSpace() {
 		return space;
@@ -200,31 +208,42 @@ public class Endosome {
 //		endosomeShape(this);
 //		OrganelleMove.changeDirection(this);
 		OrganelleMove.moveTowards(this);
-//		if (this.solubleContent.containsKey("mvb")) this.membraneContent.put("chol", 0d);
-//		Uptake and new organelles is a procedure of Cell and is not performed by endosomes		
-//		if (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this);
-//		if (Math.random()<p_EndosomeNewFromERStep)EndosomeNewFromERStep.newFromEr(this);
-//		System.out.println("actionProbabilities " + ModelProperties.getInstance().getActionProbabilities());
-		ModelProperties modelProperties = ModelProperties.getInstance();
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeTetherStep"))EndosomeTetherStep.tether(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeInternalVesicleStep"))EndosomeInternalVesicleStep.internalVesicle(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_FusionStep"))FusionStep.fusion(this);
-//		if (this.c > 1500) {
-//			System.out.println("Large endosome " + this.c + this.getRabContent());
-//			FissionStep.split(this);
-//			System.out.println("Large endosome luego" + this.c + this.getRabContent());
-//		}
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_FissionStep"))FissionStep.split(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeLysosomalDigestionStep"))EndosomeLysosomalDigestionStep.lysosomalDigestion(this);
-//		Double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
-//		if (tick%100 ==0) 
-		//if (Math.random() < 1)EndosomeRabConversionStep.rabTimeSeriesLoad(this);
-		// rabConversionN();
-		String name =  modelProperties .getCopasiFiles().get("endosomeCopasi");
-		if (Math.random() < 1 && name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeMaturationStep"))EndosomeMaturationStep.matureCheck(this); //	
-	}
+		/*
+		 * // if (this.solubleContent.containsKey("mvb"))
+		 * this.membraneContent.put("chol", 0d); // Uptake and new organelles is a
+		 * procedure of Cell and is not performed by endosomes // if
+		 * (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this); // if
+		 * (Math.random()<p_EndosomeNewFromERStep)EndosomeNewFromERStep.newFromEr(this);
+		 * // System.out.println("actionProbabilities " +
+		 * ModelProperties.getInstance().getActionProbabilities()); ModelProperties
+		 * modelProperties = ModelProperties.getInstance(); if
+		 * (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_EndosomeTetherStep"))EndosomeTetherStep.
+		 * tether(this); if (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_EndosomeInternalVesicleStep"))
+		 * EndosomeInternalVesicleStep.internalVesicle(this); if
+		 * (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_FusionStep"))FusionStep.fusion(this); // if
+		 * (this.c > 1500) { // System.out.println("Large endosome " + this.c +
+		 * this.getRabContent()); // FissionStep.split(this); //
+		 * System.out.println("Large endosome luego" + this.c + this.getRabContent());
+		 * // } if (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_FissionStep"))FissionStep.split(this); if
+		 * (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_EndosomeLysosomalDigestionStep"))
+		 * EndosomeLysosomalDigestionStep.lysosomalDigestion(this); // Double tick =
+		 * RunEnvironment.getInstance().getCurrentSchedule().getTickCount(); // if
+		 * (tick%100 ==0) //if (Math.random() <
+		 * 1)EndosomeRabConversionStep.rabTimeSeriesLoad(this); // rabConversionN();
+		 * String name = modelProperties .getCopasiFiles().get("endosomeCopasi"); if
+		 * (Math.random() < 1 &&
+		 * name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this); if
+		 * (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(
+		 * this); if (Math.random()<modelProperties
+		 * .getActionProbabilities().get("p_EndosomeMaturationStep"))
+		 * EndosomeMaturationStep.matureCheck(this); //
+		 */	}
 //	public List<Endosome> getAllEndosomes(){
 //		List<Endosome> allEndosomes = new ArrayList<Endosome>();
 //		for (Object obj : grid.getObjects()) {
@@ -261,7 +280,10 @@ public class Endosome {
 			}
 		}
 		if (golgiArea/end.area > 0.5){
-			if (end.area >= Cell.minCistern/20) end.heading = -90d; // is a cistern
+			if (end.area >= Cell.minCistern/20) {
+				end.headingP = -90d; // is a cistern
+				end.headingA = 0;
+			}
 			double[] radiusHeight = radiusHeightCistern(end.area, end.volume);
 			end.a = radiusHeight[0];
 			end.c = radiusHeight[1];
@@ -297,8 +319,11 @@ public class Endosome {
 	public void setTickCount(int tickCount) {	//FRANCO
 		this.tickCount = tickCount;				//FRANCO
 	}
-	public void setHeading(double heading) {
-		this.heading = heading;				
+	public void setHeadingP(double heading) {
+		this.headingP = headingP;				
+	}
+	public void setHeadingA(double headingA) {
+		this.headingA = headingA;				
 	}
 	public double getArea() {
 		return area;
@@ -315,8 +340,11 @@ public class Endosome {
 		return speed;
 	}
 
-	public double getHeading() {
-		return heading;
+	public double getHeadingP() {
+		return headingP;
+	}
+	public double getHeadingA() {
+		return headingA;
 	}
 
 	public HashMap<String, Double> getRabContent() {

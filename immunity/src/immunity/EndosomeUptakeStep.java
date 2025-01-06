@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
@@ -227,35 +228,20 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 //		bud.size = initOrgProp.get("maxRadius");// radius of a sphere with the volume of the
 		// cylinder
 		bud.speed = 1d / bud.size;
-		bud.heading = -90;// heading down
+		bud.headingP = -90;// heading down
+		bud.headingA = -90;// heading down
+
 		double xend=0;
 		double yend=0;
 //		To place the endosome near the plasma membrane and heading to the center of the cell
-		int randomSide = (int) Math.floor(Math.random()*4);
-		switch (randomSide) {
-		case 0 : {
-			xend = 2*cellLimit;
-			yend = Math.random()*50-2*cellLimit;
-			break;
-		}
-		case 1 : {
-			xend = 50-2*cellLimit;
-			yend = Math.random()*50-2*cellLimit;
-			break;
-		}
-		case 2 : {
-			xend = Math.random()*50-2*cellLimit;
-			yend = 2*cellLimit;
-			break;
-		}
-		case 3 : {
-			xend = Math.random()*50-2*cellLimit;
-			yend = 50-2*cellLimit;
-			break;
-		}
-		}		
-		bud.heading = Math.atan2(xend-25, yend-25)*180/Math.PI; //;
-
+        double[] point = selectRandomPointOnOblateSurface(a, c);
+        double[] angles = calculateAnglesTowardCenter(point[0], point[1], point[2]);
+        bud.xcoor = point[0];
+        bud.ycoor = point[1];        
+        bud.zcoor = point[2];
+        bud.headingP = angles[0];// heading to the center of the cell
+		bud.headingA = angles[1];// heading
+        
 		endosome.getSpace().moveTo(bud, xend, yend);
 		endosome.getGrid().moveTo(bud, (int) xend, (int) yend);
 		
@@ -269,6 +255,39 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 	PlasmaMembrane.getInstance().getPlasmaMembraneTimeSeries().clear();
 		
 	}
+    public static double[] selectRandomPointOnOblateSurface(double a, double c) {
+        Random random = new Random();
+
+        // Generate random spherical angles
+        double phi = 2 * Math.PI * random.nextDouble(); // Azimuthal angle (0 to 2π)
+        double theta = Math.acos(2 * random.nextDouble() - 1); // Polar angle (0 to π)
+
+        // Convert spherical coordinates to Cartesian coordinates
+        double x = a * Math.sin(theta) * Math.cos(phi);
+        double y = a * Math.sin(theta) * Math.sin(phi);
+        double z = c * Math.cos(theta);
+
+        return new double[]{x, y, z};
+    }
+    
+    // Calculate polar and azimuthal angles relative to the center
+    public static double[] calculateAnglesTowardCenter(double x, double y, double z) {
+        x = x - CellBuilder.xWorld/2;
+        y = y - CellBuilder.yWorld/2;
+        z = z - CellBuilder.zWorld/2;
+    	double r = Math.sqrt(x * x + y * y + z * z); // Distance to center
+        if (r == 0) {
+            return new double[]{0, 0}; // Point is at the center
+        }
+
+        // Polar angle theta (angle from z-axis)
+        double theta = Math.acos(z / r) * 180 / Math.PI;
+
+        // Azimuthal angle phi (angle in the x-y plane)
+        double phi = Math.atan2(y, x) * 180 / Math.PI;
+
+        return new double[]{theta, phi};
+    }
 
 	private static void newOrganelle(Endosome endosome, String selectedRab, HashMap<String, String> rabCode) {
 		String kind = rabCode.get(selectedRab);
@@ -330,7 +349,7 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 //		bud.size = initOrgProp.get("maxRadius");// radius of a sphere with the volume of the
 		// cylinder
 		bud.speed = 1d / bud.size;
-		bud.heading = -90;// heading down
+		bud.headingP = -90;// heading down
 		// NdPoint myPoint = space.getLocation(bud);
 		double rnd = Math.random();
 		endosome.getSpace().moveTo(bud, rnd * 50, 10 + rnd* 30);

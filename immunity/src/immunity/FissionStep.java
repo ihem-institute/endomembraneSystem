@@ -214,7 +214,8 @@ public class FissionStep {
 		b.getRabTimeSeries().clear();
 //		if(ModelProperties.getInstance().rabOrganelle.get(rabInTube).contains("Golgi"))
 //		{b.heading = -90;}
-		b.heading = endosome.heading + rd.nextGaussian() * 30d;
+		b.headingP = endosome.headingP + rd.nextGaussian() * 30d;
+		b.headingA = endosome.headingA + rd.nextGaussian() * 30d;
 //		The tickCount is reset to a certain value considering the the proportion of the 
 //		area of the newly formed organelle.  Did not like it.  Better keep the same tickCount
 		b.tickCount = endosome.tickCount;//1 + (int) (endosome.tickCount * b.area/(endosome.area + b.area));
@@ -222,15 +223,16 @@ public class FissionStep {
 		// change the													// heading
 		// of the old vesicle heading with a normal distribution
 //		scale 1500 nm is the 50 size space. Size in nm/30 is the size in the space scale
-		double deltax = Math.cos(endosome.heading * 2d * PI / 360d)
+		double deltax = Math.cos(endosome.headingP * 2d * PI / 360d)
 				* (endosome.size + b.size) * Cell.orgScale/30;
-		double deltay = Math.sin(endosome.heading * 2d * PI / 360d)
+		double deltay = Math.sin(endosome.headingP * 2d * PI / 360d)
 				* (endosome.size+ b.size)* Cell.orgScale/30;
 		
 		NdPoint myPoint = space.getLocation(endosome);
 		double x = myPoint.getX()+ deltax;
 
 		double y = myPoint.getY()+ deltay;
+		double z = myPoint.getZ();
 
 //			specific for Golgi transport.  To increase TGN volume, when split a pure TGN (RabE) tubule, near the nucleus, increase the volume in a random
 //			way between 0 and the maximal volume (the volume of a sphere with the area of the tubule
@@ -245,8 +247,8 @@ public class FissionStep {
 		if (y > 50 - cellLimit)y = 50-cellLimit;
 		if (x < cellLimit) x = cellLimit;
 		else if (x > 50 -cellLimit) x = 50 - cellLimit;
-		space.moveTo(b, x, y);
-		grid.moveTo(b, (int) x, (int) y);
+		space.moveTo(b, x, y, z);
+		grid.moveTo(b, (int) x, (int) y, (int) z);
 
 //		if (b.c>100/Cell.orgScale) {
 //			System.out.println(b.c+"  bbbbbbbbbbbbbbccccccccccccccccccccorta de nuevo  " );

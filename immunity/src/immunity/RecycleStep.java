@@ -23,8 +23,10 @@ public class RecycleStep {
 		NdPoint myPoint = endosome.getSpace().getLocation(endosome);
 			double x = myPoint.getX();
 			double y = myPoint.getY();
+			double z = myPoint.getZ();
 //			if far from the PM no recycling
-			if(!(isPointInSquare(x, y, 25, 25, 50-5*cellLimit))){ // if it is near the PM
+			if (!isPointInsideOblate(x, y, z))
+					{ // if it is near the PM
 //			if near the PM and larger domain is EE and is a tubule, recycle full fusion
 //			if near the PM	and larger domain is TGN, full fusion
 //			if near the PM	and larger domain is RE, full fusion 4%; 96% kiss and run
@@ -174,7 +176,7 @@ public class RecycleStep {
 			double h = (endosome.area-2*Math.PI*rcyl*rcyl)/(2*Math.PI*rcyl);// length of a tubule with the area of the recycled endosome
 			endosome.volume = Math.PI*rcyl*rcyl*h; // new volume of the endosome, now converted in a tubule.
 			endosome.solubleContent.put("protonEn", 3.98e-5*endosome.volume); //pH 7.4
-			endosome.heading = -90; //moving in the nucleus direction
+			endosome.headingP = -90; //moving in the nucleus direction
 			}
 		}
 
@@ -240,6 +242,20 @@ public class RecycleStep {
 
 		
 	}
+	
+    public static boolean isPointInsideOblate(double x, double y, double z) {
+    	double x0 = CellBuilder.xWorld/2;
+    	double y0 = CellBuilder.yWorld/2;
+    	double z0 = CellBuilder.zWorld/2;
+    	x = x-x0;
+    	y = y-y0;
+    	z = z-z0;
+    	double a = x0;
+    	double c = z0;
+        double lhs = (x * x) / (a * a) + (y * y) / (a * a) + (z * z) / (c * c);
+        return lhs <= 1.0;
+    }
+
     public static boolean isPointInSquare(double x, double y, double x0, double y0, double ll) {
         double halfSide = ll / 2.0;
         // Calculate the boundaries of the square

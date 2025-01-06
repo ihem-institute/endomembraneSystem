@@ -252,7 +252,7 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 //		if(endosome.heading > 0 && endosome.heading <180) {return (float) -(180+endosome.heading);}		
 //		else {	
 		if(endosome.area >= Cell.minCistern/20 && endosome.a > endosome.c) return (float) 90;
-		else return (float) -(endosome.getHeading());
+		else return (float) -(endosome.getHeadingP());
 
 	}
 	

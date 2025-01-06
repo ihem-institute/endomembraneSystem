@@ -54,7 +54,7 @@ public class FusionStep {
 		// Hence, size/15 is in grid units
 		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
 		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
-				Endosome.class, gridSize, gridSize);
+				Endosome.class, gridSize, gridSize, gridSize);
 		// System.out.println("SIZE           "+gridSize);
 
 		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
@@ -100,7 +100,7 @@ public class FusionStep {
 		// Hence, size/15 is in grid units
 		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
 		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
-				Endosome.class, gridSize, gridSize);
+				Endosome.class, gridSize, gridSize, gridSize);
 		// System.out.println("SIZE           "+gridSize);
 
 		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);

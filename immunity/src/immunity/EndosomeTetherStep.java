@@ -30,7 +30,7 @@ public class EndosomeTetherStep {
 		// Hence, size/15 is in grid units
 		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
 		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
-				Endosome.class, gridSize, gridSize);
+				Endosome.class, gridSize, gridSize, gridSize);
 		// System.out.println("SIZE           "+gridSize);
 
 		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
@@ -61,7 +61,8 @@ public class EndosomeTetherStep {
 
 			Random r = new Random();		
 			double rr = r.nextGaussian();
-			end.heading = rr * 30d + largest.heading;
+			end.headingP = rr * 30d + largest.headingP;
+			end.headingA = rr * 30d + largest.headingA;
 	//		OrganelleMove.moveTowards(end);
 		}
 	}

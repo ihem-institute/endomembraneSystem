@@ -68,16 +68,16 @@ public class OrganelleMove {
 //		System.out.println(endosome.heading + " final HEADING");
 		
 		if (organelleName.contains("cisGolgi")) {
-			space.moveTo(endosome, 25, between*1+high);
-			grid.moveTo(endosome, 25, (int)(between*1+high));
+			space.moveTo(endosome, 25, between*1+high, 4);
+			grid.moveTo(endosome, 25, (int)(between*1+high), 4);
 		}
 		if (organelleName.contains("medialGolgi")) {
-			space.moveTo(endosome, 25, between*2+high);
-			grid.moveTo(endosome, 25, (int)(between*2+high));
+			space.moveTo(endosome, 25, between*2+high, 4);
+			grid.moveTo(endosome, 25, (int)(between*2+high), 4);
 		}
 		if (organelleName.contains("transGolgi")) {
-			space.moveTo(endosome, 25, between*3+high);
-			grid.moveTo(endosome, 25, (int)(between*3+high));
+			space.moveTo(endosome, 25, between*3+high, 4);
+			grid.moveTo(endosome, 25, (int)(between*3+high),4);
 		}
 		
 	}
@@ -102,21 +102,23 @@ public class OrganelleMove {
 //		NdPoint myPoint = endosome.getEndosomeLocation(endosome);
 		
 		double x = myPoint.getX();
-//		endosome.setXcoor(x);
 		double y = myPoint.getY();
-//		endosome.setYcoor(y);
-		
-
+		double z = myPoint.getZ();
 //	If near the borders, move only with 10% probability MT independent
-		double cellSize = 50;
-		double cellCenterX = 25;
-		double cellCenterY = 25;		
-		double nucleusSize = 5;
-		double nucleusCenterX = 25;
-		double nucleusCenterY = 21;	
+		double cellSize = CellBuilder.xWorld;
+		double cellCenterX = cellSize/2;
+		double cellCenterY = cellSize/2;
+		double cellCenterZ = CellBuilder.zWorld/2;
+		double nucleusSize = 3.5;
+		double nucleusCenterX = cellSize/2;
+		double nucleusCenterY = cellSize/2*0.8;	
+		double nucleusCenterZ = cellCenterZ;
 //		If near the border, change heading randomly (100%) and stop move with 10% probability
-		if (!isPointInSquare(x, y, cellCenterX, cellCenterY, cellSize- 5 * cellLimit)) { // near the cell border  LARGECELL
-			endosome.heading = Math.random()*360;
+		if (!isPointInEllipsoid(x, y, z))
+		// cellSize- 5 cellLimit)) 
+		{ // near the cell border  LARGECELL
+			endosome.headingP = Math.random()*360;
+			endosome.headingA = Math.random()*360;
 //	    	System.out.println(" en el borde  " + x+"  " + y);
 			changeDirectionRnd(endosome);
 //		return;	
@@ -124,8 +126,11 @@ public class OrganelleMove {
 //		If near the nucleus, change heading randomly (5%) and stop move with 10% probability
 
 	
-		else if (isPointInCircle(x, y, nucleusCenterX, nucleusCenterY, nucleusSize)) { // near the nucleus
-				if (Math.random() < 0.05) endosome.heading = Math.random()*360;
+		else if (isPointInCircle(x, y, z)) { // near the nucleus
+				if (Math.random() < 0.05) {
+					endosome.headingP = Math.random()*360;
+					endosome.headingA = Math.random()*360;
+				}
 				changeDirectionRnd(endosome);
 				
 			}
@@ -140,23 +145,30 @@ public class OrganelleMove {
 //		Having the heading and speed, make the movement.  If out of the space, limit
 //		the movement
 			if (endosome.speed == 0) return;// random movement 90% of the time return speed=0
-		    double xx = x + Math.cos(endosome.heading * Math.PI / 180d)
+		    double xx = x + Math.cos(endosome.headingP * Math.PI / 180d)
 			* endosome.speed*Cell.orgScale/Cell.timeScale;
-		    double yy = y + Math.sin(endosome.heading * Math.PI / 180d)
-			* endosome.speed * Cell.orgScale/Cell.timeScale;	
+		    double yy = y + Math.sin(endosome.headingP * Math.PI / 180d)
+			* endosome.speed * Cell.orgScale/Cell.timeScale;
+		    double zz = z + Math.sin(endosome.headingA * Math.PI / 180d)
+			* endosome.speed * Cell.orgScale/Cell.timeScale;
 
 //		    if move out the cell, goes to the center of the cell and change heading randomly
-		    if (!isPointInSquare(xx, yy, cellCenterX, cellCenterY, cellSize-2*cellLimit)) {
+		    if (!isPointInEllipsoid(xx, yy, zz)) {
 //		    	System.out.println("FUERA DE CELULA  " + xx+"  " + yy);
-		    	double[] newPoint = movePointToward(xx, yy, cellCenterX, cellCenterY, 2*cellLimit);
+				double x0 = CellBuilder.xWorld/2;
+				double y0 = CellBuilder.yWorld/2;
+				double z0 = CellBuilder.zWorld/2;
+		    	double[] newPoint = movePointToward(xx, yy, zz, x0, y0, z0, 2*cellLimit);
 			    xx = newPoint[0];
 			    yy = newPoint[1];
-			    endosome.heading = Math.random()*360;
+			    zz = newPoint[2];		    
+			    endosome.headingP = Math.random()*360;
+			    endosome.headingA = Math.random()*360;
 
 		    	}
 	//    	System.out.println("FUERA DE CELULA  " + xx+"  " + yy);
-		space.moveTo(endosome, xx, yy);
-		grid.moveTo(endosome, (int) xx, (int) yy);
+		space.moveTo(endosome, xx, yy, zz);
+		grid.moveTo(endosome, (int) xx, (int) yy, (int) zz);
 	}
 	
 	public static void changeDirectionRnd(Endosome endosome) {
@@ -260,17 +272,20 @@ public class OrganelleMove {
 				double mth = mt.getMtheading();
 				double yy = dist * Math.sin((mth+90)* Math.PI/180);
 				double xx = dist * Math.cos((mth+90)* Math.PI/180);
+				double zz = 4;
 				NdPoint pt = space.getLocation(endosome);
 				double xpt = pt.getX()-xx;
 				double ypt = pt.getY()-yy;
 			    if (ypt >= 50-cellLimit) ypt = 50 -cellLimit;
 				if (ypt <= 0+cellLimit) ypt = cellLimit;
-				space.moveTo(endosome, xpt, ypt);
-				grid.moveTo(endosome, (int) xpt, (int) ypt);
+				space.moveTo(endosome, xpt, ypt, zz);
+				grid.moveTo(endosome, (int) xpt, (int) ypt, (int) zz);
 //				dist = distance(endosome, mt);
 //				Changes the speed to a standard speed in MT independet of size
 				endosome.speed = 1d*Cell.orgScale/Cell.timeScale;
-				endosome.heading = -(mtDir * 180f + mt.getMtheading()+270f);
+				endosome.headingP = -(mtDir * 180f + mt.getMtheading()+270f);
+				endosome.headingA = 0;
+				
 //				System.out.println(endosome.speed +" speed heading "+ endosome.heading+" MTheading" + mt.getMtheading());
 				return;
 			}
@@ -286,9 +301,10 @@ public class OrganelleMove {
 		grid = endosome.getGrid();		
 		double deltaX = Math.random()*10-5;//when near MT rnd en zona Golgi
 		double deltaY = Math.random()*6-3;//when near MT rnd en zona Golgi
+		double deltaZ = 4; //Math.random()*6-3;//when near MT rnd en zona Golgi
 
-			space.moveTo(endosome, 25 + deltaX, 14 + deltaY);
-			grid.moveTo(endosome, (int) (25 + deltaX), (int)(14 + deltaY));
+			space.moveTo(endosome, 25 + deltaX, 14 + deltaY, deltaZ);
+			grid.moveTo(endosome, (int) (25 + deltaX), (int)(14 + deltaY), (int) deltaZ);
 			
 		NdPoint myPoint = space.getLocation(endosome);
 		double x = myPoint.getX();
@@ -361,31 +377,42 @@ public class OrganelleMove {
 		return distance;
 	}
 	
-    public static boolean isPointInCircle(double x, double y, double x0, double y0, double r) {
-        double distanceSquared = Math.pow(x - x0, 2) + Math.pow(y - y0, 2);
+    public static boolean isPointInCircle(double x, double y, double z) {
+		double r = 3.5;
+		double x0 = CellBuilder.xWorld/2;
+		double y0 = CellBuilder.yWorld/2;
+		double z0 = CellBuilder.zWorld/2;
+        double distanceSquared = Math.pow(x - x0, 2) + Math.pow(y - y0, 2) + Math.pow(z - z0, 2);
         double radiusSquared = Math.pow(r, 2);
         return distanceSquared <= radiusSquared;
     }
     
-    public static boolean isPointInSquare(double x, double y, double x0, double y0, double ll) {
-        double halfSide = ll / 2.0;
-        // Calculate the boundaries of the square
-        double left = x0 - halfSide;
-        double right = x0 + halfSide;
-        double top = y0 + halfSide;
-        double bottom = y0 - halfSide;
-
+    public static boolean isPointInEllipsoid(double x, double y, double z) {
+		double x0 = CellBuilder.xWorld/2;
+		double y0 = CellBuilder.yWorld/2;
+		double z0 = CellBuilder.zWorld/2;
+		
+		double dx = x-x0;
+		double dy = y-y0;
+		double dz = z-z0;
+ //       double halfSide = ll / 2.0;
+        double value = (dx * dx) / (x0 * x0) + (dy * dy) / (y0 * y0) + (dz * dz) / (z0 * z0);
         // Check if the point is within the boundaries
-        return (x >= left && x <= right && y >= bottom && y <= top);
+        return value <= 1;
+
     }
-    public static double[] movePointToward(double x, double y, double x0, double y0, double d) {
+    public static double[] movePointToward(double x, double y, double z, double x0, double y0, double z0, double d) {
+        // Calculate the differences in each coordinate
         double dx = x0 - x;
         double dy = y0 - y;
-        double distance = Math.sqrt(dx * dx + dy * dy);
+        double dz = z0 - z;
+
+        // Calculate the distance from the point to the center
+        double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
         if (distance == 0) {
             // The starting point and target point are the same
-            return new double[] { x, y };
+            return new double[] { x, y, z };
         }
 
         // Calculate the ratio to scale the direction vector
@@ -394,9 +421,11 @@ public class OrganelleMove {
         // Calculate the new coordinates
         double newX = x + ratio * dx;
         double newY = y + ratio * dy;
+        double newZ = z + ratio * dz;
 
-        return new double[] { newX, newY };
+        return new double[] { newX, newY, newZ };
     }
+
 
 }
 
