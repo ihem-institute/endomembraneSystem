@@ -309,6 +309,7 @@ public class FreezeDryEndosomes {
             line = line + "volume" + "," + endosome.getVolume() + ",";
             line = line + "xcoor" + "," + endosome.getXcoor() + ",";
             line = line + "ycoor" + "," + endosome.getYcoor() + ",";
+            line = line + "zcoor" + "," + endosome.getZcoor() + ",";
 		line = line + "\n";	
 		output = new BufferedWriter(new FileWriter(FreezeOutputPath, true));
 //		output = new BufferedWriter(new FileWriter("C:/Users/lmayo/workspace/immunity/outputFrozenEndosomes.csv", true));

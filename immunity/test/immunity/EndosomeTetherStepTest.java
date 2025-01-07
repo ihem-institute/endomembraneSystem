@@ -47,17 +47,17 @@ public class EndosomeTetherStepTest {
 		for (int i = 0; i<10; i++){
 			this.endosome.size = 5*(i+1);
 //			this.endosome2.size = 110;
-			this.endosome.heading = -90+5*i;
+			this.endosome.headingP = -90+5*i;
 //			this.endosome2.heading = -45;
 			
 //			HashMap<String,Double> initial = new HashMap<String,Double>(this.endosome.solubleContent);
 //			this.endosome.getSpace().moveTo(this.endosome, 25, 25);
 			this.endosome.getSpace().moveTo(this.endosome, (int)Math.random()*50, (int)Math.random()*50);
 
-			System.out.println("\nTEST   antes  "+this.endosome.heading+"  ");
+			System.out.println("\nTEST   antes  "+this.endosome.headingP+"  ");
 			EndosomeTetherStep.tether(endosome);
 //			EndosomeTetherStep.tether(endosome2);
-			System.out.println("TEST   despues "+this.endosome.heading+"  ");
+			System.out.println("TEST   despues "+this.endosome.headingP+"  ");
 //			assertSame(this.endosome.solubleContent, this.endosome.solubleContent);
 	//		assertNotSame(initial, this.endosome.solubleContent);
 

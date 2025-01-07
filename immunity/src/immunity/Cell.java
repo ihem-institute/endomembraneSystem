@@ -89,7 +89,7 @@ public class Cell {
 			
 // eventual use for cell metabolism
 	}
-	@ScheduledMethod(start = 1000000, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1)
 //	0.01/2d)// era /3 y luego /1, pero demasiado uptake desde PM
 	public void uptake() {
 		if (Math.random() <ModelProperties.getInstance().getActionProbabilities().get("p_ERUptake"))

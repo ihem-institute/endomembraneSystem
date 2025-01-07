@@ -55,7 +55,7 @@ public class EndosomeFusionStepTest {
 		this.endosome2.getGrid().moveTo(this.endosome2, 25, 25);
 		for (int i = 0; i<20; i++){
 			this.endosome.size = 10*(i+1);
-			this.endosome.heading = -90+5*i;
+			this.endosome.headingP = -90+5*i;
 			double yPosition = 49.999-i;
 			this.endosome.getGrid().moveTo(this.endosome, 25, (int)yPosition);
 			System.out.println("\nTEST   antes  "+this.endosome.solubleContent+"  "

@@ -30,6 +30,8 @@ public class OrganelleMove {
 			endosome.setXcoor(x);
 			double y = myPoint.getY();
 			endosome.setYcoor(y);
+			double z = myPoint.getZ();
+			endosome.setZcoor(z);
 		}
 		else {
 			moveNormal(endosome);
@@ -38,6 +40,8 @@ public class OrganelleMove {
 			endosome.setXcoor(x);
 			double y = myPoint.getY();
 			endosome.setYcoor(y);
+			double z = myPoint.getZ();
+			endosome.setZcoor(z);
 		}
 	}
 	
@@ -66,18 +70,18 @@ public class OrganelleMove {
 		double high = 29;//distance from the bottom
 //		endosome.setHeading(-90d);// = -90d;			
 //		System.out.println(endosome.heading + " final HEADING");
-		
+		double zcoor = CellBuilder.zWorld/2;
 		if (organelleName.contains("cisGolgi")) {
-			space.moveTo(endosome, 25, between*1+high, 4);
-			grid.moveTo(endosome, 25, (int)(between*1+high), 4);
+			space.moveTo(endosome, 25, between*1+high, zcoor);
+			grid.moveTo(endosome, 25, (int)(between*1+high), (int) zcoor);
 		}
 		if (organelleName.contains("medialGolgi")) {
-			space.moveTo(endosome, 25, between*2+high, 4);
-			grid.moveTo(endosome, 25, (int)(between*2+high), 4);
+			space.moveTo(endosome, 25, between*2+high, zcoor);
+			grid.moveTo(endosome, 25, (int)(between*2+high), (int) zcoor);
 		}
 		if (organelleName.contains("transGolgi")) {
-			space.moveTo(endosome, 25, between*3+high, 4);
-			grid.moveTo(endosome, 25, (int)(between*3+high),4);
+			space.moveTo(endosome, 25, between*3+high, zcoor);
+			grid.moveTo(endosome, 25, (int)(between*3+high),(int) zcoor);
 		}
 		
 	}
@@ -105,14 +109,12 @@ public class OrganelleMove {
 		double y = myPoint.getY();
 		double z = myPoint.getZ();
 //	If near the borders, move only with 10% probability MT independent
-		double cellSize = CellBuilder.xWorld;
-		double cellCenterX = cellSize/2;
-		double cellCenterY = cellSize/2;
-		double cellCenterZ = CellBuilder.zWorld/2;
-		double nucleusSize = 3.5;
-		double nucleusCenterX = cellSize/2;
-		double nucleusCenterY = cellSize/2*0.8;	
-		double nucleusCenterZ = cellCenterZ;
+		/*
+		 * double cellSize = CellBuilder.xWorld; double cellCenterX = cellSize/2; double
+		 * cellCenterY = cellSize/2; double cellCenterZ = CellBuilder.zWorld/2; double
+		 * nucleusSize = 3.5; double nucleusCenterX = cellSize/2; double nucleusCenterY
+		 * = cellSize/2*0.8; double nucleusCenterZ = cellCenterZ;
+		 */
 //		If near the border, change heading randomly (100%) and stop move with 10% probability
 		if (!isPointInEllipsoid(x, y, z))
 		// cellSize- 5 cellLimit)) 
@@ -151,10 +153,11 @@ public class OrganelleMove {
 			* endosome.speed * Cell.orgScale/Cell.timeScale;
 		    double zz = z + Math.sin(endosome.headingA * Math.PI / 180d)
 			* endosome.speed * Cell.orgScale/Cell.timeScale;
+//	    	System.out.println("coordenadas  " + xx+"  " + yy+ "  "+ zz);
 
 //		    if move out the cell, goes to the center of the cell and change heading randomly
 		    if (!isPointInEllipsoid(xx, yy, zz)) {
-//		    	System.out.println("FUERA DE CELULA  " + xx+"  " + yy);
+//		    	System.out.println("FUERA DE CELULA ANTES " + xx+"  " + yy+"  " + zz);
 				double x0 = CellBuilder.xWorld/2;
 				double y0 = CellBuilder.yWorld/2;
 				double z0 = CellBuilder.zWorld/2;
@@ -166,7 +169,7 @@ public class OrganelleMove {
 			    endosome.headingA = Math.random()*360;
 
 		    	}
-	//    	System.out.println("FUERA DE CELULA  " + xx+"  " + yy);
+//	    	System.out.println("FUERA DE CELULA DESPUES " + xx+"  " + yy+"  " + zz);
 		space.moveTo(endosome, xx, yy, zz);
 		grid.moveTo(endosome, (int) xx, (int) yy, (int) zz);
 	}
@@ -272,7 +275,7 @@ public class OrganelleMove {
 				double mth = mt.getMtheading();
 				double yy = dist * Math.sin((mth+90)* Math.PI/180);
 				double xx = dist * Math.cos((mth+90)* Math.PI/180);
-				double zz = 4;
+				double zz = CellBuilder.zWorld/2;
 				NdPoint pt = space.getLocation(endosome);
 				double xpt = pt.getX()-xx;
 				double ypt = pt.getY()-yy;
@@ -311,6 +314,8 @@ public class OrganelleMove {
 		endosome.setXcoor(x);
 		double y = myPoint.getY();
 		endosome.setYcoor(y);
+		double z = myPoint.getZ();
+		endosome.setZcoor(z);
 		
 	}
 
@@ -342,43 +347,42 @@ public class OrganelleMove {
 	}
 
 	private static double distance(Endosome endosome, MT obj) {
-
-		// If the line passes through two points P1=(x1,y1) and P2=(x2,y2) then
-		// the distance of (x0,y0) from the line is calculate from wiki
+		
 		NdPoint pt = space.getLocation(endosome);
-		double xpt = pt.getX();
-		double ypt = pt.getY();
-		double ymax = (double) ((MT) obj).getYend();
-		double ymin = (double) ((MT) obj).getYorigin();
-		double xmax = (double) ((MT) obj).getXend();
-		double xmin = (double) ((MT) obj).getXorigin();
-		
-        // Calculate the projection of C onto the line containing AB
-        Point A = new Point(xmin, ymin);
-        Point B = new Point(xmax, ymax);
-        Point C = new Point(xpt, ypt);
-        LineSegment segment = new LineSegment(A, B);
-        double ACx = C.x - segment.A.x;
-        double ACy = C.y - segment.A.y;
-        double ABx = segment.B.x - segment.A.x;
-        double ABy = segment.B.y - segment.A.y;
-        double dotProduct = ACx * ABx + ACy * ABy;
-        double t = dotProduct / (ABx * ABx + ABy * ABy);
+		double xP = pt.getX();
+		double yP = pt.getY();
+		double zP = pt.getZ();
+		double xMax = (double) ((MT) obj).getXend();
+		double xMin = (double) ((MT) obj).getXorigin();
+		double yMax = (double) ((MT) obj).getYend();
+		double yMin = (double) ((MT) obj).getYorigin();
+		double zMax = (double) ((MT) obj).getZend();
+		double zMin = (double) ((MT) obj).getZorigin();
+    // Vector AB (line direction vector)
+    double ABx = xMax - xMin;
+    double ABy = yMax - yMin;
+    double ABz = zMax - zMin;
 
-        // Check if the projection point lies within the segment bounds
-        if (!(t >= 0 && t <= 1)) return 2000;
-		
-		double a = (xmax - xmin) * (ymin - ypt) - (ymax - ymin)
-				* (xmin - xpt);
-		double b = Math.sqrt((ymax - ymin) * (ymax - ymin) + (xmax - xmin)
-				* (xmax - xmin));
-		double distance = a / b;
-//		The distance has a sign that it is used to move the organelle to the position in the Mt
-		return distance;
+    // Vector AP (vector from line point to target point)
+    double APx = xP - xMin;
+    double APy = yP - yMin;
+    double APz = zP - zMin;
+
+    // Cross product of AP and AB
+    double crossX = APy * ABz - APz * ABy;
+    double crossY = APz * ABx - APx * ABz;
+    double crossZ = APx * ABy - APy * ABx;
+
+    // Magnitudes of vectors
+    double crossMagnitude = Math.sqrt(crossX * crossX + crossY * crossY + crossZ * crossZ);
+    double ABmagnitude = Math.sqrt(ABx * ABx + ABy * ABy + ABz * ABz);
+
+    // Distance formula
+    return crossMagnitude / ABmagnitude;
 	}
 	
     public static boolean isPointInCircle(double x, double y, double z) {
-		double r = 3.5;
+		double r = CellBuilder.zWorld/2;
 		double x0 = CellBuilder.xWorld/2;
 		double y0 = CellBuilder.yWorld/2;
 		double z0 = CellBuilder.zWorld/2;

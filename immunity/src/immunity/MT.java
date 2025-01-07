@@ -2,6 +2,7 @@ package immunity;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 //import com.thoughtworks.xstream.XStream;
 
@@ -18,6 +19,8 @@ public class MT {
 	double xend = 40d;
 	double yorigin = 0d;
 	double yend = 50d;
+	double zorigin = 0d;
+	double zend = 50d;
 	double mth = Math.atan((yend - yorigin) / (xend - xorigin));
 	public double mtheading = -mth * 180 / Math.PI;
 	public double length = 0.0;
@@ -50,50 +53,20 @@ public class MT {
 ////		xorigin = 25;
 ////		xend = RandomHelper.nextDoubleFromTo(0, 50);
 
-		xorigin= 25;
-		yorigin = 25;
-//		double squareDiag = Math.sqrt(25*25 + 25*25);
-//		double angle90 = 360 - mtheading;
-//		if (angle90 > 180) {angle90 = -(angle90 - 360);}
-//		if (angle90 > 90) angle90 = -(angle90 - 180);
-//        double complementaryAngle = Math.abs(45 - angle90);
-//        // Ensure the resulting angle is positive and within [0, 90]
-//        double distance = squareDiag*Math.cos(complementaryAngle*Math.PI/180);
-//		System.out.println(distance + "  "+mtheading +" complementary angle  "+ complementaryAngle);
-//
-//        xend = 25 + distance * Math.cos(-mtheading*Math.PI / 180);
-//		yend = 25 + distance * Math.sin(-mtheading*Math.PI / 180);
-		int randomSide = (int) Math.floor(Math.random()*4);
-		switch (randomSide) {
-		case 0 : {
-			xend = 0;
-			yend = Math.random()*50;
-			break;
-		}
-		case 1 : {
-			xend = 50;
-			yend = Math.random()*50;
-			break;
-		}
-		case 2 : {
-			xend = Math.random()*50;
-			yend = 0;
-			break;
-		}
-		case 3 : {
-			xend = Math.random()*50;
-			yend = 50;
-			break;
-		}
-		}
+		xorigin= CellBuilder.xWorld/2;
+		yorigin = CellBuilder.yWorld/2;
+		zorigin = CellBuilder.zWorld/2;
 		
+		double[] randomMTend = getRandomPointOnCircle(CellBuilder.xWorld/2);
+		xend = randomMTend[0]+ xorigin;
+		yend = randomMTend[1] + yorigin;
+		zend = zorigin;
 		mtheading = Math.atan2(xend-25, yend-25)*180/Math.PI; //-mth;
 		double x = (xend + xorigin)/2 ;//25 * Math.cos(mtheading*Math.PI / 180);
 		double y = (yend + yorigin)/2 ;//25 * Math.sin(mtheading*Math.PI / 180);
-//		double y = 25+;
-//		double x = 24.5;//xorigin + 25 * Math.cos(mtheading * Math.PI / 180);
-		space.moveTo(mt, x, y, 4);
-		grid.moveTo(mt, (int) x, (int) y, 4);
+		double z = CellBuilder.zWorld/2;
+		space.moveTo(mt, x, y, z);
+		grid.moveTo(mt, (int) x, (int) y, (int) z);
 		length = Math.sqrt((xend-xorigin)*(xend-xorigin)+(yend-yorigin)*(yend-yorigin));
 //System.out.println(mtheading + "  "+xend +" XY al azar del cuadrado  "+ yend);		
 //writing to a xml file.  It works, but I will not be able to use to strart a simulation
@@ -107,6 +80,19 @@ public class MT {
 //		}
 		
 	}
+    public static double[] getRandomPointOnCircle(double r) {
+        Random random = new Random();
+
+        // Generate a random angle in radians between 0 and 2PI
+        double theta = 2 * Math.PI * random.nextDouble();
+
+        // Calculate x and y coordinates
+        double x = r * Math.cos(theta);
+        double y = r * Math.sin(theta);
+
+        return new double[] { x, y };
+    }
+	
 	// GETTERS AND SETTERS
 	public double getXorigin() {
 		return xorigin;
@@ -122,6 +108,13 @@ public class MT {
 
 	public double getYend() {
 		return yend;
+	}
+	public double getZorigin() {
+		return zorigin;
+	}
+
+	public double getZend() {
+		return zend;
 	}
 
 	public double getMtheading() {

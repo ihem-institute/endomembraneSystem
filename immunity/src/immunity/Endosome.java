@@ -208,42 +208,31 @@ public class Endosome {
 //		endosomeShape(this);
 //		OrganelleMove.changeDirection(this);
 		OrganelleMove.moveTowards(this);
-		/*
-		 * // if (this.solubleContent.containsKey("mvb"))
-		 * this.membraneContent.put("chol", 0d); // Uptake and new organelles is a
-		 * procedure of Cell and is not performed by endosomes // if
-		 * (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this); // if
-		 * (Math.random()<p_EndosomeNewFromERStep)EndosomeNewFromERStep.newFromEr(this);
-		 * // System.out.println("actionProbabilities " +
-		 * ModelProperties.getInstance().getActionProbabilities()); ModelProperties
-		 * modelProperties = ModelProperties.getInstance(); if
-		 * (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_EndosomeTetherStep"))EndosomeTetherStep.
-		 * tether(this); if (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_EndosomeInternalVesicleStep"))
-		 * EndosomeInternalVesicleStep.internalVesicle(this); if
-		 * (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_FusionStep"))FusionStep.fusion(this); // if
-		 * (this.c > 1500) { // System.out.println("Large endosome " + this.c +
-		 * this.getRabContent()); // FissionStep.split(this); //
-		 * System.out.println("Large endosome luego" + this.c + this.getRabContent());
-		 * // } if (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_FissionStep"))FissionStep.split(this); if
-		 * (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_EndosomeLysosomalDigestionStep"))
-		 * EndosomeLysosomalDigestionStep.lysosomalDigestion(this); // Double tick =
-		 * RunEnvironment.getInstance().getCurrentSchedule().getTickCount(); // if
-		 * (tick%100 ==0) //if (Math.random() <
-		 * 1)EndosomeRabConversionStep.rabTimeSeriesLoad(this); // rabConversionN();
-		 * String name = modelProperties .getCopasiFiles().get("endosomeCopasi"); if
-		 * (Math.random() < 1 &&
-		 * name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this); if
-		 * (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(
-		 * this); if (Math.random()<modelProperties
-		 * .getActionProbabilities().get("p_EndosomeMaturationStep"))
-		 * EndosomeMaturationStep.matureCheck(this); //
-		 */	}
+//		if (this.solubleContent.containsKey("mvb")) this.membraneContent.put("chol", 0d);
+//		Uptake and new organelles is a procedure of Cell and is not performed by endosomes		
+//		if (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this);
+//		if (Math.random()<p_EndosomeNewFromERStep)EndosomeNewFromERStep.newFromEr(this);
+//		System.out.println("actionProbabilities " + ModelProperties.getInstance().getActionProbabilities());
+		ModelProperties modelProperties = ModelProperties.getInstance();
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeTetherStep"))EndosomeTetherStep.tether(this);
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeInternalVesicleStep"))EndosomeInternalVesicleStep.internalVesicle(this);
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_FusionStep"))FusionStep.fusion(this);
+//		if (this.c > 1500) {
+//			System.out.println("Large endosome " + this.c + this.getRabContent());
+//			FissionStep.split(this);
+//			System.out.println("Large endosome luego" + this.c + this.getRabContent());
+//		}
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_FissionStep"))FissionStep.split(this);
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeLysosomalDigestionStep"))EndosomeLysosomalDigestionStep.lysosomalDigestion(this);
+//		Double tick = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+//		if (tick%100 ==0) 
+		//if (Math.random() < 1)EndosomeRabConversionStep.rabTimeSeriesLoad(this);
+		// rabConversionN();
+		String name =  modelProperties .getCopasiFiles().get("endosomeCopasi");
+		if (Math.random() < 1 && name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this);
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(this);
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeMaturationStep"))EndosomeMaturationStep.matureCheck(this); //	
+	}
 //	public List<Endosome> getAllEndosomes(){
 //		List<Endosome> allEndosomes = new ArrayList<Endosome>();
 //		for (Object obj : grid.getObjects()) {
