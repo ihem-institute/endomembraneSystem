@@ -1947,12 +1947,12 @@ endosome1645q,initOrgProp,area,21362.83004,volume,201061.9298,xcoor,0,ycoor,0,zc
 endosome1645q,initRabContent,RabI,21362.83004,,,,,,,,,,,,,,,,
 endosome1645q,initMembraneContent,exCxEn,0,R-TfaEn,0.006115366,oMHCIEn,0,membraneMarker,0,cMHCIEn,0,R-TfEn,2.53E-05,pepMHCIEn,0,REn,0.005008964,imCxEn,0
 endosome1645q,initSolubleContent,ovaEn,0,protonEn,20.76266018,TfaEn,0.003767679,solubleMarker,0,mvb,0,FeEn,2.13E-05,TfEn,4.65E-08,pepEn,0,,
-plasmaMembrane,initOrgProp,area,6.00E+07,volume,2.40E+30,,,,,,,,,,,,,,
+plasmaMembrane,initOrgProp,area,3.73E+08,volume,2.40E+30,,,,,,,,,,,,,,
 plasmaMembrane,initMembraneContent,exCxEn,0,R-TfaEn,269.5042761,oMHCIEn,0,membraneMarker,0,cMHCIEn,0,R-TfEn,1647.117351,pepMHCIEn,0,REn,0.142494823,imCxEn,0
 plasmaMembrane,initSolubleContent,ovaEn,0,protonEn,9.55E+25,TfaEn,0,solubleMarker,0,mvb,0,FeEn,0,TfEn,0,pepEn,0,,
 EReticulum,initOrgProp,area,6.00E+07,volume,2.40E+10,,,,,,,,,,,,,,
 EReticulum,initMembraneContent,exCxEn,0,R-TfaEn,0.316656228,oMHCIEn,0,membraneMarker,0,cMHCIEn,0,R-TfEn,0.004054269,pepMHCIEn,0,REn,19.42081308,imCxEn,0
 EReticulum,initSolubleContent,ovaEn,0,protonEn,18640.17545,TfaEn,0.450860956,solubleMarker,0,mvb,2.30E-22,FeEn,0.001843428,TfEn,6.57E-06,pepEn,0,,
-CyCell,initOrgProp,area,9000000,volume,7.20E+09,,,,,,,,,,,,,,
+CyCell,initOrgProp,area,3.73E+08,volume,7.20E+09,,,,,,,,,,,,,,
 CyCell,initMembraneContent,,,,,,,,,,,,,,,,,,
 CyCell,initSolubleContent,pepCy,0,ovaCy,0,FeCy,2.80E-06,protonCy,1.00E-04,,,,,,,,,,

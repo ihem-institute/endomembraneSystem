@@ -119,8 +119,8 @@ public class OrganelleMove {
 		if (!isPointInEllipsoid(x, y, z))
 		// cellSize- 5 cellLimit)) 
 		{ // near the cell border  LARGECELL
-			endosome.headingP = Math.random()*360;
-			endosome.headingA = Math.random()*360;
+//			endosome.headingP = Math.random()*360;
+//			endosome.headingA = Math.random()*360;
 //	    	System.out.println(" en el borde  " + x+"  " + y);
 			changeDirectionRnd(endosome);
 //		return;	
@@ -129,10 +129,10 @@ public class OrganelleMove {
 
 	
 		else if (isPointInCircle(x, y, z)) { // near the nucleus
-				if (Math.random() < 0.05) {
-					endosome.headingP = Math.random()*360;
-					endosome.headingA = Math.random()*360;
-				}
+//				if (Math.random() < 0.05) {
+//					endosome.headingP = Math.random()*360;
+//					endosome.headingA = Math.random()*360;
+//				}
 				changeDirectionRnd(endosome);
 				
 			}
@@ -176,8 +176,10 @@ public class OrganelleMove {
 	
 	public static void changeDirectionRnd(Endosome endosome) {
 //		90% of the time, the speed is 0 and the endosome does not move
-		if (Math.random()<0.9) {
+		if (Math.random()<0.5) {
 			endosome.speed = 0;
+			endosome.headingP = Math.random()*360;
+			endosome.headingA = Math.random()*360;
 			return;
 		}
 //		double initialh = endosome.heading;
@@ -235,7 +237,7 @@ public class OrganelleMove {
 				mt = mmt;
 			}
 		}
-
+// Check if near MT.  If it is, then move on MT according to organelle domains and if it is or not a tubule
 		if (Math.abs(dist*30d/Cell.orgScale) < endosome.size) {
 
 				if (endosome.a >endosome.c) {moveGolgiVesicles(endosome);}
@@ -273,16 +275,13 @@ public class OrganelleMove {
 //				Changes the heading to the heading of the MT
 //				Moves the endosome to the MT position
 				double mth = mt.getMtheading();
-				double yy = dist * Math.sin((mth+90)* Math.PI/180);
-				double xx = dist * Math.cos((mth+90)* Math.PI/180);
-				double zz = CellBuilder.zWorld/2;
-				NdPoint pt = space.getLocation(endosome);
-				double xpt = pt.getX()-xx;
-				double ypt = pt.getY()-yy;
-			    if (ypt >= 50-cellLimit) ypt = 50 -cellLimit;
-				if (ypt <= 0+cellLimit) ypt = cellLimit;
-				space.moveTo(endosome, xpt, ypt, zz);
-				grid.moveTo(endosome, (int) xpt, (int) ypt, (int) zz);
+				double[] point = closestMTpoint(
+						endosome.getXcoor(),endosome.getYcoor(),endosome.getZcoor(),
+						mt.getXorigin(), mt.getYorigin(), mt.getZorigin(),
+						mt.getXend(), mt.getYend(),mt.getZend());
+
+				space.moveTo(endosome, point[0], point[1], point[2]);
+				grid.moveTo(endosome, (int) point[0], (int) point[1], (int) point[2]);
 //				dist = distance(endosome, mt);
 //				Changes the speed to a standard speed in MT independet of size
 				endosome.speed = 1d*Cell.orgScale/Cell.timeScale;
@@ -298,6 +297,36 @@ public class OrganelleMove {
 		{changeDirectionRnd(endosome);
 		return;
 		}
+	}
+	public static double[] closestMTpoint(double x, double y, double z, 
+			double xmin, double ymin, double zmin, 
+			double xmax, double ymax, double zmax) {
+		// Line segment vector
+		double dx = xmax - xmin;
+		double dy = ymax - ymin;
+		double dz = zmax - zmin;
+
+		// Vector from segment start to point
+		double px = x - xmin;
+		double py = y - ymin;
+		double pz = z - zmin;
+
+		// Dot products
+		double lineLengthSquared = dx * dx + dy * dy + dz * dz;
+		double dotProduct = px * dx + py * dy + pz * dz;
+
+		// Calculate projection parameter t
+		double t = dotProduct / lineLengthSquared;
+
+		// Clamp t to the range [0, 1]
+		t = Math.max(0, Math.min(1, t));
+
+		// Closest point coordinates
+		double closestX = xmin + t * dx;
+		double closestY = ymin + t * dy;
+		double closestZ = zmin + t * dz;
+
+		return new double[] { closestX, closestY, closestZ };
 	}
 	private static void moveGolgiVesicles(Endosome endosome) {
 		space = endosome.getSpace();

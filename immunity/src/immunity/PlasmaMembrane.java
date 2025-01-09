@@ -52,20 +52,24 @@ public class PlasmaMembrane {
 		// World is a 50 X 50 space.  Each unit of space has a size of 15 
 		// hence the world is 750 X 750 size in repast units, that correspond to 
 		// a 1500nm x 1500nm cellular space at orgScale = 1.  
-		// To convert from cell units (in nm) to repast space = nm/2
+		// To convert from cell units (in nm) to repast space in space of 50  = nm/30
+		// to convert from Repast space (50x50) to nm World size *30 (at scale =1)
 		// the orgScale is taking into account in the scale of the shape
 
 		ModelProperties modelProperties = ModelProperties.getInstance();
 		double orgScale = modelProperties.getCellK().get("orgScale");
 		plasmaMembraneArea = ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneArea");// 
-		initialPlasmaMembraneArea = 1500*100*4/orgScale/orgScale;
+		initialPlasmaMembraneArea = calculateSpheroidArea(CellBuilder.xWorld/2*30, CellBuilder.zWorld/2*30)/orgScale/orgScale;
 		//1500 y 400 es lado y el alto de la membrana considerada en escala original. 4 son cuatro lados.
-	//	System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneArea);
+		System.out.println("aaaaaIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneArea);
 		
 		//400, 1500 y 1500 es el cubo en nm en escala original	
 		plasmaMembraneVolume = ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
-		initialPlasmaMembraneVolume = 1500*400*1500/orgScale/orgScale/orgScale;//ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
-
+//		volume of spheroid = 4/3*PI*a^2*c
+		initialPlasmaMembraneVolume = 4/3 * Math.PI *CellBuilder.xWorld/2*30*CellBuilder.xWorld/2*30*CellBuilder.zWorld/2*30		
+				/orgScale/orgScale/orgScale;//ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
+		//1500 y 400 es lado y el alto de la membrana considerada en escala original. 4 son cuatro lados.
+	System.out.println("vvvvvIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneVolume);
 //		plasmaMembraneTimeSeries = null;
 //		
 //		membraneRecycle.putAll(modelProperties.initPMmembraneRecycle);
@@ -84,7 +88,28 @@ public class PlasmaMembrane {
 //		}
 //		System.out.println("solubleRecycle "+solubleRecycle);		
 	}
+    public static double calculateSpheroidArea(double a, double c) {
+//        if (a <= 0 || c <= 0) {
+//            throw new IllegalArgumentException("Axes must be positive values.");
+//        }
 
+        // Calculate eccentricity squared
+        double eSquared = 1 - (c * c) / (a * a);
+
+        if (eSquared < 1e-6) {
+            // Near-spherical case (e^2 ~ 0)
+            return 4 * Math.PI * a * a;
+        }
+
+        // Calculate eccentricity
+        double e = Math.sqrt(eSquared);
+
+        // Calculate surface area
+        double term1 = 2 * Math.PI * a * a;
+        double term2 = Math.PI * c * c / e * Math.log(1 + e/(1 - e));
+
+        return term1 + term2;
+    }
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
 		changeColor();

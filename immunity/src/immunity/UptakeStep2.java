@@ -419,7 +419,7 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 		context.add(bud);
 		bud.speed = 0;//1d / bud.size;
 		
-        double[] point = selectRandomPointOnOblateSurface(a, c);
+        double[] point = selectRandomPointOnOblateSurface(CellBuilder.xWorld/2, CellBuilder.zWorld/2);
         double[] angles = calculateAnglesTowardCenter(point[0], point[1], point[2]);
         bud.xcoor = point[0];
         bud.ycoor = point[1];        
@@ -449,9 +449,9 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
         double theta = Math.acos(2 * random.nextDouble() - 1); // Polar angle (0 to π)
 
         // Convert spherical coordinates to Cartesian coordinates
-        double x = a * Math.sin(theta) * Math.cos(phi);
-        double y = a * Math.sin(theta) * Math.sin(phi);
-        double z = c * Math.cos(theta);
+        double x = a * Math.sin(theta) * Math.cos(phi)+ a;
+        double y = a * Math.sin(theta) * Math.sin(phi)+ a;
+        double z = c * Math.cos(theta)+ c;
 
         return new double[]{x, y, z};
     }

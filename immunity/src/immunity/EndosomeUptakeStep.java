@@ -228,9 +228,6 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 //		bud.size = initOrgProp.get("maxRadius");// radius of a sphere with the volume of the
 		// cylinder
 		bud.speed = 1d / bud.size;
-		bud.headingP = -90;// heading down
-		bud.headingA = -90;// heading down
-
 		double xend=0;
 		double yend=0;
 //		To place the endosome near the plasma membrane and heading to the center of the cell

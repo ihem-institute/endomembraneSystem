@@ -176,7 +176,9 @@ public class RecycleStep {
 			double h = (endosome.area-2*Math.PI*rcyl*rcyl)/(2*Math.PI*rcyl);// length of a tubule with the area of the recycled endosome
 			endosome.volume = Math.PI*rcyl*rcyl*h; // new volume of the endosome, now converted in a tubule.
 			endosome.solubleContent.put("protonEn", 3.98e-5*endosome.volume); //pH 7.4
-			endosome.headingP = -90; //moving in the nucleus direction
+			double[] angles = headingToCenter(endosome.getXcoor(),endosome.getYcoor(),endosome.getZcoor());
+			endosome.headingP = angles[0]; //moving in the nucleus direction
+			endosome.headingA = angles[1];
 			}
 		}
 
@@ -253,7 +255,7 @@ public class RecycleStep {
     	double a = x0;
     	double c = z0;
         double lhs = (x * x) / (a * a) + (y * y) / (a * a) + (z * z) / (c * c);
-        return lhs <= 1.0;
+        return lhs <= 0.9;
     }
 
     public static boolean isPointInSquare(double x, double y, double x0, double y0, double ll) {
@@ -268,6 +270,7 @@ public class RecycleStep {
         return (x >= left && x <= right && y >= bottom && y <= top);
     }
 
+    
 ////	Collections.shuffle(mts); 19-7-21 No need to shuffle because the closest MT will be selected
 //	double dist = 1000;
 //	MT mt = null;
@@ -283,7 +286,30 @@ public class RecycleStep {
 //			mt = mmt;
 //		}
 //	}
-    
+    public static double[] headingToCenter(double x, double y, double z) {
+        // Compute the differences
+    	double x0 = CellBuilder.xWorld;
+    	double y0 = CellBuilder.yWorld;
+    	double z0 = CellBuilder.zWorld;
+        double dx = x0 - x;
+        double dy = y0 - y;
+        double dz = z0 - z;
+
+        // Calculate the distance (magnitude of the vector)
+        double r = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (r == 0) {
+            throw new IllegalArgumentException("The organelle is already at the center!");
+        }
+
+        // Calculate the polar angle (theta)
+        double polarAngle = Math.toDegrees(Math.acos(dz / r));
+
+        // Calculate the azimuthal angle (phi)
+        double azimuthalAngle = Math.toDegrees(Math.atan2(dy, dx));
+
+        return new double[] { polarAngle, azimuthalAngle };
+    }
 	private static double distanceErgicEr(Endosome endosome, Object eR) {
 		space = endosome.getSpace();
 		grid = endosome.getGrid();

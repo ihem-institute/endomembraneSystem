@@ -308,7 +308,7 @@ public class Endosome {
 	public void setTickCount(int tickCount) {	//FRANCO
 		this.tickCount = tickCount;				//FRANCO
 	}
-	public void setHeadingP(double heading) {
+	public void setHeadingP(double headingP) {
 		this.headingP = headingP;				
 	}
 	public void setHeadingA(double headingA) {

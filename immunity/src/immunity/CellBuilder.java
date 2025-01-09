@@ -309,8 +309,8 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 			} 
 			
 			else if (obj instanceof EndoplasmicReticulum) {
-				double x = 25;//((EndoplasmicReticulum) obj).getXcoor();
-				double y = 25;// ((EndoplasmicReticulum) obj).getYcoor();
+				double x = xWorld/2;//((EndoplasmicReticulum) obj).getXcoor();
+				double y = yWorld/2;// ((EndoplasmicReticulum) obj).getYcoor();
 				space.moveTo(obj, x, y, zWorld/2);
 				grid.moveTo(obj, (int) x, (int) y, (int) zWorld/2);					
 //				System.out.println(((EndoplasmicReticulum) obj).area + "  " +
