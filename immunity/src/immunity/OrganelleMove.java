@@ -19,7 +19,7 @@ public class OrganelleMove {
 	
 	public static void moveTowards(Endosome endosome) {
 
-		if ( endosome.area >= Cell.minCistern/20// minimal cistern Golgi absolute Scale hacer constante
+		if ( endosome.area >= Cell.minCistern/80//era 20  minimal cistern Golgi absolute Scale hacer constante
 				&& isGolgi(endosome))
 		{ // test if it is Golgi
 //			System.out.println(endosome.heading + " INITIAL HEADING");
@@ -52,11 +52,7 @@ public class OrganelleMove {
 			String name = ModelProperties.getInstance().rabOrganelle.get(rab);
 			if (name.contains("Golgi")) {areaGolgi = areaGolgi + endosome.rabContent.get(rab);} 
 		}
-		boolean isGolgi = false;
-		if (areaGolgi/endosome.area >= 0.5) {
-			isGolgi = true;
-		}
-		return isGolgi;
+		return areaGolgi/endosome.area >= 0.5;
 	}
 
 
@@ -119,10 +115,10 @@ public class OrganelleMove {
 		if (!isPointInEllipsoid(x, y, z))
 		// cellSize- 5 cellLimit)) 
 		{ // near the cell border  LARGECELL
-//			endosome.headingP = Math.random()*360;
-//			endosome.headingA = Math.random()*360;
 //	    	System.out.println(" en el borde  " + x+"  " + y);
-			changeDirectionRnd(endosome);
+			endosome.headingP = Math.random()*360;
+			endosome.headingA = Math.random()*360;
+//			changeDirectionRnd(endosome);
 //		return;	
 		}
 //		If near the nucleus, change heading randomly (5%) and stop move with 10% probability
@@ -130,10 +126,10 @@ public class OrganelleMove {
 	
 		else if (isPointInCircle(x, y, z)) { // near the nucleus
 //				if (Math.random() < 0.05) {
-//					endosome.headingP = Math.random()*360;
-//					endosome.headingA = Math.random()*360;
+					endosome.headingP = Math.random()*360;
+					endosome.headingA = Math.random()*360;
 //				}
-				changeDirectionRnd(endosome);
+//				changeDirectionRnd(endosome);
 				
 			}
 		else
@@ -176,7 +172,7 @@ public class OrganelleMove {
 	
 	public static void changeDirectionRnd(Endosome endosome) {
 //		90% of the time, the speed is 0 and the endosome does not move
-		if (Math.random()<0.5) {
+		if (Math.random()<0.1) {
 			endosome.speed = 0;
 			endosome.headingP = Math.random()*360;
 			endosome.headingA = Math.random()*360;
@@ -431,7 +427,7 @@ public class OrganelleMove {
  //       double halfSide = ll / 2.0;
         double value = (dx * dx) / (x0 * x0) + (dy * dy) / (y0 * y0) + (dz * dz) / (z0 * z0);
         // Check if the point is within the boundaries
-        return value <= 1;
+        return value <= 0.99;
 
     }
     public static double[] movePointToward(double x, double y, double z, double x0, double y0, double z0, double d) {
@@ -455,7 +451,10 @@ public class OrganelleMove {
         double newX = x + ratio * dx;
         double newY = y + ratio * dy;
         double newZ = z + ratio * dz;
-
+//System.out.println(x + " xMovePoint Toward " + newX);
+//System.out.println(y + " yMovePoint Toward " + newY);
+//System.out.println(z + " zMovePoint Toward " + newZ);
+//System.out.println(distance + " MovePoint Toward " + ratio);
         return new double[] { newX, newY, newZ };
     }
 

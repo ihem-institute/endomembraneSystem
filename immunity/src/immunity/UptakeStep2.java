@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -237,9 +238,10 @@ public class UptakeStep2 {
 		bud.tickCount = 1;
 //		Endosome.endosomeShape(bud);
 //		The new ERGIC can be anywhere in the cell
-		double x = Math.random()* (CellBuilder.xWorld - 8 * cellLimit);
-		double y = Math.random()* (CellBuilder.yWorld - 8 * cellLimit);
-		double z = CellBuilder.zWorld/2;
+		double[] point = selectPointInSpheroidOutsideSphere(CellBuilder.xWorld/2, CellBuilder.zWorld/2);
+		double x = point[0] + CellBuilder.xWorld/2;
+		double y = point[1] + CellBuilder.xWorld/2;
+		double z = point[2] + CellBuilder.zWorld/2;
 
 		space.moveTo(bud, x,y,z);
 		grid.moveTo(bud, (int) x, (int) y, (int)z);
@@ -253,7 +255,32 @@ public class UptakeStep2 {
 		//		}
 //	EndoplasmicReticulum.getInstance().getendoplasmicReticulumTimeSeries().clear();
 	}
+    public static double[] selectPointInSpheroidOutsideSphere(double a, double c) {
+        Random random = new Random();
+        double x, y, z;
 
+        while (true) {
+            // Generate random point in the bounding box of the spheroid
+            x = (2 * random.nextDouble() - 1) * a; // Random x in range [-a, a]
+            y = (2 * random.nextDouble() - 1) * a; // Random y in range [-a, a]
+            z = (2 * random.nextDouble() - 1) * c; // Random z in range [-c, c]
+
+            // Check if point is inside the spheroid
+            double spheroidEquation = (x * x) / (a * a) + (y * y) / (a * a) + (z * z) / (c * c);
+
+            // Check if point is outside the sphere
+            double sphereEquation = (x * x) + (y * y) + (z * z);
+            if (spheroidEquation < 1 && sphereEquation > c * c) {
+                // Point satisfies both conditions
+ //               System.out.println(sphereEquation + "  Sph " + spheroidEquation);
+                break;
+            }
+
+        }
+
+        return new double[]{x, y, z};
+    }
+    
 	private static void newUptake(Cell cell, String selectedRab) {
 		double cellLimit = 3d * Cell.orgScale;
 //		System.out.println("UPTAKE INITIAL ORGANELLES " +	InitialOrganelles.getInstance().getInitOrgProp().get("kind1"));
@@ -431,7 +458,7 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 		bud.getSpace().moveTo(bud, point[0], point[1], point[2]);
 		bud.getGrid().moveTo(bud, (int) point[0], (int) point[1], (int) point[2]);
 		
-		System.out.println(point + " EEEEEEEEEE NEW UPTAKE ");
+		System.out.println(Arrays.toString(point) + " EEEEEEEEEE NEW UPTAKE " + Arrays.toString(angles));
 //					try {
 //					TimeUnit.SECONDS.sleep(5);
 //				} catch (InterruptedException e) {
@@ -441,20 +468,23 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 	PlasmaMembrane.getInstance().getPlasmaMembraneTimeSeries().clear();
 		
 	}
-    public static double[] selectRandomPointOnOblateSurface(double a, double c) {
-        Random random = new Random();
+	public static double[] selectRandomPointOnOblateSurface(double a, double c) {
+	    Random random = new Random();
 
-        // Generate random spherical angles
-        double phi = 2 * Math.PI * random.nextDouble(); // Azimuthal angle (0 to 2π)
-        double theta = Math.acos(2 * random.nextDouble() - 1); // Polar angle (0 to π)
+	    // Generate random spherical angles
+	    double phi = 2 * Math.PI * random.nextDouble(); // Azimuthal angle (0 to 2π)
+	    double theta = Math.acos(2 * random.nextDouble() - 1); // Polar angle (0 to π)
 
-        // Convert spherical coordinates to Cartesian coordinates
-        double x = a * Math.sin(theta) * Math.cos(phi)+ a;
-        double y = a * Math.sin(theta) * Math.sin(phi)+ a;
-        double z = c * Math.cos(theta)+ c;
+	    // Convert spherical coordinates to Cartesian coordinates
+	    double x = a * Math.sin(theta) * Math.cos(phi);
+	    double y = a * Math.sin(theta) * Math.sin(phi);
+	    double z = c * Math.cos(theta);
 
-        return new double[]{x, y, z};
-    }
+	    // Verify the point satisfies the spheroid equation
+//	    System.out.println("Spheroid equation result: " + (x * x / (a * a) + y * y / (a * a) + z * z / (c * c)));
+
+	    return new double[]{x + a, y + a, z + c};
+	}
     
     // Calculate polar and azimuthal angles relative to the center
     public static double[] calculateAnglesTowardCenter(double x, double y, double z) {
