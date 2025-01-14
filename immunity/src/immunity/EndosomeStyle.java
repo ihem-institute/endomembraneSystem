@@ -42,42 +42,27 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 		 * sphere the s^3/v^2 is 113. For a cylinder is larger than this. For
 		 * the minimum cylinder is 169.6
 		 */
-//		double s = object.getArea();
-//		double v = object.getVolume();
-//		double rsphere = Math.pow((v * 3) / (4 * Math.PI), (1 / 3d));
-//		double svratio = s/v; // ratio surface volume
-//		double a = rsphere; //initial a from the radius of a sphere of volume v
-//		double c = a;// initially, c=a
-		// calculation from s/v for a cilinder that it is the same than for an ellypsoid
-		// s= 2PIa^2+2PIa*2c and v = PIa^2*2c  hence s/v =(1/c)+(2/a)
-//		for (int i=1; i<3; i++){// just two iterations yield an acceptable a-c ratio for ploting
-//		a=2/(svratio-1/c);//from s/v ratio
-//		c= v*3/(4*Math.PI*a*a);//from v ellypsoid
-//		}
-//		System.out.println("area  "+ s+" volume   " + v);
-//		System.out.println("a "+a+ " c "+c+" areaE  "+ (2*Math.PI*a*a+2*a*Math.PI*2*c)*.666+" volumeE   " + 4d/3d*Math.PI*a*a*c);
 //		PLOT as ellipses with a length/wide ratio depending on the area/volume
 //		ratio of the endosome.  It is 1 (sphere) when the area is what you need to
 //		cover a sphere with the volume of the endosome
-//		double svr = ((s * s * s) / (v * v) / (113.0973355d)); 
-//		 svr should be 1 for a sphere
 //		SCALE: I MEASURE THAT THE 50 GRID CORRESPOND TO A RECTANGLE OF 750 OF LENGTH
 //		IF THE ORGANELLES ARE IN nm, HENCE THE AREA REPRESENT A 750 nm X 750 nm
         VSpatial shape = null;
-//		double a1 = 2*rsphere/(1+svr);
-		//if (a>10){
+
 // World is a 50 X 50 space.  Each unit of space has a size of 15 
 // hence the world is 750 X 750 size in repast units, that correspond to 
 // a 1500nm x 1500nm cellular space at orgScale = 1.  
 // To convert from cell units (in nm) to repast space = nm/2
 // the orgScale is taking into account in the scale of the shape (see below);
-        Endosome.endosomeShape(object);
+//       Endosome.endosomeShape(object);
         double a=object.getA();
         double c=object.getC();
         if (Double.isNaN(a)) {
 //        	volume too large for the area.  Calculate a new volume that fit in a sphere of this area
-        object.volume = Math.pow(object.area,3/2)/6/Math.pow(Math.PI, 1/2);
-        Endosome.endosomeShape(object);
+        double r = Math.sqrt(object.area /4/Math.PI);
+        object.volume = 4/3*Math.PI*r*r*r;
+        a = r;
+        c = r;
 		System.out.println("area "+ object.area +" volume "+object.volume);
         }
         if (a<=c){
@@ -85,35 +70,12 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
         shape = this.factory.createShape(ellypse);
         }
         else{
-//        	object.heading = -90;
-//  		System.out.println(object.toString()+ "a  "+a+"  c  "+ c);
-         Shape rec = new RoundRectangle2D.Double(-c/2, -a/2, c, a,  0, 0);
+//  	System.out.println(object.toString()+ "a  "+a+"  c  "+ c);
+        Shape rec = new RoundRectangle2D.Double(-c/2, -a/2, c, a,  0, 0);
 //        arguments x, y, ancho, largo, corner angle (small sharp), side curvature (small, straight)
+// 		System.out.println("c  "+c+"    a  "+a);         
         shape = this.factory.createShape(rec);
 		}
-//		else{
-//		shape = this.factory.createRectangle((int) (v/Math.PI/100),5);	
-//		}
-//		System.out.println("a  "+a1+"svr  "+svr);
-/*//       PLOT as a sphere plus a tubule
-		Shape sphere = new Ellipse2D.Double(0, 0, rsphere, rsphere);
-		double areaTubule = s - 4*Math.PI*rsphere*rsphere;
-		//		length of a one-cap cylinder with the extra membrane.
-//		h = (area-PI*r2)/2*PI*r.  Where r is the radius of a tubule (10 nm)
-		
-		double tubLength = (areaTubule-Math.PI*100d)/(2*Math.PI*10);
-        Shape tubule = new Rectangle.Double(rsphere-2,rsphere/2-5,tubLength,10);
-		System.out.println("SPHERE"+rsphere+"TUBULE"+tubLength);
-	    Area area = new Area(sphere);
-	    Area a2 = new Area(tubule);
-	    area.add(a2);
-	    VSpatial spPlusTub = this.factory.createShape(area);*/
-
-//		VSpatial createRectangle = this.factory.createRectangle(5 * svr, 5);
-
-//       Stroke stroke = new BasicStroke((float) 0.2);
-
-
 		return shape;//createRectangle;
 	}
 
@@ -187,12 +149,7 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 		//		}
 
 
-
-
-
-
 		if (colorCode ==0)
-
 		{
 			// color code for rab contents
 			double red = object.getEdgeRed();

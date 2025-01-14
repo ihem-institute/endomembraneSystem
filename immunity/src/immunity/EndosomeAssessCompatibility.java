@@ -19,7 +19,7 @@ public class EndosomeAssessCompatibility {
 		// occurs with a probability proportional to the compatibility
 		String maxRab = Collections.max(endosome1.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
 		if (maxRab.equals("RabD")) {
-			System.out.println( "compatibilidad RabD " + sum);
+//			System.out.println( "compatibilidad RabD " + sum);
 //			sum = 1;
 		}
 		return Math.random() < sum;

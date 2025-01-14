@@ -69,7 +69,7 @@ public class FusionStep {
 //				System.out.println(endosomes_to_delete.size());
 			}
 		}
-		System.out.println("endosomas que se fusionan" + endosomes_to_delete.size());
+//		System.out.println("endosomas que se fusionan" + endosomes_to_delete.size());
 		for (Endosome endosome2 : endosomes_to_delete) {
 			// System.out.println(endosome.area+"  AREAS A SUMAR AREAS A SUMAR"+
 			// endosome.area);
