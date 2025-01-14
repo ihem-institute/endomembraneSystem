@@ -2,6 +2,7 @@ package immunity;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -26,7 +27,15 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 import repast.simphony.space.grid.WrapAroundBorders;
+import repast.simphony.space.projection.Projection;
 import repast.simphony.util.collections.IndexedIterable;
+import repast.simphony.visualization.editor.space.Projected3DSpace;
+import repast.simphony.visualization.engine.DisplayCreatorFactory;
+import repast.simphony.visualization.engine.DisplayDescriptor;
+import repast.simphony.visualization.gui.DisplayDescriptorFactory;
+import repast.simphony.visualization.visualization2D.Display2D;
+import repast.simphony.visualization.visualization3D.Display3D;
+import repast.simphony.visualizationOGL2D.DefaultStyleOGL2D;
 
 public class CellBuilder implements ContextBuilder<Object> { // contextbuilder es una interfaz, debe tener una clase context que se sobrescribe mas abajo
 
@@ -85,6 +94,33 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 //		System.out.println(" builder CellProperties cargado");
 //			context.add(ModelProperties);	
 		//Cell cell = Cell.getInstance();
+		/*
+		 * Projected3DSpace<Object> xzProjection = new Projected3DSpace<>(space,0,2);
+		 * 
+		 * // Add the projection to the context context.addProjection(xzProjection);
+		 * 
+		 * // Create a display descriptor DisplayDescriptor descriptor; try { descriptor
+		 * = DisplayDescriptorFactory.createDescriptor("XZ Plane Display"); } catch
+		 * (Exception e1) { // TODO Auto-generated catch block e1.printStackTrace(); }
+		 * descriptor.setName(DefaultStyleOGL2D.class.getName());
+		 * descriptor.setName("XZ Plane Display");
+		 * 
+		 * // Add the display descriptor to the RunEnvironment ((Object)
+		 * RunEnvironment.getInstance()).addDisplay(descriptor);
+		 * 
+		 * // Create the display using the factory
+		 * DisplayCreatorFactory.getDisplayCreator().createDisplay(descriptor, context);
+		 * 
+		 * 
+		 */
+		
+////		Display2DConfiguration config = new Display2DConfiguration(context, new ArrayList<>());
+//        Display2D display = new Display2D(config, null);
+//        ((Context) display).addProjection(xzProjection);
+//        // Create the scene for visualization
+//        ((Object) display).createScene();
+
+		
 		context.add(new Cell(space, grid));
 		context.add(new Results(space, grid, null, null));// 
 		context.add(new UpdateParameters());
@@ -395,5 +431,5 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 	}*/
 
 
-	
+
 }

@@ -35,6 +35,8 @@ public class MT {
 	public void step() {
 		if (Math.random() <0.01)
 			changePosition(this);
+//		mtheading = -180;
+		
 	}
 
 	public void changePosition(MT mt) {

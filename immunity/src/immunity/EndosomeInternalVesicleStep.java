@@ -59,7 +59,7 @@ public class EndosomeInternalVesicleStep {
 		minV = minV + mvbVolume;
 		if (sp * sp * sp / (minV * minV) <= 36 * PI) return;
 
-		//		System.out.println("INTERNAL VESICLE ORGANELLE" + organelle);
+				System.out.println("INTERNAL VESICLE ORGANELLE  " + organelle);
 //	After all this control, a single vesicle is formed.
 
 		int nroVesicles = 1;

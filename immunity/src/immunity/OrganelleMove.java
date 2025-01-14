@@ -228,102 +228,131 @@ public class OrganelleMove {
 //			scale 0.5 it is 3000 nm.
 //			Hence to convert to nm, I must multiply by 45 (2250/50) and divide by scale. An organelle will sense MT
 //			at a distance less than its size.
-			if (Math.abs(ndist) <= Math.abs(dist)) {
+			if (ndist <= dist) {
 				dist = ndist; 
 				mt = mmt;
 			}
 		}
 // Check if near MT.  If it is, then move on MT according to organelle domains and if it is or not a tubule
-		if (Math.abs(dist*30d/Cell.orgScale) < endosome.size) {
 
-				if (endosome.a >endosome.c) {moveGolgiVesicles(endosome);}
-				boolean isTubule = (endosome.volume/(endosome.area - 2*Math.PI*Cell.rcyl*Cell.rcyl) <=Cell.rcyl/2); // should be /2
-// select a mtDir according with the domains present in the endosome.  Larger probability for the more aboundant domain
-// 0 means to plus endo of MT (to PM); +1 means to the minus end of MT (to nucleus)
-				rabDir = mtDirection(endosome);
-//				System.out.println (dist +" distancia " + rabDir);
-				if (isTubule)
-					{
-//					System.out.println("IS TUBULE"+ rabDir);
-					mtDir = ModelProperties.getInstance().mtTropismTubule.get(rabDir);
-					if (Math.random()<Math.abs(mtDir)) {
-//+1 means to plus end of MT (to PM); -1 means to the minus end of MT (to nucleus)
-						if (Math.signum(mtDir)>=0) {mtDir = 0;} else {mtDir = 1;}
-						}
-						else {
-						changeDirectionRnd(endosome);
-						return;
-						}
-					} // if no a tubule
-				else
-					{
-					mtDir = ModelProperties.getInstance().mtTropismRest.get(rabDir);
-//					System.out.println("IS NOT TUBULE"+ mtDir);
-					if (Math.random()< Math.abs(mtDir)) {
-//+1 means to plus end of MT (to PM); -1 means to the minus end of MT (to nucleus)
-						if (Math.signum(mtDir)>=0) {mtDir = 0;} else {mtDir = 1;}
-						}
-						else {
-						changeDirectionRnd(endosome);
-						return;
-						}
-					}
-//				Changes the heading to the heading of the MT
-//				Moves the endosome to the MT position
-				double mth = mt.getMtheading();
-				double[] point = closestMTpoint(
-						endosome.getXcoor(),endosome.getYcoor(),endosome.getZcoor(),
-						mt.getXorigin(), mt.getYorigin(), mt.getZorigin(),
-						mt.getXend(), mt.getYend(),mt.getZend());
-
-				space.moveTo(endosome, point[0], point[1], point[2]);
-				grid.moveTo(endosome, (int) point[0], (int) point[1], (int) point[2]);
-//				dist = distance(endosome, mt);
-//				Changes the speed to a standard speed in MT independet of size
-				endosome.speed = 1d*Cell.orgScale/Cell.timeScale;
-				endosome.headingP = -(mtDir * 180f + mt.getMtheading()+270f);
-				endosome.headingA = 0;
-				
-//				System.out.println(endosome.speed +" speed heading "+ endosome.heading+" MTheading" + mt.getMtheading());
-				return;
-			}
-		
-//		If no Mts, then random
-		else 
-		{changeDirectionRnd(endosome);
-		return;
+		//		If far from  Mts, then random
+		if (dist*30d/Cell.orgScale > 2*endosome.size) {
+			changeDirectionRnd(endosome);
+			return;
+			
 		}
-	}
-	public static double[] closestMTpoint(double x, double y, double z, 
-			double xmin, double ymin, double zmin, 
-			double xmax, double ymax, double zmax) {
-		// Line segment vector
-		double dx = xmax - xmin;
-		double dy = ymax - ymin;
-		double dz = zmax - zmin;
 
-		// Vector from segment start to point
-		double px = x - xmin;
-		double py = y - ymin;
-		double pz = z - zmin;
+			if (endosome.a >endosome.c) {moveGolgiVesicles(endosome);}
+			else
+			{boolean isTubule = (endosome.volume/(endosome.area - 2*Math.PI*Cell.rcyl*Cell.rcyl) <=Cell.rcyl/2); // should be /2
+			// select a mtDir according with the domains present in the endosome.  Larger probability for the more aboundant domain
+			// 0 means to plus endo of MT (to PM); +1 means to the minus end of MT (to nucleus)
+			rabDir = mtDirection(endosome);
+			//				System.out.println (dist +" distancia " + rabDir);
+			if (isTubule)
+			{
+//									System.out.println(mtDir + "IS TUBULE "+ rabDir);
+				mtDir = ModelProperties.getInstance().mtTropismTubule.get(rabDir);
+				if (Math.random()<Math.abs(mtDir)) {
+					//+1 means to plus end of MT (to PM); -1 means to the minus end of MT (to nucleus)
+					if (Math.signum(mtDir)>=0) {mtDir = 0;} else {mtDir = 1;}
+//					mtDir = Math.signum(mtDir);
+				}
+				else {
+					changeDirectionRnd(endosome);
+					return;
+				}
+//			System.out.println(mtDir + " IS TUBULE "+ rabDir);
+			} // if no a tubule
+			else
+			{
+				mtDir = ModelProperties.getInstance().mtTropismRest.get(rabDir);
+	//								System.out.println("IS NOT TUBULE"+ mtDir);
+				if (Math.random()< Math.abs(mtDir)) {
+					//+1 means to plus end of MT (to PM); -1 means to the minus end of MT (to nucleus)
+					if (Math.signum(mtDir)>=0) {mtDir = 0;} else {mtDir = 1;}
+//					mtDir = Math.signum(mtDir);
+				}
+				else {
+					changeDirectionRnd(endosome);
+					return;
+				}
+//			System.out.println(mtDir + " IS NO TUBULE "+ rabDir);
+			}
+			}
+			//				Changes the heading to the heading of the MT
+			//				Moves the endosome to the MT position
+			double mth = mt.getMtheading();
+			NdPoint myPoint = space.getLocation(endosome);
+//			NdPoint myPoint = endosome.getEndosomeLocation(endosome);		
+			double x = myPoint.getX();
+			double y = myPoint.getY();
+			double z = myPoint.getZ();
+			
+			double[] point = closestMTpoint(
+					x,y,z,
+					mt.getXorigin(), mt.getYorigin(), mt.getZorigin(),
+					mt.getXend(), mt.getYend(),mt.getZend());
 
-		// Dot products
-		double lineLengthSquared = dx * dx + dy * dy + dz * dz;
-		double dotProduct = px * dx + py * dy + pz * dz;
+			space.moveTo(endosome, point[0], point[1], point[2]);
+			grid.moveTo(endosome, (int) point[0], (int) point[1], (int) point[2]);
+			myPoint = space.getLocation(endosome);
+//			NdPoint myPoint = endosome.getEndosomeLocation(endosome);		
+			x = myPoint.getX();
+			y = myPoint.getY();
+			z = myPoint.getZ();
+			
+			System.out.println(x+ " final position " + y + " final position " + z);
+			//				dist = distance(endosome, mt);
+			//				Changes the speed to a standard speed in MT independet of size
+			endosome.speed = 1d*Cell.orgScale/Cell.timeScale;
+			endosome.headingP = -(mtDir * 180f + mt.getMtheading()+270f);
+			endosome.headingA = 0;
+//				System.out.println(endosome.rabContent +" endosome heading "+ endosome.headingP+" MTheading " + mt.getMtheading());
+			return;
+		}
 
-		// Calculate projection parameter t
-		double t = dotProduct / lineLengthSquared;
+		//		If no Mts, then random
 
-		// Clamp t to the range [0, 1]
-		t = Math.max(0, Math.min(1, t));
+public static double[] closestMTpoint(double x, double y, double z, 
+            double xmin, double ymin, double zmin, 
+            double xmax, double ymax, double zmax) {
+// Line segment vector
+double dx = xmax - xmin;
+double dy = ymax - ymin;
+double dz = zmax - zmin;
 
-		// Closest point coordinates
-		double closestX = xmin + t * dx;
-		double closestY = ymin + t * dy;
-		double closestZ = zmin + t * dz;
+// Vector from segment start to the given point
+double px = x - xmin;
+double py = y - ymin;
+double pz = z - zmin;
 
-		return new double[] { closestX, closestY, closestZ };
-	}
+// Calculate the length squared of the segment
+double lineLengthSquared = dx * dx + dy * dy + dz * dz;
+
+// Handle edge case: if the segment is a single point
+if (lineLengthSquared == 0.0) {
+return new double[] { xmin, ymin, zmin };
+}
+
+// Projection of point onto the line (parameter t)
+double dotProduct = px * dx + py * dy + pz * dz;
+double t = dotProduct / lineLengthSquared;
+
+// Clamp t to the range [0, 1] to stay within the segment
+t = Math.max(0, Math.min(1, t));
+
+// Compute the closest point on the segment
+double closestX = xmin + t * dx;
+double closestY = ymin + t * dy;
+double closestZ = zmin + t * dz;
+
+// Debugging output (optional)
+//System.out.println("Closest point: (" + closestX + ", " + closestY + ", " + closestZ + ")");
+
+return new double[] { closestX, closestY, closestZ };
+}
+
 	private static void moveGolgiVesicles(Endosome endosome) {
 		space = endosome.getSpace();
 		grid = endosome.getGrid();		
@@ -370,41 +399,78 @@ public class OrganelleMove {
 		}
 		return mts;
 	}
+	private static double distance(Endosome endosome, MT mt) {
+	    // Get the coordinates of the endosome and MT segment endpoints
+	    NdPoint pt = space.getLocation(endosome);
+	    double xP = pt.getX();
+	    double yP = pt.getY();
+	    double zP = pt.getZ();
+	    double xMin = mt.getXorigin();
+	    double yMin = mt.getYorigin();
+	    double zMin = mt.getZorigin();
+	    double xMax = mt.getXend();
+	    double yMax = mt.getYend();
+	    double zMax = mt.getZend();
 
-	private static double distance(Endosome endosome, MT obj) {
-		
-		NdPoint pt = space.getLocation(endosome);
-		double xP = pt.getX();
-		double yP = pt.getY();
-		double zP = pt.getZ();
-		double xMax = (double) ((MT) obj).getXend();
-		double xMin = (double) ((MT) obj).getXorigin();
-		double yMax = (double) ((MT) obj).getYend();
-		double yMin = (double) ((MT) obj).getYorigin();
-		double zMax = (double) ((MT) obj).getZend();
-		double zMin = (double) ((MT) obj).getZorigin();
-    // Vector AB (line direction vector)
-    double ABx = xMax - xMin;
-    double ABy = yMax - yMin;
-    double ABz = zMax - zMin;
+	    // Vector AB (segment direction vector)
+	    double ABx = xMax - xMin;
+	    double ABy = yMax - yMin;
+	    double ABz = zMax - zMin;
 
-    // Vector AP (vector from line point to target point)
-    double APx = xP - xMin;
-    double APy = yP - yMin;
-    double APz = zP - zMin;
+	    // Vector AP (vector from segment start to point)
+	    double APx = xP - xMin;
+	    double APy = yP - yMin;
+	    double APz = zP - zMin;
 
-    // Cross product of AP and AB
-    double crossX = APy * ABz - APz * ABy;
-    double crossY = APz * ABx - APx * ABz;
-    double crossZ = APx * ABy - APy * ABx;
+	    // Dot products
+	    double ABdotAB = ABx * ABx + ABy * ABy + ABz * ABz; // Segment length squared
+	    double ABdotAP = ABx * APx + ABy * APy + ABz * APz; // Projection scalar
 
-    // Magnitudes of vectors
-    double crossMagnitude = Math.sqrt(crossX * crossX + crossY * crossY + crossZ * crossZ);
-    double ABmagnitude = Math.sqrt(ABx * ABx + ABy * ABy + ABz * ABz);
+	    // Calculate projection parameter t
+	    double t = ABdotAP / ABdotAB;
 
-    // Distance formula
-    return crossMagnitude / ABmagnitude;
+	    // Clamp t to the range [0, 1] to ensure it's within the segment
+	    t = Math.max(0, Math.min(1, t));
+
+	    // Closest point on the segment
+	    double closestX = xMin + t * ABx;
+	    double closestY = yMin + t * ABy;
+	    double closestZ = zMin + t * ABz;
+
+	    // Distance from the point to the closest point on the segment
+	    double dx = xP - closestX;
+	    double dy = yP - closestY;
+	    double dz = zP - closestZ;
+	    double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+//	    System.out.println("Distance to MT: " + distance);
+	    return distance;
 	}
+
+	/*
+	 * private static double distance(Endosome endosome, MT mt) { // Distance of a
+	 * point to a MT NdPoint pt = space.getLocation(endosome); double xP =
+	 * pt.getX(); double yP = pt.getY(); double zP = pt.getZ(); double xMax =
+	 * (double) mt.getXend(); double xMin = (double) mt.getXorigin(); double yMax =
+	 * (double) mt.getYend(); double yMin = (double) mt.getYorigin(); double zMax =
+	 * (double) mt.getZend(); double zMin = (double) mt.getZorigin(); // Vector AB
+	 * (line direction vector) double ABx = xMax - xMin; double ABy = yMax - yMin;
+	 * double ABz = zMax - zMin;
+	 * 
+	 * // Vector AP (vector from line point to target point) double APx = xP - xMin;
+	 * double APy = yP - yMin; double APz = zP - zMin;
+	 * 
+	 * // Cross product of AP and AB double crossX = APy * ABz - APz * ABy; double
+	 * crossY = APz * ABx - APx * ABz; double crossZ = APx * ABy - APy * ABx;
+	 * 
+	 * // Magnitudes of vectors double crossMagnitude = Math.sqrt(crossX * crossX +
+	 * crossY * crossY + crossZ * crossZ); double ABmagnitude = Math.sqrt(ABx * ABx
+	 * + ABy * ABy + ABz * ABz);
+	 * 
+	 * // Distance formula System.out.println(2*endosome.size + " distancia a MT " +
+	 * (crossMagnitude / ABmagnitude*30d/Cell.orgScale)); return crossMagnitude /
+	 * ABmagnitude; }
+	 */
 	
     public static boolean isPointInCircle(double x, double y, double z) {
 		double r = CellBuilder.zWorld/2;

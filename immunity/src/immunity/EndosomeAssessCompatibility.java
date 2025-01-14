@@ -1,5 +1,8 @@
 package immunity;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class EndosomeAssessCompatibility {
 	
 	public static boolean compatibles(Endosome endosome1, Endosome endosome2) {
@@ -14,6 +17,11 @@ public class EndosomeAssessCompatibility {
 		}
 		// compatibility is a value between 0 and 1. Fusion
 		// occurs with a probability proportional to the compatibility
+		String maxRab = Collections.max(endosome1.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
+		if (maxRab.equals("RabD")) {
+			System.out.println( "compatibilidad RabD " + sum);
+//			sum = 1;
+		}
 		return Math.random() < sum;
 	}
 

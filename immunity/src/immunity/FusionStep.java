@@ -38,7 +38,7 @@ public class FusionStep {
 // The organelle selected must be larger than a vesicles
 // rendo is the radius of a new endosome from PM and also of a new ERGIC from ER 
 //		double rendo = ModelProperties.getInstance().getCellK().get("rendo");//35.0; // radius vesicle/ 15393,804
-		if (endosome.area <= minEn){return;};
+//		if (endosome.area <= minEn){return;};
 		space = endosome.getSpace();
 		grid = endosome.getGrid();
 // assesses if the organelle selected is a Golgi structure.  For this it sum all the Golgi domains			
@@ -55,7 +55,7 @@ public class FusionStep {
 		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
 		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
 				Endosome.class, gridSize, gridSize, gridSize);
-		// System.out.println("SIZE           "+gridSize);
+//		System.out.println("SIZE           "+gridSize);
 
 		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
 		List<Endosome> endosomes_to_delete = new ArrayList<Endosome>();
@@ -66,9 +66,10 @@ public class FusionStep {
 						&& (EndosomeAssessCompatibility.compatibles(endosome, end))) {
 					endosomes_to_delete.add(end);
 				}
-				// System.out.println(endosomes_to_delete);
+//				System.out.println(endosomes_to_delete.size());
 			}
 		}
+		System.out.println("endosomas que se fusionan" + endosomes_to_delete.size());
 		for (Endosome endosome2 : endosomes_to_delete) {
 			// System.out.println(endosome.area+"  AREAS A SUMAR AREAS A SUMAR"+
 			// endosome.area);
