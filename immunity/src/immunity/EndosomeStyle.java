@@ -54,7 +54,7 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 // a 1500nm x 1500nm cellular space at orgScale = 1.  
 // To convert from cell units (in nm) to repast space = nm/2
 // the orgScale is taking into account in the scale of the shape (see below);
-//       Endosome.endosomeShape(object);
+       Endosome.endosomeShape(object);
         double a=object.getA();
         double c=object.getC();
         if (Double.isNaN(a)) {

@@ -81,13 +81,13 @@ public class FissionStep {
 // if not enough surface to contain the volume plus a
 // minimum tubule, no split
 //			System.out.println("small tubule left " +so + "  " + ssphere + "  " + (so-ssphere));			if (endosome.c>1500)	System.out.println(" NO CORTA endosome RabInTubeSelected " + rabInTube);
-			if (endosome.c > 150/Cell.orgScale)	System.out.println(" NO CORTA endosome RabInTubeSelected " + rabInTube);
+//			if (endosome.c > 150/Cell.orgScale)	System.out.println(" NO CORTA endosome RabInTubeSelected " + rabInTube);
 
 			return; 
 		}
 
 		rabInTube = rabInTube(endosome); // select a rab for the tubule
-		if (endosome.c>1500)	System.out.println(" NO CORTA endosome RabInTubeSelected " + rabInTube);
+//		if (endosome.c>1500)	System.out.println(" NO CORTA endosome RabInTubeSelected " + rabInTube);
 
 		boolean isGolgi = isGolgi(endosome);
 		if (rabInTube == null) return; // if non is selected, no fission
@@ -256,7 +256,7 @@ public class FissionStep {
 //		}
 //		Endosome.endosomeShape(endosome);
 		if (endosome.c > 150/Cell.orgScale) {
-			System.out.println(endosome.c+"  ccccccccccccccccccccccccccccccccccorta de nuevo  " );
+//			System.out.println(endosome.c+"  ccccccccccccccccccccccccccccccccccorta de nuevo  " );
 			split(endosome);
 		}
 	}

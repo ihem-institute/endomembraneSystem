@@ -76,7 +76,7 @@ public class FreezeDryEndosomes {
 				InitialOrganelles inOr = InitialOrganelles.getInstance();
 //				System.out.println("AQUI PARA b0  "+b[0]);
 				inOr.getDiffOrganelles().add(b[0]);
-//				System.out.println("AQUI PARA  "+b[1]);
+				System.out.println("AQUI PARA  "+b[1]);
 				switch (b[1]) {
 				case "initOrgProp": {
 					HashMap<String, Double> value = new HashMap<String, Double>();

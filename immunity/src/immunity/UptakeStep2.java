@@ -66,7 +66,7 @@ public class UptakeStep2 {
 		double initialAreaPM = PlasmaMembrane.getInstance().getInitialPlasmaMembraneArea();
 
 		while(areaPM > initialAreaPM) {
-		System.out.println(" 	NEW UPTAKE PM   " + areaPM + "    "+initialAreaPM);
+//		System.out.println(" 	NEW UPTAKE PM   " + areaPM + "    "+initialAreaPM);
 		newUptake(cell,"RabA");
 		if (Math.random()< 0) {
 			break; // to prevent too many continuous uptakes
@@ -78,7 +78,7 @@ public class UptakeStep2 {
 		double areaER = EndoplasmicReticulum.getInstance().getEndoplasmicReticulumArea();
 		double initialAreaER = EndoplasmicReticulum.getInstance().getInitialendoplasmicReticulumArea();
 		while (areaER > initialAreaER) {
-			System.out.println(" 	NEW UPTAKE ER   " + areaER + "    "+initialAreaER);
+//			System.out.println(" 	NEW UPTAKE ER   " + areaER + "    "+initialAreaER);
 		
 		newSecretion(cell,"RabI");
 		if (Math.random()< 0.5) {
@@ -316,8 +316,8 @@ public class UptakeStep2 {
 		double plasmaMembrane = PlasmaMembrane.getInstance().getPlasmaMembraneArea() - area;
 		int tick = (int) RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
 //		if (tick == 1) uptakeArea = 0d;
-		uptakeArea = uptakeArea + 4d/3d*PI*a*a*c;// should area
-		System.out.println(uptakeArea + " TOTAL UPTAKE UPTAKE "+ plasmaMembrane + "  "+ area + " " + tick);
+		uptakeArea = uptakeArea + 4d/3d*PI*a*a*c;// IT IS TOTAL VOLUME INCORPORATED.  For Area, I should use the area formula
+//		System.out.println(uptakeArea + " TOTAL UPTAKE UPTAKE "+ plasmaMembrane + "  "+ area + " " + tick);
 		PlasmaMembrane.getInstance().setPlasmaMembraneArea(plasmaMembrane);
 		
 		double volume = 4d/3d*PI*a*a*c;
@@ -457,8 +457,23 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
         
 		bud.getSpace().moveTo(bud, point[0], point[1], point[2]);
 		bud.getGrid().moveTo(bud, (int) point[0], (int) point[1], (int) point[2]);
-		
-		System.out.println(Arrays.toString(point) + " EEEEEEEEEE NEW UPTAKE " + Arrays.toString(angles));
+// To control where the new endosome is located		
+//        double centerX = 25.0;
+//        double centerY = 25.0;
+//        double centerZ = 4.0;
+//        double semiMajorAxis = 25.0; // a
+//        double semiMinorAxis = 4.0;  // b
+//
+//        // Spheroid equation components
+//        double termX = Math.pow(bud.xcoor - centerX, 2) / Math.pow(semiMajorAxis, 2);
+//        double termY = Math.pow(bud.ycoor - centerY, 2) / Math.pow(semiMajorAxis, 2);
+//        double termZ = Math.pow(bud.zcoor - centerZ, 2) / Math.pow(semiMinorAxis, 2);
+//
+//        // Calculate the result of the spheroid equation
+//        double result = termX + termY + termZ;
+//		
+//		
+//		System.out.println(Arrays.toString(point) + " EEEEEEEEEE NEW UPTAKE " + result);
 //					try {
 //					TimeUnit.SECONDS.sleep(5);
 //				} catch (InterruptedException e) {

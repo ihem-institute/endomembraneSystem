@@ -25,16 +25,29 @@ public class RecycleStep {
 			double y = myPoint.getY();
 			double z = myPoint.getZ();
 //			if far from the PM no recycling
-			if (!isPointInsideOblate(x, y, z))
+			if (!isPointInsideOblate(x, y, z)) // uses spheroid definition but 0.9 instead of 1 (near the surface)
 					{ // if it is near the PM
 //			if near the PM and larger domain is EE and is a tubule, recycle full fusion
 //			if near the PM	and larger domain is TGN, full fusion
 //			if near the PM	and larger domain is RE, full fusion 4%; 96% kiss and run
 				
 //			So, I am assuming a fast recycling cycle probably with Rab4 tubules 
-/* I will test the possibility of recycling of the membrane and having a balance of EE
- * and PM membrane.
- */		
+//				To test position at recycling
+//		        double centerX = 25.0;
+//		        double centerY = 25.0;
+//		        double centerZ = 4.0;
+//		        double semiMajorAxis = 25.0; // a
+//		        double semiMinorAxis = 4.0;  // b
+//
+//		        // Spheroid equation components
+//		        double termX = Math.pow(x - centerX, 2) / Math.pow(semiMajorAxis, 2);
+//		        double termY = Math.pow(y - centerY, 2) / Math.pow(semiMajorAxis, 2);
+//		        double termZ = Math.pow(z - centerZ, 2) / Math.pow(semiMinorAxis, 2);
+//
+//		        // Calculate the result of the spheroid equation
+//		        double result = termX + termY + termZ;
+//		        
+//		        System.out.println("RECYCLING TO THE PM " + result);
 		
 		String maxRab = Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
 		String organelle = ModelProperties.getInstance().getRabOrganelle().get(maxRab);    
@@ -234,7 +247,7 @@ public class RecycleStep {
 			PlasmaMembrane.getInstance().getPlasmaMembraneTimeSeries().clear();
 			double plasmaMembrane = endosome.area + PlasmaMembrane.getInstance().getPlasmaMembraneArea();
 			PlasmaMembrane.getInstance().setPlasmaMembraneArea(plasmaMembrane);
-			System.out.println("RECYCLING OF EE  " + endosome.tickCount);
+//			System.out.println("RECYCLING OF EE  " + endosome.tickCount);
 
 //			to delete the recycled EE endosome.
 			Context<Object> context = ContextUtils.getContext(endosome);
@@ -271,21 +284,6 @@ public class RecycleStep {
     }
 
     
-////	Collections.shuffle(mts); 19-7-21 No need to shuffle because the closest MT will be selected
-//	double dist = 1000;
-//	MT mt = null;
-////NEW		RULE 19-7-2021.  The organelle will sense the MT around it and select the closest one (minimal absolute distance)
-//	for (MT mmt : mts) {
-//		double ndist = distance(endosome, mmt);
-////		The distance is in space units from 0 to 50. At scale 1, the space is 1500 nm.  At 
-////		scale 0.5 it is 3000 nm.
-////		Hence to convert to nm, I must multiply by 45 (2250/50) and divide by scale. An organelle will sense MT
-////		at a distance less than its size.
-//		if (Math.abs(ndist) <= Math.abs(dist)) {
-//			dist = ndist; 
-//			mt = mmt;
-//		}
-//	}
     public static double[] headingToCenter(double x, double y, double z) {
         // Compute the differences
     	double x0 = CellBuilder.xWorld;

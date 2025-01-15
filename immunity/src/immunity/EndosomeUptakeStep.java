@@ -242,7 +242,7 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 		endosome.getSpace().moveTo(bud, xend, yend);
 		endosome.getGrid().moveTo(bud, (int) xend, (int) yend);
 		
-		System.out.println(xend + " EEEEEEEEEE NEW UPTAKE " + yend);
+//		System.out.println(xend + " EEEEEEEEEE NEW UPTAKE " + yend);
 //					try {
 //					TimeUnit.SECONDS.sleep(5);
 //				} catch (InterruptedException e) {
