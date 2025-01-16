@@ -59,17 +59,20 @@ public class PlasmaMembrane {
 		ModelProperties modelProperties = ModelProperties.getInstance();
 		double orgScale = modelProperties.getCellK().get("orgScale");
 		plasmaMembraneArea = ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneArea");// 
-		initialPlasmaMembraneArea = calculateSpheroidArea(CellBuilder.xWorld/2*30, CellBuilder.zWorld/2*30)/orgScale/orgScale;
+		double radiusNm = CellBuilder.xWorld/2d*30d/orgScale;
+		double heightNm = CellBuilder.zWorld/2d*30d/orgScale;
+		initialPlasmaMembraneArea = calculateSpheroidArea(radiusNm, heightNm);
 		//1500 y 400 es lado y el alto de la membrana considerada en escala original. 4 son cuatro lados.
 		System.out.println("aaaaaIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneArea);
 		
 		//400, 1500 y 1500 es el cubo en nm en escala original	
 		plasmaMembraneVolume = ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
 //		volume of spheroid = 4/3*PI*a^2*c
-		initialPlasmaMembraneVolume = 4/3 * Math.PI *CellBuilder.xWorld/2*30*CellBuilder.xWorld/2*30*CellBuilder.zWorld/2*30		
-				/orgScale/orgScale/orgScale;//ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
+		initialPlasmaMembraneVolume = 4.0/3.0 * Math.PI *radiusNm*radiusNm*heightNm;		
+//ModelProperties.getInstance().getPlasmaMembraneProperties().get("plasmaMembraneVolume");//
 		//1500 y 400 es lado y el alto de la membrana considerada en escala original. 4 son cuatro lados.
-	System.out.println("vvvvvIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneVolume);
+	System.out.println(radiusNm +" "+ heightNm + "vvvvvIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ initialPlasmaMembraneVolume + " " +
+		4d/3d*3.14*7500*7500*3900);
 //		plasmaMembraneTimeSeries = null;
 //		
 //		membraneRecycle.putAll(modelProperties.initPMmembraneRecycle);
@@ -98,16 +101,17 @@ public class PlasmaMembrane {
 
         if (eSquared < 1e-6) {
             // Near-spherical case (e^2 ~ 0)
-            return 4 * Math.PI * a * a;
+            return 4d * Math.PI * a * a;
         }
 
         // Calculate eccentricity
         double e = Math.sqrt(eSquared);
 
         // Calculate surface area
-        double term1 = 2 * Math.PI * a * a;
-        double term2 = Math.PI * c * c / e * Math.log(1 + e/(1 - e));
-
+        double term1 = 2d * Math.PI * a * a;
+        double term2 = Math.PI * c * c / e * Math.log((1 + e)/(1 - e));
+        System.out.println(c + "  " + a);
+        System.out.println(e + "  " + term1 + " " + term2);
         return term1 + term2;
     }
 	@ScheduledMethod(start = 1, interval = 1)

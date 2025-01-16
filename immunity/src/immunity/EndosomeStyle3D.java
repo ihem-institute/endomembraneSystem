@@ -7,6 +7,7 @@ import org.jogamp.java3d.Appearance;
 import org.jogamp.java3d.ColoringAttributes;
 import org.jogamp.java3d.Material;
 import org.jogamp.java3d.Shape3D;
+import org.jogamp.java3d.Texture;
 import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
 import org.jogamp.java3d.utils.geometry.Primitive;
@@ -14,46 +15,66 @@ import org.jogamp.java3d.utils.geometry.Sphere;
 import org.jogamp.vecmath.Color3f;
 import org.jogamp.vecmath.Vector3d;
 
+import repast.simphony.visualization.visualization3D.ShapeFactory;
 import repast.simphony.visualization.visualization3D.style.Style3D;
 import repast.simphony.visualization.visualization3D.style.TaggedAppearance;
 import repast.simphony.visualization.visualization3D.style.TaggedBranchGroup;
- class EndosomeStyle3D implements Style3D<Object> {
 
-    @Override
-    public TaggedBranchGroup getBranchGroup(Object obj, TaggedBranchGroup group) {
-        if (group == null) {
-            group = new TaggedBranchGroup("Spheroid");
+ public class EndosomeStyle3D implements Style3D<Object> {
+		Texture texture;
+		
+		public EndosomeStyle3D (){
+			super();
+			
 
-            // Define appearance
-            Appearance appearance = new Appearance();
-            ColoringAttributes colorAttr = new ColoringAttributes(new Color3f(0.5f, 0.5f, 1.0f), ColoringAttributes.SHADE_GOURAUD);
-            appearance.setColoringAttributes(colorAttr);
-
-            // Create a sphere
-            Sphere sphere = new Sphere(1.0f, Primitive.GENERATE_NORMALS, 64, appearance);
-            Shape3D shape = new Shape3D(sphere.getShape().getGeometry(),appearance);
-			shape.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
-			shape.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
-			shape.setCapability(Shape3D.ALLOW_GEOMETRY_READ);
-
-            // Create a TransformGroup for scaling
-            TransformGroup tg = new TransformGroup();
-
-            // Create a scale transformation for a spheroid
-            Transform3D transform = new Transform3D();
-            transform.setScale(new Vector3d(1.0, 0.5, 1.0)); // Example: squish along the Y-axis
-
-            // Apply the transformation
-            tg.setTransform(transform);
-
-            // Add the sphere to the TransformGroup
-            tg.addChild(shape);
-
-            // Add the TransformGroup to the branch group
-            group.getBranchGroup().addChild(tg);
-        }
-        return group;
-    }
+	    texture.setBoundaryModeS(Texture.WRAP);
+	    texture.setBoundaryModeT(Texture.WRAP);
+		}
+		  public TaggedBranchGroup getBranchGroup(Object o, TaggedBranchGroup taggedGroup) {
+			    if (taggedGroup == null || taggedGroup.getTag() == null) {
+			      taggedGroup = new TaggedBranchGroup("DEFAULT");
+			      Shape3D sphere = ShapeFactory.createSphere(.02f, "DEFAULT");
+			      taggedGroup.getBranchGroup().addChild(sphere);
+			      return taggedGroup;
+			    }
+			    
+			    return null;
+			  }
+//    @Override
+//    public TaggedBranchGroup getBranchGroup(Object obj, TaggedBranchGroup group) {
+//        if (group == null) {
+//            group = new TaggedBranchGroup("Spheroid");
+//
+//            // Define appearance
+//            Appearance appearance = new Appearance();
+//            ColoringAttributes colorAttr = new ColoringAttributes(new Color3f(0.5f, 0.5f, 1.0f), ColoringAttributes.SHADE_GOURAUD);
+//            appearance.setColoringAttributes(colorAttr);
+//
+//            // Create a sphere
+//            Sphere sphere = new Sphere(1.0f, Primitive.GENERATE_NORMALS, 64, appearance);
+//            Shape3D shape = new Shape3D(sphere.getShape().getGeometry(),appearance);
+//			shape.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+//			shape.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+//			shape.setCapability(Shape3D.ALLOW_GEOMETRY_READ);
+//
+//            // Create a TransformGroup for scaling
+//            TransformGroup tg = new TransformGroup();
+//
+//            // Create a scale transformation for a spheroid
+//            Transform3D transform = new Transform3D();
+//            transform.setScale(new Vector3d(1.0, 0.5, 1.0)); // Example: squish along the Y-axis
+//
+//            // Apply the transformation
+//            tg.setTransform(transform);
+//
+//            // Add the sphere to the TransformGroup
+//            tg.addChild(shape);
+//
+//            // Add the TransformGroup to the branch group
+//            group.getBranchGroup().addChild(tg);
+//        }
+//        return group;
+//    }
 
 
     private Appearance createAppearance() {
@@ -106,4 +127,5 @@ import repast.simphony.visualization.visualization3D.style.TaggedBranchGroup;
 		// TODO Auto-generated method stub
 		return appearance;
 	}
+
 }

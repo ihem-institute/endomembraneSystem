@@ -112,9 +112,7 @@ public class OrganelleMove {
 		// cellSize- 5 cellLimit)) 
 		{ // near the cell border  LARGECELL
 //	    	System.out.println(" en el borde  " + x+"  " + y);
-			endosome.headingP = Math.random()*360;
-			endosome.headingA = Math.random()*360;
-//			changeDirectionRnd(endosome);
+			changeDirectionRnd(endosome);
 //		return;	
 		}
 //		If near the nucleus, change heading randomly (5%) and stop move with 10% probability
@@ -122,10 +120,10 @@ public class OrganelleMove {
 	
 		else if (isPointInCircle(x, y, z)) { // near the nucleus
 //				if (Math.random() < 0.05) {
-					endosome.headingP = Math.random()*360;
-					endosome.headingA = Math.random()*360;
+//					endosome.headingP = Math.random()*360;
+//					endosome.headingA = Math.random()*360;
 //				}
-//				changeDirectionRnd(endosome);
+				changeDirectionRnd(endosome);
 				
 			}
 		else
@@ -165,8 +163,8 @@ public class OrganelleMove {
 	}
 	
 	public static void changeDirectionRnd(Endosome endosome) {
-//		90% of the time, the speed is 0 and the endosome does not move
-		if (Math.random()<0.1) {
+//		1% of the time, the speed is 0 and the heading change at random
+		if (Math.random()<0.01) {
 			endosome.speed = 0;
 			endosome.headingP = Math.random()*360;
 			endosome.headingA = Math.random()*360;
@@ -378,7 +376,7 @@ return new double[] { closestX, closestY, closestZ };
 	    NdPoint pt = space.getLocation(endosome);
 	    double xP = pt.getX();
 	    double yP = pt.getY();
-	    double zP = pt.getZ();
+	    double zP = CellBuilder.zWorld/2;//pt.getZ(); No concidera la distancia en z.  El MT abarca todo el plano Z
 	    double xMin = mt.getXorigin();
 	    double yMin = mt.getYorigin();
 	    double zMin = mt.getZorigin();

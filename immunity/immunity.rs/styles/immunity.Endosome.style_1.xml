@@ -1,9 +1,10 @@
 <repast.simphony.visualization.editedStyle.DefaultEditedStyleData3D>
-  <shapeWkt>cylinder</shapeWkt>
+  <shapeWkt>sphere</shapeWkt>
   <size>0.03</size>
-  <sizeMax>0.1</sizeMax>
+  <sizeMax>100000.0</sizeMax>
   <sizeMin>0.0</sizeMin>
   <sizeScale>1.0</sizeScale>
+  <sizeScaleMethodName>getArea</sizeScaleMethodName>
   <label></label>
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
