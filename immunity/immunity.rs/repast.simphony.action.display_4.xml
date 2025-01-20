@@ -4,7 +4,7 @@
   <styles>
     <entry>
       <string>immunity.Endosome</string>
-      <string>immunity.EndosomeStyle3D</string>
+      <string>immunity.SpheroidNodeStyle</string>
     </entry>
   </styles>
   <editedStyles>
@@ -23,7 +23,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>561626571</hashCode>
+    <hashCode>1559561031</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>

@@ -143,6 +143,7 @@ public class OrganelleMove {
 		    double zz = z + Math.sin(endosome.headingA * Math.PI / 180d)
 			* endosome.speed * Cell.orgScale/Cell.timeScale;
 //	    	System.out.println("coordenadas  " + xx+"  " + yy+ "  "+ zz);
+		 if (isOccupied((int)xx, (int)yy, (int)zz, endosome)) return;   
 
 //		    if move out the cell, goes to the center of the cell and change heading randomly
 		    if (!isPointInEllipsoid(xx, yy, zz)) {
@@ -161,6 +162,30 @@ public class OrganelleMove {
 		space.moveTo(endosome, xx, yy, zz);
 		grid.moveTo(endosome, (int) xx, (int) yy, (int) zz);
 	}
+	
+	public static boolean isOccupied(int x, int y, int z, Endosome endosome) {
+	    for (Object obj : grid.getObjectsAt(x, y, z)) {
+	        if (!obj.equals(endosome)) { // Exclude the moving object
+//	          System.out.println(obj + "  OCCUPIED ");       	
+	            return true; // Found another object, so the cell is occupied
+	        }
+	    }
+
+	    return false; // No other objects in the cell
+	}
+	
+//	public static int isOccupied(int x, int y, int z) {
+//	    Iterable<Object> objects = grid.getObjectsAt(x, y, z);
+//	    int count = 0;
+//
+////	    System.out.println("Objects at (" + x + ", " + y + "):");
+//	    for (Object obj : objects) {
+//
+//	        count++; // Increment the count for each object
+//	    }
+//        System.out.println(objects + "   "+ count); // Print each object found
+//	    return count; // Return the total count of objects
+//	}
 	
 	public static void changeDirectionRnd(Endosome endosome) {
 //		1% of the time, the speed is 0 and the heading change at random

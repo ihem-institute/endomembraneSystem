@@ -49,9 +49,11 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 	public static final IndexedIterable getCollectionER() {
 		return collectionER;
 	}
+	
 	static double xWorld = 50;
 	static double yWorld = 50;
 	static double zWorld = 26;
+	
 // PRUEBA DE CAMBIO. Espacio 3D.  La célula va a ser un esferoide tipo oblato, 
 //	El alto del oblato es zWorld (eje de giro) y el ancho es xWorld = yWorld
 // Create two spaces, one for PM where Agents are molecules and other for the Intracellular transport.  
@@ -76,6 +78,8 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 							new SimpleGridAdder<Object>(), true,
 							(int) xWorld, (int) yWorld, (int) zWorld));
 		
+		
+	
 // PM space
 //		ContinuousSpace<Object> spacePM = spaceFactory.createContinuousSpace(
 //										"spacePM", context, new RandomCartesianAdder<Object>(),
