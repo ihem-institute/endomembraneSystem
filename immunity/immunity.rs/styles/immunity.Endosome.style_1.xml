@@ -1,7 +1,7 @@
 <repast.simphony.visualization.editedStyle.DefaultEditedStyleData3D>
   <shapeWkt>sphere</shapeWkt>
   <size>0.03</size>
-  <sizeMax>100000.0</sizeMax>
+  <sizeMax>10.0</sizeMax>
   <sizeMin>0.0</sizeMin>
   <sizeScale>1.0</sizeScale>
   <sizeScaleMethodName>getArea</sizeScaleMethodName>

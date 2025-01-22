@@ -87,36 +87,7 @@ public class UptakeStep2 {
 		areaER = EndoplasmicReticulum.getInstance().getEndoplasmicReticulumArea();	
 		}
 //		COMPENSATORY NEW ORGANELLE
-		if (3>1) return;
 
-		for (String rab : totalRabs.keySet()){
-			//			System.out.println("ErrorRabs  "+ rab + "   " +initialTotalRabs.get(rab) +"     "+ totalRabs.get(rab));
-			double value = initialTotalRabs.get(rab) - totalRabs.get(rab);
-			deltaRabs.put(rab, value);
-		}
-
-		//	System.out.println("Initial Rabs  "+ initialTotalRabs + " \n delta Rabs"+ deltaRabs);
-		double largeDelta = 0d;
-		String selectedRab = "";
-		for (String rab : deltaRabs.keySet()){
-			if (deltaRabs.get(rab)>largeDelta) {
-				selectedRab=rab;
-				largeDelta=deltaRabs.get(rab);
-			}	
-		}
-		//		System.out.println("selected Rab for uptake "+ selectedRab);
-		//		If no rab was selected or the surface required is small (less than a sphere of 60 nm radius, 
-		//		no uptake is required
-		if (selectedRab.equals("")|| deltaRabs.get(selectedRab)<450000000) return;
-		//if the selected Rab correspond to Early Endosomes, new uptake
-		String selectedOrganelle = ModelProperties.getInstance().getRabOrganelle().get(selectedRab);
-//		System.out.println(" 	NEW UPTAKE OTHER   " + selectedRab + "  " + deltaRabs);
-		if (selectedOrganelle.equals("EE")){ 
-			newUptake(cell,selectedRab);}
-		else if (selectedOrganelle.equals("ERGIC")){ 
-			newSecretion(cell,selectedRab);}
-		else {newOrganelle(cell, selectedRab, rabCode);
-		}
 		}
 
 	
@@ -245,6 +216,14 @@ public class UptakeStep2 {
 
 		space.moveTo(bud, x,y,z);
 		grid.moveTo(bud, (int) x, (int) y, (int)z);
+//		bud.setXcoor(x);
+//		bud.setYcoor(y);
+//		bud.setZcoor(z);
+//		if (bud.zcoor < 1E-3 ) {
+//		System.out.println(x + " SECRETION coordenada en cero" + y +" "+ z);
+//		
+//	}
+
 		
 //					System.out.println(area + "  NEW ERGIC " + bud.membraneContent);
 		//			try {
@@ -272,12 +251,18 @@ public class UptakeStep2 {
             double sphereEquation = (x * x) + (y * y) + (z * z);
             if (spheroidEquation < 1 && sphereEquation > c * c) {
                 // Point satisfies both conditions
+//        		if (z < 1E-3 ) {
+//        			System.out.println(z + " PUNTO SELECCIONADO coordenada en cero");
+//        			
+//        		}
  //               System.out.println(sphereEquation + "  Sph " + spheroidEquation);
                 break;
             }
 
         }
 
+//			System.out.println(x+a + " PUNTO "+ (y+a)+" SELECCIONADO " + (z+c));
+			
         return new double[]{x, y, z};
     }
     
@@ -454,9 +439,16 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
         bud.headingP = angles[0];// heading to the center of the cell
 		bud.headingA = angles[1];// heading
 		bud.tickCount =1;
-        
-		bud.getSpace().moveTo(bud, point[0], point[1], point[2]);
-		bud.getGrid().moveTo(bud, (int) point[0], (int) point[1], (int) point[2]);
+		space.moveTo(bud, point[0], point[1], point[2]);
+		grid.moveTo(bud, (int) point[0], (int) point[1], (int) point[2]);
+//		bud.setXcoor(point[0]);
+//		bud.setYcoor(point[1]);
+//		bud.setZcoor(point[2]);
+//		
+		if (bud.zcoor < 1E-3 ) {
+		System.out.println(bud.zcoor + " UPTAKE coordenada en cero");
+		
+	}
 // To control where the new endosome is located		
 //        double centerX = 25.0;
 //        double centerY = 25.0;

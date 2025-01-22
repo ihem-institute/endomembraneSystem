@@ -60,9 +60,9 @@ public class Endosome {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	
-	public double xcoor = 0d;
-	public double ycoor = 0d;
-	public double zcoor = 0d;
+	double xcoor = 0d;
+	double ycoor = 0d;
+	double zcoor = 0d;
 	
 	// Endosomal
 	ModelProperties cellProperties = ModelProperties.getInstance();
@@ -151,7 +151,8 @@ public class Endosome {
 	}
 //    @ProbeID
 	public final double getXcoor() {
-		return xcoor;
+		NdPoint myPoint = space.getLocation(this);
+		return myPoint.getX();
 	}
 
 	public final void setXcoor(double xcoor) {
@@ -159,13 +160,15 @@ public class Endosome {
 	}
 	
 	public final double getYcoor() {
-		return ycoor;
+		NdPoint myPoint = space.getLocation(this);
+		return myPoint.getY();
 	}
 	public void setYcoor(double ycoor) {
 		this.ycoor = ycoor;	
 	}
 	public final double getZcoor() {
-		return zcoor;
+		NdPoint myPoint = space.getLocation(this);
+		return myPoint.getZ();
 	}
 	public void setZcoor(double zcoor) {
 		this.zcoor = zcoor;	
@@ -200,14 +203,22 @@ public class Endosome {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-//		String message = "MENSAJE";//(new JSONDoc(rabTimeSeries)).toString();
-//		if (logger.isDebugEnabled()) {
-//			logger.debug(message);			
-//		}
+
 		this.tickCount=this.tickCount + 1;
-//		endosomeShape(this);
-//		OrganelleMove.changeDirection(this);
+
+		NdPoint myPoint = space.getLocation(this);
+		double x = myPoint.getX();
+		this.setXcoor(x);
+		double y = myPoint.getY();
+		this.setYcoor(y);
+		double z = myPoint.getZ();
+		this.setZcoor(z);
+		if (this.zcoor < 1E-3 ) {
+			System.out.println(this.zcoor + " INICIAL coordenada en cero");
+			
+		}
 		OrganelleMove.moveTowards(this);
+
 //		if (this.solubleContent.containsKey("mvb")) this.membraneContent.put("chol", 0d);
 //		Uptake and new organelles is a procedure of Cell and is not performed by endosomes		
 //		if (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this);
@@ -231,18 +242,13 @@ public class Endosome {
 		String name =  modelProperties .getCopasiFiles().get("endosomeCopasi");
 		if (Math.random() < 1 && name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this);
 		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeMaturationStep"))EndosomeMaturationStep.matureCheck(this); //	
-	}
-//	public List<Endosome> getAllEndosomes(){
-//		List<Endosome> allEndosomes = new ArrayList<Endosome>();
-//		for (Object obj : grid.getObjects()) {
-//			if (obj instanceof Endosome) {
-//				allEndosomes.add((Endosome) obj);
-//			}
-//		}
-////		System.out.println("ALL ENDOSOMES FORM PLASMA MEMBRANE " +allEndosomes);
-//		return allEndosomes;
+		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeMaturationStep"))EndosomeMaturationStep.matureCheck(this);
+//		if (this.zcoor < 1E-3 ) {
+//		System.out.println(this.zcoor + " FINAL coordenada en cero");
+//		
 //	}
+	
+	}
 
 	public static void endosomeShape(Endosome end) {
 		double s = end.area;

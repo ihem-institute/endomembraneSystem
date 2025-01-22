@@ -26,24 +26,25 @@ public class OrganelleMove {
 //			System.out.println(endosome.heading + " INITIAL HEADING");
 //			endosome.heading = -90;
 			moveCistern(endosome);		
-			NdPoint myPoint = space.getLocation(endosome);
-			double x = myPoint.getX();
-			endosome.setXcoor(x);
-			double y = myPoint.getY();
-			endosome.setYcoor(y);
-			double z = myPoint.getZ();
-			endosome.setZcoor(z);
+//			NdPoint myPoint = space.getLocation(endosome);
+//			double x = myPoint.getX();
+//			endosome.setXcoor(x);
+//			double y = myPoint.getY();
+//			endosome.setYcoor(y);
+//			double z = myPoint.getZ();
+//			endosome.setZcoor(z);
 		}
 //		if it is not a Golgi cistern, move as a regular organelle
 		else {
 			moveNormal(endosome);
-			NdPoint myPoint = space.getLocation(endosome);
-			double x = myPoint.getX();
-			endosome.setXcoor(x);
-			double y = myPoint.getY();
-			endosome.setYcoor(y);
-			double z = myPoint.getZ();
-			endosome.setZcoor(z);
+//			NdPoint myPoint = space.getLocation(endosome);
+//			double x = myPoint.getX();
+//			endosome.setXcoor(x);
+//			double y = myPoint.getY();
+//			endosome.setYcoor(y);
+//			double z = myPoint.getZ();
+//			endosome.setZcoor(z);
+
 		}
 	}
 	
@@ -159,6 +160,7 @@ public class OrganelleMove {
 			    endosome.headingA = Math.random()*360;
 		    	}
 //	    	System.out.println("FUERA DE CELULA DESPUES " + xx+"  " + yy+"  " + zz);
+
 		space.moveTo(endosome, xx, yy, zz);
 		grid.moveTo(endosome, (int) xx, (int) yy, (int) zz);
 	}
@@ -359,14 +361,14 @@ return new double[] { closestX, closestY, closestZ };
 			grid.moveTo(endosome, (int) (25 + deltaX), (int)(47 + deltaY), (int) deltaZ); 
 
 			
-		NdPoint myPoint = space.getLocation(endosome);
-		double x = myPoint.getX();
-		endosome.setXcoor(x);
-		double y = myPoint.getY();
-		endosome.setYcoor(y);
-		double z = myPoint.getZ();
-		endosome.setZcoor(z);
-		System.out.println(x+ " Golgi Vesicle " + y);
+//		NdPoint myPoint = space.getLocation(endosome);
+//		double x = myPoint.getX();
+//		endosome.setXcoor(x);
+//		double y = myPoint.getY();
+//		endosome.setYcoor(y);
+//		double z = myPoint.getZ();
+//		endosome.setZcoor(z);
+//		System.out.println(x+ " Golgi Vesicle " + y);
 		
 	}
 

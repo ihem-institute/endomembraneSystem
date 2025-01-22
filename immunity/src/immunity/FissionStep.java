@@ -250,6 +250,7 @@ public class FissionStep {
 		space.moveTo(b, x, y, z);
 		grid.moveTo(b, (int) x, (int) y, (int) z);
 
+
 //		if (b.c>100/Cell.orgScale) {
 //			System.out.println(b.c+"  bbbbbbbbbbbbbbccccccccccccccccccccorta de nuevo  " );
 //			split(b);
