@@ -119,6 +119,7 @@ public class EndosomeUptakeStep {
 		value = value + area;
 		Results.instance.getTotalRabs().put("RabA", value);
 		initOrgProp.put("volume", volume);
+		
 //		System.out.println("PROPIEDADES RAB A  "+initOrgProp);
 //		try {
 //			Thread.sleep(4000);
@@ -228,8 +229,6 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
 //		bud.size = initOrgProp.get("maxRadius");// radius of a sphere with the volume of the
 		// cylinder
 		bud.speed = 1d / bud.size;
-		double xend=0;
-		double yend=0;
 //		To place the endosome near the plasma membrane and heading to the center of the cell
         double[] point = selectRandomPointOnOblateSurface(a, c);
         double[] angles = calculateAnglesTowardCenter(point[0], point[1], point[2]);
@@ -239,8 +238,9 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
         bud.headingP = angles[0];// heading to the center of the cell
 		bud.headingA = angles[1];// heading
         
-		endosome.getSpace().moveTo(bud, xend, yend);
-		endosome.getGrid().moveTo(bud, (int) xend, (int) yend);
+		endosome.getSpace().moveTo(bud, point[0],point[1], point[2] );
+		endosome.getGrid().moveTo(bud, (int) point[0], (int) point[1], (int)point[2]);
+		
 		
 //		System.out.println(xend + " EEEEEEEEEE NEW UPTAKE " + yend);
 //					try {

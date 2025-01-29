@@ -513,143 +513,127 @@ switched to Kind4(Rab7).  I guess is that the rate will have to be relative.  1 
     }
 
 
-	private static void newOrganelle(Cell cell, String selectedRab, HashMap<String, String> rabCode) {
-		String kind = rabCode.get(selectedRab);
-		boolean isNewGolgi = ModelProperties.getInstance().getRabOrganelle().get(selectedRab).contains("Golgi");
-		if(isNewGolgi) {// new Golgi organelle
-			HashMap<String, Double> initOrgProp =  new HashMap<String, Double>(InitialOrganelles.getInstance().getInitOrgProp().get(kind));
-			double totalArea = initOrgProp.get("area")/ModelProperties.getInstance().getCellK().get("orgScale");
-			double maxRadius = initOrgProp.get("maxRadius");
-			double maxAsym = initOrgProp.get("maxAsym");
-			double minRadius = Cell.rcyl*1.1;
-			double a = RandomHelper.nextDoubleFromTo(minRadius,maxRadius);// radius cylinder Gogli cisterna				
-			double c = minRadius; //cylinder height
-			double area = 2* PI*Math.pow(a, 2)+ 2*PI*a*c;
-			double volume =PI*Math.pow(a, 2)* c;
-			initOrgProp.put("area", area);
-			initOrgProp.put("volume", volume);
-			double value = Results.instance.getTotalRabs().get(selectedRab);
-			value = value + area;
-			Results.instance.getTotalRabs().put(selectedRab, value);
-			HashMap<String, Double> rabContent = new HashMap<String, Double>();
-			rabContent.put(selectedRab, area);
-			HashMap<String, Double> membraneContent = new HashMap<String, Double>();
-			HashMap<String, Double> solubleContent = new HashMap<String, Double>();
-			HashSet<String> solubleMet = new HashSet<String>(ModelProperties.getInstance().getSolubleMet());
-			HashSet<String> membraneMet = new HashSet<String>(ModelProperties.getInstance().getMembraneMet());
-//				This is getting the keyset of the membrane metabolisms
-			// MEMBRANE CONTENT.  For a new organelle, with the Rab that was selected to compensate lost, the membrane content is taken from the total
-			// membrane content associated to this rab/total area of the rab.  This is an average of the membrane content associated to the specific
-			// Rab.  Marker is set to zero.
-					for (String mem : membraneMet){
-//						//				System.out.println(mem + "  MMEEMM " + selectedRab + "\n " + Results.getInstance().getContentDist());
-						value = Results.getInstance().getContentDist().get(mem+selectedRab)
-								/Results.getInstance().getTotalRabs().get(selectedRab);
-						membraneContent.put(mem, value * area);
-					}
-					membraneContent.put("membraneMarker", 0d);
-			// SOLUBLE CONTENT.  For a new organelle, with the Rab that was selected to compensate lost, the soluble content is taken from the total
-			// soluble content associated to this rab/total volume surrounded by the rab.  This is an average of the soluble content associated to the specific
-			// Rab.  Marker and mvb is set to zero
-					for (String sol : solubleMet){
-						value = Results.getInstance().getContentDist().get(sol+selectedRab)
-								/Results.getInstance().getTotalVolumeRabs().get(selectedRab);
-						solubleContent.put(sol, value * volume);
-					}
-					solubleContent.put("mvb", 0d);
-					solubleContent.put("solubleMarker", 0d);
-					Context<Object> context = ContextUtils.getContext(cell);
-					ContinuousSpace<Object> space = cell.getSpace();
-					Grid<Object> grid = cell.getGrid();
-					Endosome bud = new Endosome(space, grid, rabContent, membraneContent,
-							solubleContent, initOrgProp);
-					context.add(bud);
-					bud.area = area; 
-					bud.volume = volume; 
-					bud.speed = 1d / bud.size;
-					bud.headingP = -90;// heading down
-					bud.headingA = -90;// heading down
-					//Endosome.endosomeShape(bud);
-					bud.tickCount = 1;
-					// NdPoint myPoint = space.getLocation(bud);
-					double rnd = Math.random();
-					space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld, CellBuilder.zWorld/2);
-					grid.moveTo(bud, (int) (rnd * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int) (CellBuilder.zWorld/2));
-
-
-//					System.out.println(membraneContent + " " + solubleContent + " " + rabContent+" " + initOrgProp);
-	
-		}
-		else {// new non Golgi organelles
-//		System.out.println(kind + " UPTAKE INITIAL ORGANELLES " +	InitialOrganelles.getInstance().getInitOrgProp().get(kind));
-
-		HashMap<String, Double> initOrgProp = new HashMap<String, Double>(
-				InitialOrganelles.getInstance().getInitOrgProp().get(kind));
-		
-		//		double tMembrane = Cell.getInstance().gettMembrane();
-		double maxRadius = initOrgProp.get("maxRadius");
-		double maxAsym = initOrgProp.get("maxAsym");
-		double minRadius = Cell.rcyl*1.1;
-		double a = RandomHelper.nextDoubleFromTo(minRadius,maxRadius);				
-		double c = a + a  * Math.random()* maxAsym;
-		double f = 1.6075;
-		double af= Math.pow(a, f);
-		double cf= Math.pow(c, f);
-		double area = 4d* PI*Math.pow((af*af+af*cf+af*cf)/3, 1/f);
-		double volume = 4d/3d*PI*a*a*c;
-		double value = Results.instance.getTotalRabs().get(selectedRab);
-		value = value + area;
-		Results.instance.getTotalRabs().put(selectedRab, value);
-		initOrgProp.put("area", area);
-		initOrgProp.put("volume", volume);	
-		HashMap<String, Double> rabContent = new HashMap<String, Double>();
-		rabContent.put(selectedRab, area);
-		
-		HashMap<String, Double> membraneContent = new HashMap<String, Double>();
-		HashMap<String, Double> solubleContent = new HashMap<String, Double>();
-		HashSet<String> solubleMet = new HashSet<String>(ModelProperties.getInstance().getSolubleMet());
-		HashSet<String> membraneMet = new HashSet<String>(ModelProperties.getInstance().getMembraneMet());
-//	This is getting the keyset of the membrane metabolisms
-// MEMBRANE CONTENT.  For a new organelle, with the Rab that was selected to compensate lost, the membrane content is taken from the total
-// membrane content associated to this rab/total area of the rab.  This is an average of the membrane content associated to the specific
-// Rab.  Marker is set to zero.
-		for (String mem : membraneMet){
-			//				System.out.println(mem + "  MMEEMM " + selectedRab + "\n " + Results.getInstance().getContentDist());
-			value = Results.getInstance().getContentDist().get(mem+selectedRab)
-					/Results.getInstance().getTotalRabs().get(selectedRab);
-			membraneContent.put(mem, value * area);
-		}
-		membraneContent.put("membraneMarker", 0d);
-// SOLUBLE CONTENT.  For a new organelle, with the Rab that was selected to compensate lost, the soluble content is taken from the total
-// soluble content associated to this rab/total volume surrounded by the rab.  This is an average of the soluble content associated to the specific
-// Rab.  Marker and mvb is set to zero
-		for (String sol : solubleMet){
-			value = Results.getInstance().getContentDist().get(sol+selectedRab)
-					/Results.getInstance().getTotalVolumeRabs().get(selectedRab);
-			solubleContent.put(sol, value * volume);
-		}
-		solubleContent.put("mvb", 0d);
-		solubleContent.put("solubleMarker", 0d);
-		Context<Object> context = ContextUtils.getContext(cell);
-		ContinuousSpace<Object> space = cell.getSpace();
-		Grid<Object> grid = cell.getGrid();
-		Endosome bud = new Endosome(space, grid, rabContent, membraneContent,
-				solubleContent, initOrgProp);
-		context.add(bud);
-		bud.area = area; 
-		bud.volume = volume;
-		bud.tickCount = 1;
-		//Endosome.endosomeShape(bud);
-		bud.speed = 1d / bud.size;
-		bud.headingP = -90;// heading down
-		bud.headingA = -90;// heading down
-
-		// NdPoint myPoint = space.getLocation(bud);
-		double rnd = Math.random();
-		space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld, CellBuilder.zWorld/2);
-		grid.moveTo(bud, (int) (rnd * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int) (CellBuilder.zWorld/2));
-
-		}
-	}
+	/*
+	 * private static void newOrganelle(Cell cell, String selectedRab,
+	 * HashMap<String, String> rabCode) { String kind = rabCode.get(selectedRab);
+	 * boolean isNewGolgi =
+	 * ModelProperties.getInstance().getRabOrganelle().get(selectedRab).contains(
+	 * "Golgi"); if(isNewGolgi) {// new Golgi organelle HashMap<String, Double>
+	 * initOrgProp = new HashMap<String,
+	 * Double>(InitialOrganelles.getInstance().getInitOrgProp().get(kind)); double
+	 * totalArea =
+	 * initOrgProp.get("area")/ModelProperties.getInstance().getCellK().get(
+	 * "orgScale"); double maxRadius = initOrgProp.get("maxRadius"); double maxAsym
+	 * = initOrgProp.get("maxAsym"); double minRadius = Cell.rcyl*1.1; double a =
+	 * RandomHelper.nextDoubleFromTo(minRadius,maxRadius);// radius cylinder Gogli
+	 * cisterna double c = minRadius; //cylinder height double area = 2*
+	 * PI*Math.pow(a, 2)+ 2*PI*a*c; double volume =PI*Math.pow(a, 2)* c;
+	 * initOrgProp.put("area", area); initOrgProp.put("volume", volume); double
+	 * value = Results.instance.getTotalRabs().get(selectedRab); value = value +
+	 * area; Results.instance.getTotalRabs().put(selectedRab, value);
+	 * HashMap<String, Double> rabContent = new HashMap<String, Double>();
+	 * rabContent.put(selectedRab, area); HashMap<String, Double> membraneContent =
+	 * new HashMap<String, Double>(); HashMap<String, Double> solubleContent = new
+	 * HashMap<String, Double>(); HashSet<String> solubleMet = new
+	 * HashSet<String>(ModelProperties.getInstance().getSolubleMet());
+	 * HashSet<String> membraneMet = new
+	 * HashSet<String>(ModelProperties.getInstance().getMembraneMet()); // This is
+	 * getting the keyset of the membrane metabolisms // MEMBRANE CONTENT. For a new
+	 * organelle, with the Rab that was selected to compensate lost, the membrane
+	 * content is taken from the total // membrane content associated to this
+	 * rab/total area of the rab. This is an average of the membrane content
+	 * associated to the specific // Rab. Marker is set to zero. for (String mem :
+	 * membraneMet){ // // System.out.println(mem + "  MMEEMM " + selectedRab +
+	 * "\n " + Results.getInstance().getContentDist()); value =
+	 * Results.getInstance().getContentDist().get(mem+selectedRab)
+	 * /Results.getInstance().getTotalRabs().get(selectedRab);
+	 * membraneContent.put(mem, value * area); }
+	 * membraneContent.put("membraneMarker", 0d); // SOLUBLE CONTENT. For a new
+	 * organelle, with the Rab that was selected to compensate lost, the soluble
+	 * content is taken from the total // soluble content associated to this
+	 * rab/total volume surrounded by the rab. This is an average of the soluble
+	 * content associated to the specific // Rab. Marker and mvb is set to zero for
+	 * (String sol : solubleMet){ value =
+	 * Results.getInstance().getContentDist().get(sol+selectedRab)
+	 * /Results.getInstance().getTotalVolumeRabs().get(selectedRab);
+	 * solubleContent.put(sol, value * volume); } solubleContent.put("mvb", 0d);
+	 * solubleContent.put("solubleMarker", 0d); Context<Object> context =
+	 * ContextUtils.getContext(cell); ContinuousSpace<Object> space =
+	 * cell.getSpace(); Grid<Object> grid = cell.getGrid(); Endosome bud = new
+	 * Endosome(space, grid, rabContent, membraneContent, solubleContent,
+	 * initOrgProp); context.add(bud); bud.area = area; bud.volume = volume;
+	 * bud.speed = 1d / bud.size; bud.headingP = -90;// heading down bud.headingA =
+	 * -90;// heading down //Endosome.endosomeShape(bud); bud.tickCount = 1; //
+	 * NdPoint myPoint = space.getLocation(bud); double rnd = Math.random();
+	 * space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld,
+	 * CellBuilder.zWorld/2); grid.moveTo(bud, (int) (rnd *
+	 * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int)
+	 * (CellBuilder.zWorld/2));
+	 * 
+	 * 
+	 * // System.out.println(membraneContent + " " + solubleContent + " " +
+	 * rabContent+" " + initOrgProp);
+	 * 
+	 * } else {// new non Golgi organelles // System.out.println(kind +
+	 * " UPTAKE INITIAL ORGANELLES " +
+	 * InitialOrganelles.getInstance().getInitOrgProp().get(kind));
+	 * 
+	 * HashMap<String, Double> initOrgProp = new HashMap<String, Double>(
+	 * InitialOrganelles.getInstance().getInitOrgProp().get(kind));
+	 * 
+	 * // double tMembrane = Cell.getInstance().gettMembrane(); double maxRadius =
+	 * initOrgProp.get("maxRadius"); double maxAsym = initOrgProp.get("maxAsym");
+	 * double minRadius = Cell.rcyl*1.1; double a =
+	 * RandomHelper.nextDoubleFromTo(minRadius,maxRadius); double c = a + a *
+	 * Math.random()* maxAsym; double f = 1.6075; double af= Math.pow(a, f); double
+	 * cf= Math.pow(c, f); double area = 4d* PI*Math.pow((af*af+af*cf+af*cf)/3,
+	 * 1/f); double volume = 4d/3d*PI*a*a*c; double value =
+	 * Results.instance.getTotalRabs().get(selectedRab); value = value + area;
+	 * Results.instance.getTotalRabs().put(selectedRab, value);
+	 * initOrgProp.put("area", area); initOrgProp.put("volume", volume);
+	 * HashMap<String, Double> rabContent = new HashMap<String, Double>();
+	 * rabContent.put(selectedRab, area);
+	 * 
+	 * HashMap<String, Double> membraneContent = new HashMap<String, Double>();
+	 * HashMap<String, Double> solubleContent = new HashMap<String, Double>();
+	 * HashSet<String> solubleMet = new
+	 * HashSet<String>(ModelProperties.getInstance().getSolubleMet());
+	 * HashSet<String> membraneMet = new
+	 * HashSet<String>(ModelProperties.getInstance().getMembraneMet()); // This is
+	 * getting the keyset of the membrane metabolisms // MEMBRANE CONTENT. For a new
+	 * organelle, with the Rab that was selected to compensate lost, the membrane
+	 * content is taken from the total // membrane content associated to this
+	 * rab/total area of the rab. This is an average of the membrane content
+	 * associated to the specific // Rab. Marker is set to zero. for (String mem :
+	 * membraneMet){ // System.out.println(mem + "  MMEEMM " + selectedRab + "\n " +
+	 * Results.getInstance().getContentDist()); value =
+	 * Results.getInstance().getContentDist().get(mem+selectedRab)
+	 * /Results.getInstance().getTotalRabs().get(selectedRab);
+	 * membraneContent.put(mem, value * area); }
+	 * membraneContent.put("membraneMarker", 0d); // SOLUBLE CONTENT. For a new
+	 * organelle, with the Rab that was selected to compensate lost, the soluble
+	 * content is taken from the total // soluble content associated to this
+	 * rab/total volume surrounded by the rab. This is an average of the soluble
+	 * content associated to the specific // Rab. Marker and mvb is set to zero for
+	 * (String sol : solubleMet){ value =
+	 * Results.getInstance().getContentDist().get(sol+selectedRab)
+	 * /Results.getInstance().getTotalVolumeRabs().get(selectedRab);
+	 * solubleContent.put(sol, value * volume); } solubleContent.put("mvb", 0d);
+	 * solubleContent.put("solubleMarker", 0d); Context<Object> context =
+	 * ContextUtils.getContext(cell); ContinuousSpace<Object> space =
+	 * cell.getSpace(); Grid<Object> grid = cell.getGrid(); Endosome bud = new
+	 * Endosome(space, grid, rabContent, membraneContent, solubleContent,
+	 * initOrgProp); context.add(bud); bud.area = area; bud.volume = volume;
+	 * bud.tickCount = 1; //Endosome.endosomeShape(bud); bud.speed = 1d / bud.size;
+	 * bud.headingP = -90;// heading down bud.headingA = -90;// heading down
+	 * 
+	 * // NdPoint myPoint = space.getLocation(bud); double rnd = Math.random();
+	 * space.moveTo(bud, rnd * CellBuilder.xWorld, rnd * CellBuilder.yWorld,
+	 * CellBuilder.zWorld/2); grid.moveTo(bud, (int) (rnd *
+	 * CellBuilder.xWorld),(int) (rnd * CellBuilder.yWorld), (int)
+	 * (CellBuilder.zWorld/2));
+	 * 
+	 * } }
+	 */
 		
 }

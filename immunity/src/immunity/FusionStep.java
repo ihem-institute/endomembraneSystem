@@ -1,18 +1,23 @@
 package immunity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
+import repast.simphony.space.projection.Projection;
 import repast.simphony.util.ContextUtils;
+import repast.simphony.visualization.IDisplay;
+import repast.simphony.visualization.visualization3D.Display3D;
 
 public class FusionStep {
 	private static ContinuousSpace<Object> space;
@@ -80,16 +85,24 @@ public class FusionStep {
 			endosome.rabContent = sumRabContent(endosome, endosome2);
 			endosome.membraneContent = sumMembraneContent(endosome, endosome2);
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
-			Context<Object> context = ContextUtils.getContext(endosome);
+			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
+//			context.getProjections().remove(endosome2);
+//			context.getObjectsAsStream(Endosome.class).count();
+			
+// getAgentTypes(endosome);
+//			long display = repast.simphony.visualization.visualization3D.Display3D.FRAME_UPDATE_INTERVAL;
+//			System.out.println(display +"  DISPLAY ");
 		}
+
 		double rsphere = Math.pow(endosome.volume * 3d / 4d / Math.PI, (1d / 3d));
 		double size = rsphere;
 		endosome.speed = 1d/ size;
 		//Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();
-		endosomes_to_delete.clear();
+//		endosomes_to_delete.clear();
+		
 //		The time series will be re-calculated by COPASI call in the next tick
 //				
 	}
@@ -140,15 +153,18 @@ public class FusionStep {
 			endosome.rabContent = sumRabContent(endosome, endosome2);
 			endosome.membraneContent = sumMembraneContent(endosome, endosome2);
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
-			Context<Object> context = ContextUtils.getContext(endosome);
+			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
-		}
+//			context.getObjectsAsStream(Endosome.class).count();
+			}
+		
 		double rsphere = Math.pow(endosome.volume * 3d / 4d / Math.PI, (1d / 3d));
 		double size = rsphere;
 		endosome.speed = 1d/ size;
 		Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
-		endosome.getRabTimeSeries().clear();
+		endosome.getRabTimeSeries().clear();		
+		endosomes_to_delete.clear();
 //		The time series will be re-calculated by COPASI call in the next tick
 	}
 

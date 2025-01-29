@@ -10,6 +10,7 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 //import javax.media.opengl.GL2;
 
@@ -177,17 +178,19 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 		
 //		color code = 1.  Select the more aboundant Rab
 		else {
-			HashMap<String, Double> rabContent = new HashMap<String, Double>(object.getRabContent());
-			Double rabMax = 0d;
-			String rabColor = null;
-			for (String rab : rabContent.keySet())
-			{
-				if (rabContent.get(rab)> rabMax) {
-					rabMax = rabContent.get(rab);
-					rabColor = rab;
+//			HashMap<String, Double> rabContent = new HashMap<String, Double>(object.getRabContent());
+//			Double rabMax = 0d;
+//			String rabColor = null;
+//			for (String rab : rabContent.keySet())
+//			{
+//				if (rabContent.get(rab)> rabMax) {
+//					rabMax = rabContent.get(rab);
+//					rabColor = rab;
+//
+//				}
+//			}
+			String rabColor = Collections.max(object.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
 
-				}
-			}
 			//			System.out.println(rabColor+rabContent);
 			if (rabColor.equals("RabA"))	return new Color (0,0,255);//EE
 			else if (rabColor.equals("RabB"))	return new Color (0,255,255);//SE
@@ -226,10 +229,10 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 		// the label is the number of internal vesicles (Multi Vesicular Body)
 		// in the endosome
 
-		if(2<3) {
-			return null;		// to eliminate the labels
-		}
-		else {
+//		if(2<3) {
+//			return null;		// to eliminate the labels
+//		}
+//		else {
 		String label = "";
 		if (object.getSolubleContent().containsKey("solubleMarker")
 				&& object.getSolubleContent().get("solubleMarker")> 0.9){
@@ -245,7 +248,6 @@ public class EndosomeStyle implements StyleOGL2D<Endosome> {
 			return label;
 		}
 		else return label + object.getMvb();
-		}
 	}
 
 	@Override

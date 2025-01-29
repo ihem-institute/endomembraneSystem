@@ -21,6 +21,7 @@ import javax.swing.table.TableModel;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.log4j.Logger;
 import org.opengis.filter.identity.ObjectId;
+import com.jogamp.newt.Display;
 
 //import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -45,6 +46,7 @@ import repast.simphony.util.ContextUtils;
 import java.util.Random;
 
 import repast.simphony.valueLayer.GridValueLayer;
+import repast.simphony.visualization.visualization3D.Display3D;
 //import repast.simphony.ui.probe.ProbeID;
 //import repast.simphony.ui.probe.ProbeInfo;
 
@@ -76,7 +78,7 @@ public class Endosome {
 	double size;// = Math.pow(volume * 3d / 4d / Math.PI, (1d / 3d));
 	double speed;// = 5d / size; // initial value, but should change
 	double headingP = 0;// = Math.random() * 360d; // initial value, but should
-	double headingA;				// change
+	double headingA = 0;				// change
 	
 	double cellLimit = 3 * Cell.orgScale;
 	double mvb;// = 0; // number of internal vesices
@@ -203,7 +205,11 @@ public class Endosome {
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-
+		Context<Object> context = ContextUtils.getContext(this);
+		if(!context.contains(this)) {
+			System.out.println(" ABSENT ENDOSOME " + this);
+			return;
+		}
 		this.tickCount=this.tickCount + 1;
 
 		NdPoint myPoint = space.getLocation(this);
@@ -213,12 +219,13 @@ public class Endosome {
 		this.setYcoor(y);
 		double z = myPoint.getZ();
 		this.setZcoor(z);
-		if (this.zcoor < 1E-3 ) {
-			System.out.println(this.zcoor + " INICIAL coordenada en cero");
-			
-		}
-		OrganelleMove.moveTowards(this);
+//		if (this.zcoor < 1E-3 ) {
+//			System.out.println(this.zcoor + " INICIAL coordenada en cero");
+//			
+//		}
 
+		
+		OrganelleMove.moveTowards(this);
 //		if (this.solubleContent.containsKey("mvb")) this.membraneContent.put("chol", 0d);
 //		Uptake and new organelles is a procedure of Cell and is not performed by endosomes		
 //		if (Math.random()<p_EndosomeUptakeStep)EndosomeUptakeStep.uptake(this);
@@ -247,7 +254,20 @@ public class Endosome {
 //		System.out.println(this.zcoor + " FINAL coordenada en cero");
 //		
 //	}
-	
+//		Context<Object> context = ContextUtils.getContext(this);
+//	    if (!context.contains(this)) {
+//	        System.out.println("Skipping agent not present in the context: " + this);
+//	        return; // Skip rendering for this agent
+//	    }
+//		myPoint = space.getLocation(this);
+//		System.out.println(this + " FINAL coordenada en cero");
+//		x = myPoint.getX();
+//		this.setXcoor(x);
+//		y = myPoint.getY();
+//		this.setYcoor(y);
+//		z = myPoint.getZ();
+//		this.setZcoor(z);
+
 	}
 
 	public static void endosomeShape(Endosome end) {
@@ -275,10 +295,10 @@ public class Endosome {
 			}
 		}
 		if (golgiArea/end.area > 0.5){
-			if (end.area >= Cell.minCistern/20) {
-				end.headingP = -90d; // is a cistern
-				end.headingA = 0;
-			}
+//			if (end.area >= Cell.minCistern/20) {
+//				end.headingP = 0d; // is a cistern
+//				end.headingA = 0d;
+//			}
 			double[] radiusHeight = radiusHeightCistern(end.area, end.volume);
 			end.a = radiusHeight[0];
 			end.c = radiusHeight[1];
@@ -336,10 +356,21 @@ public class Endosome {
 	}
 
 	public double getHeadingP() {
-		return headingP;
+	    // Normalize the angle to the range 0–360
+	    this.headingP = this.headingP % 360; // Reduce the angle to the range -360 to 360
+	    if (this.headingP < 0) {
+	        this.headingP += 360; // Ensure it is in the range 0–360
+	    }
+	    return this.headingP;
 	}
+	
 	public double getHeadingA() {
-		return headingA;
+	    // Normalize the angle to the range 0–360
+	    this.headingA = this.headingA % 360; // Reduce the angle to the range -360 to 360
+	    if (this.headingA < 0) {
+	        this.headingA += 360; // Ensure it is in the range 0–360
+	    }
+	    return this.headingA;
 	}
 
 	public HashMap<String, Double> getRabContent() {

@@ -25,14 +25,16 @@ public class OrganelleMove {
 //			in the Golgi area
 //			System.out.println(endosome.heading + " INITIAL HEADING");
 //			endosome.heading = -90;
+			endosome.setHeadingP(0d);
+			endosome.setHeadingA(0d);
 			moveCistern(endosome);		
-//			NdPoint myPoint = space.getLocation(endosome);
-//			double x = myPoint.getX();
-//			endosome.setXcoor(x);
-//			double y = myPoint.getY();
-//			endosome.setYcoor(y);
-//			double z = myPoint.getZ();
-//			endosome.setZcoor(z);
+			NdPoint myPoint = space.getLocation(endosome);
+			double x = myPoint.getX();
+			endosome.setXcoor(x);
+			double y = myPoint.getY();
+			endosome.setYcoor(y);
+			double z = myPoint.getZ();
+			endosome.setZcoor(z);
 		}
 //		if it is not a Golgi cistern, move as a regular organelle
 		else {
@@ -68,20 +70,22 @@ public class OrganelleMove {
 		double between = 4*scale;//distance between cisterna Math.random();
 		double high = 29;//distance from the bottom
 //		endosome.setHeading(-90d);// = -90d;			
-//		System.out.println(endosome.heading + " final HEADING");
+//		System.out.println(endosome.headingP + " polar CISTERN HEADING");
+//		System.out.println(endosome.headingA + "  azimuthal CISTERN HEADING");
 		double zcoor = CellBuilder.zWorld/2;
 		if (organelleName.contains("cisGolgi")) {
 			space.moveTo(endosome, 25, between*1+high, zcoor);
 			grid.moveTo(endosome, 25, (int)(between*1+high), (int) zcoor);
 		}
-		if (organelleName.contains("medialGolgi")) {
+		else if (organelleName.contains("medialGolgi")) {
 			space.moveTo(endosome, 25, between*2+high, zcoor);
 			grid.moveTo(endosome, 25, (int)(between*2+high), (int) zcoor);
 		}
-		if (organelleName.contains("transGolgi")) {
+		else if (organelleName.contains("transGolgi")) {
 			space.moveTo(endosome, 25, between*3+high, zcoor);
 			grid.moveTo(endosome, 25, (int)(between*3+high),(int) zcoor);
 		}
+
 		
 	}
 
@@ -103,7 +107,7 @@ public class OrganelleMove {
 
 		NdPoint myPoint = space.getLocation(endosome);
 //		NdPoint myPoint = endosome.getEndosomeLocation(endosome);
-		
+//		System.out.println("ESTO FALLA "+myPoint.getX());
 		double x = myPoint.getX();
 		double y = myPoint.getY();
 		double z = myPoint.getZ();
@@ -120,11 +124,25 @@ public class OrganelleMove {
 
 	
 		else if (isPointInCircle(x, y, z)) { // near the nucleus
+			changeDirectionRnd(endosome);
+			
 //				if (Math.random() < 0.05) {
 //					endosome.headingP = Math.random()*360;
 //					endosome.headingA = Math.random()*360;
 //				}
-				changeDirectionRnd(endosome);
+//		    System.out.println(x + "   in circle " + y + "    "+z);
+//				double[] headingOut = outOfCircle(x,y,z);
+//				endosome.headingP = headingOut[0];
+//				endosome.headingA = headingOut[1];
+//				endosome.speed = 200d/endosome.size * Cell.orgScale/Cell.timeScale;//was 20d
+//
+//			double[] headingOut = moveAwayFromCenter(x,y,z);
+//			space.moveTo(endosome, headingOut[0], headingOut[1], headingOut[2]);
+//			grid.moveTo(endosome, (int) headingOut[0], (int) headingOut[1], (int)headingOut[2]);
+//		    System.out.println(headingOut[0] + " out of   in circle " + headingOut[1] + "    "+headingOut[2]);
+			
+				
+				
 				
 			}
 		else
@@ -144,7 +162,10 @@ public class OrganelleMove {
 		    double zz = z + Math.sin(endosome.headingA * Math.PI / 180d)
 			* endosome.speed * Cell.orgScale/Cell.timeScale;
 //	    	System.out.println("coordenadas  " + xx+"  " + yy+ "  "+ zz);
-		 if (isOccupied((int)xx, (int)yy, (int)zz, endosome)) return;   
+		 if (isOccupied((int)xx, (int)yy, (int)zz, endosome)) {;   
+		 endosome.headingP =  - endosome.headingP;
+		 endosome.headingA =  - endosome.headingA;
+		 }
 
 //		    if move out the cell, goes to the center of the cell and change heading randomly
 		    if (!isPointInEllipsoid(xx, yy, zz)) {
@@ -449,12 +470,14 @@ return new double[] { closestX, closestY, closestZ };
 
 	
     public static boolean isPointInCircle(double x, double y, double z) {
-		double r = CellBuilder.zWorld/2;
+		double r = 0.5*CellBuilder.zWorld/2;
 		double x0 = CellBuilder.xWorld/2;
 		double y0 = CellBuilder.yWorld/2;
 		double z0 = CellBuilder.zWorld/2;
         double distanceSquared = Math.pow(x - x0, 2) + Math.pow(y - y0, 2) + Math.pow(z - z0, 2);
         double radiusSquared = Math.pow(r, 2);
+
+        
         return distanceSquared <= radiusSquared;
     }
     
@@ -499,6 +522,62 @@ return new double[] { closestX, closestY, closestZ };
 //System.out.println(distance + " MovePoint Toward " + ratio);
         return new double[] { newX, newY, newZ };
     }
+
+        public static double[] outOfCircle(double x, double y, double z) {
+            // Calculate the relative position of the point to the sphere center
+    		double x0 = CellBuilder.xWorld/2;
+    		double y0 = CellBuilder.yWorld/2;
+    		double z0 = CellBuilder.zWorld/2;
+            double dx = x - x0;
+            double dy = y - y0;
+            double dz = z - z0;
+
+            // Compute the magnitude of the vector
+            double magnitude = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            // Compute the polar angle (theta)
+            double theta = Math.toDegrees(Math.acos(dz / magnitude));
+
+            // Compute the azimuthal angle (phi)
+            double phi = Math.toDegrees(Math.atan2(dy, dx));
+
+            // Return the angles in degrees
+            return new double[]{theta, phi};
+        }
+        
+        public static double[] moveAwayFromCenter(double x, double y, double z) {
+            // Calculate the relative position of the point to the sphere center
+            double x0 = CellBuilder.xWorld / 2;
+            double y0 = CellBuilder.yWorld / 2;
+            double z0 = CellBuilder.zWorld / 2;
+            double dx = x - x0;
+            double dy = y - y0;
+            double dz = z - z0;
+//            double initialDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            // Compute the magnitude of the vector
+            double magnitude = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            // Handle the edge case where the magnitude is zero (point at the center)
+            if (magnitude == 0) {
+                throw new IllegalArgumentException("The point is at the center of the sphere, no valid direction.");
+            }
+
+            // Normalize the direction vector
+            double unitDx = dx / magnitude;
+            double unitDy = dy / magnitude;
+            double unitDz = dz / magnitude;
+            double d = 1d;
+
+            // Scale the unit vector by the distance d
+            double x1 = x + unitDx * d;
+            double y1 = y + unitDy * d;
+            double z1 = z + unitDz * d;
+//           double finalDistance = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0) + (z1 - z0) * (z1 - z0));
+//            System.out.println( initialDistance+"  Distance from Center: " + finalDistance);
+            // Return the new coordinates
+            return new double[]{x1, y1, z1};
+        }
+
 
 
 }

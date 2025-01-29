@@ -223,16 +223,39 @@ public class FissionStep {
 		// change the													// heading
 		// of the old vesicle heading with a normal distribution
 //		scale 1500 nm is the 50 size space. Size in nm/30 is the size in the space scale
-		double deltax = Math.cos(endosome.headingP * 2d * PI / 360d)
+		double deltax = Math.cos(b.headingP * 2d * PI / 360d)
 				* (endosome.size + b.size) * Cell.orgScale/30;
-		double deltay = Math.sin(endosome.headingP * 2d * PI / 360d)
+		double deltay = Math.sin(b.headingP * 2d * PI / 360d)
+				* (endosome.size+ b.size)* Cell.orgScale/30;
+		double deltaz= Math.cos(b.headingA * 2d * PI / 360d)
 				* (endosome.size+ b.size)* Cell.orgScale/30;
 		
 		NdPoint myPoint = space.getLocation(endosome);
 		double x = myPoint.getX()+ deltax;
 
 		double y = myPoint.getY()+ deltay;
-		double z = myPoint.getZ();
+		double z = myPoint.getZ()+deltaz;
+	    if (!OrganelleMove.isPointInEllipsoid(x, y, z)) {
+
+			double x0 = CellBuilder.xWorld/2;
+			double y0 = CellBuilder.yWorld/2;
+			double z0 = CellBuilder.zWorld/2;
+//	    	System.out.println("FUERA DE CELULA ANTES " + x+"  " + y+"  " + z
+//	    			+ " " +(Math.sqrt(Math.pow(x - x0, 2) + Math.pow(y - y0, 2) + Math.pow(z - z0, 2))));
+	    	double[] newPoint = OrganelleMove.movePointToward(x, y, z, x0, y0, z0, 2*cellLimit);
+		    x = newPoint[0];
+		    y = newPoint[1];
+		    z = newPoint[2];		    
+		    endosome.headingP = Math.random()*360;
+		    endosome.headingA = Math.random()*360;
+	    	
+//    		System.out.println("FUERA DE CELULA DESPUES " + x+"  " + y+"  " + z
+//	    			+ " " +(Math.sqrt(Math.pow(x - x0, 2) + Math.pow(y - y0, 2) + Math.pow(z - z0, 2))));
+
+	    }
+
+	space.moveTo(b, x, y, z);
+	grid.moveTo(b, (int) x, (int) y, (int) z);
 
 //			specific for Golgi transport.  To increase TGN volume, when split a pure TGN (RabE) tubule, near the nucleus, increase the volume in a random
 //			way between 0 and the maximal volume (the volume of a sphere with the area of the tubule
@@ -242,21 +265,8 @@ public class FissionStep {
 //				double deltaVol = maxVol-b.volume;
 //				b.volume = b.volume + deltaVol;
 //			}
-	
-		if (y < cellLimit)y= cellLimit;		
-		if (y > 50 - cellLimit)y = 50-cellLimit;
-		if (x < cellLimit) x = cellLimit;
-		else if (x > 50 -cellLimit) x = 50 - cellLimit;
-		space.moveTo(b, x, y, z);
-		grid.moveTo(b, (int) x, (int) y, (int) z);
-
-
-//		if (b.c>100/Cell.orgScale) {
-//			System.out.println(b.c+"  bbbbbbbbbbbbbbccccccccccccccccccccorta de nuevo  " );
-//			split(b);
-//		}
-//		Endosome.endosomeShape(endosome);
-		if (endosome.c > 150/Cell.orgScale) {
+		Endosome.endosomeShape(endosome);
+		if (endosome.c > 1500/Cell.orgScale) {
 //			System.out.println(endosome.c+"  ccccccccccccccccccccccccccccccccccorta de nuevo  " );
 			split(endosome);
 		}
