@@ -9,6 +9,7 @@ import java.util.Map;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.environment.RunState;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -87,6 +88,8 @@ public class FusionStep {
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
 			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
+			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+
 //			context.getProjections().remove(endosome2);
 //			context.getObjectsAsStream(Endosome.class).count();
 			
@@ -101,6 +104,7 @@ public class FusionStep {
 		//Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();
+		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 //		endosomes_to_delete.clear();
 		
 //		The time series will be re-calculated by COPASI call in the next tick
@@ -155,9 +159,10 @@ public class FusionStep {
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
 			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
+			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+
 //			context.getObjectsAsStream(Endosome.class).count();
 			}
-		
 		double rsphere = Math.pow(endosome.volume * 3d / 4d / Math.PI, (1d / 3d));
 		double size = rsphere;
 		endosome.speed = 1d/ size;
@@ -165,6 +170,7 @@ public class FusionStep {
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();		
 		endosomes_to_delete.clear();
+		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 //		The time series will be re-calculated by COPASI call in the next tick
 	}
 

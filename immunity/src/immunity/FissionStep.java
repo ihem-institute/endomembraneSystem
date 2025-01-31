@@ -266,7 +266,7 @@ public class FissionStep {
 //				b.volume = b.volume + deltaVol;
 //			}
 		Endosome.endosomeShape(endosome);
-		if (endosome.c > 1500/Cell.orgScale) {
+		if (endosome.c > 1500/Cell.orgScale) { //was 150 changedd 29/1/25
 //			System.out.println(endosome.c+"  ccccccccccccccccccccccccccccccccccorta de nuevo  " );
 			split(endosome);
 		}

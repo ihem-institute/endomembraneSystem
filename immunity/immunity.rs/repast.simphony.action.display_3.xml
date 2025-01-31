@@ -69,11 +69,11 @@
   <schedParams>
     <start>1.0</start>
     <interval>1.0</interval>
-    <priority>-Infinity</priority>
-    <pType>LAST</pType>
+    <priority>Infinity</priority>
+    <pType>FIRST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1147123907</hashCode>
+    <hashCode>-2093698706</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>

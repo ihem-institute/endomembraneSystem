@@ -46,6 +46,7 @@ public class UptakeStep2 {
 		 *  */
 
 //		Cell cell = Cell.getInstance();
+
 		HashMap<String, Double> totalRabs = new HashMap<String, Double>(Results.getInstance().getTotalRabs());
 		HashMap<String, Double> initialTotalRabs = new HashMap<String, Double>(Results.getInstance().getInitialTotalRabs());
 		//		System.out.println("totalRabs  "+totalRabs);

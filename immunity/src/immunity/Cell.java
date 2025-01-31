@@ -3,10 +3,13 @@ package immunity;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.environment.RunState;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.util.ContextUtils;
 
 public class Cell {
 	// a single Cell is created
@@ -66,6 +69,10 @@ public class Cell {
 	}
 	@ScheduledMethod(start = 1, interval = 100)
 	public void step() {
+	    System.gc(); //To clean garbage
+//	    System.out.println("Forced GC at tick ");			
+//	    Context<Object> context = ContextUtils.getContext(this);
+//	    System.out.println("Agent count: " + context.size());
 //		Cytosol pH = 7
 		Cell.getInstance().getSolubleCell().put("protonCy", 1E-4);
 //		Cytosol digestion
@@ -92,6 +99,9 @@ public class Cell {
 	@ScheduledMethod(start = 1, interval = 1)
 //	0.01/2d)// era /3 y luego /1, pero demasiado uptake desde PM
 	public void uptake() {
+		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		System.out.println("Memory usage: " + Runtime.getRuntime().totalMemory() / (1024 * 1024) + " MB");
+
 		if (Math.random() <ModelProperties.getInstance().getActionProbabilities().get("p_ERUptake"))
 		{
 

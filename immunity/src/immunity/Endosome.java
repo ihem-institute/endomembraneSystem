@@ -196,20 +196,22 @@ public class Endosome {
 		else return 10;
 	}
 
-	@ScheduledMethod(start = 1, interval = 1000)
-	public void printRabTropism() {
-//		System.out.println(" RAB TROPISMS " + cellProperties.getInstance().getRabTropism());
-	}
+//	@ScheduledMethod(start = 1, interval = 1000)
+//	public void printRabTropism() {
+////		System.out.println(" RAB TROPISMS " + cellProperties.getInstance().getRabTropism());
+//	}
 
 	
 	
 	@ScheduledMethod(start = 1, interval = 1)
 	public void step() {
-		Context<Object> context = ContextUtils.getContext(this);
-		if(!context.contains(this)) {
-			System.out.println(" ABSENT ENDOSOME " + this);
-			return;
-		}
+//		Context<Object> context = ContextUtils.getContext(this);
+////		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+//		if(!context.contains(this)) {
+//			System.out.println(" ABSENT ENDOSOME " + this);
+//			return;
+//		}
+//		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 		this.tickCount=this.tickCount + 1;
 
 		NdPoint myPoint = space.getLocation(this);
@@ -220,7 +222,7 @@ public class Endosome {
 		double z = myPoint.getZ();
 		this.setZcoor(z);
 //		if (this.zcoor < 1E-3 ) {
-//			System.out.println(this.zcoor + " INICIAL coordenada en cero");
+//		System.out.println(this.zcoor + " INICIAL coordenada en cero");
 //			
 //		}
 
@@ -267,6 +269,7 @@ public class Endosome {
 //		this.setYcoor(y);
 //		z = myPoint.getZ();
 //		this.setZcoor(z);
+		
 
 	}
 

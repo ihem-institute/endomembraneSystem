@@ -5,12 +5,12 @@ import java.awt.Font;
 import java.util.Collections;
 
 import org.jogamp.java3d.Shape3D;
+import org.jogamp.java3d.Node;
 import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
 import org.jogamp.java3d.Appearance;
 import org.jogamp.java3d.ColoringAttributes;
 import org.jogamp.java3d.Material;
-import org.jogamp.java3d.Shape3D;
 import org.jogamp.java3d.Texture;
 import org.jogamp.java3d.Transform3D;
 import org.jogamp.java3d.TransformGroup;
@@ -37,49 +37,37 @@ import repast.simphony.space.grid.Grid;
  */
 public class SpheroidNodeStyle implements Style3D<Endosome> {
 
-	 public TaggedBranchGroup getBranchGroup(Endosome agent, 
-		        TaggedBranchGroup taggedGroup) {
+	public TaggedBranchGroup getBranchGroup(Endosome agent, TaggedBranchGroup taggedGroup) {
+	    if (taggedGroup == null) {
+	        taggedGroup = new TaggedBranchGroup("Spheroid");
 
-		 if (agent.getSpace().getLocation(agent) == null) {
-			    System.out.println("Skipping agent with null location: " + agent);
-			    return null;
-			}
-		 
-	        if (taggedGroup == null) {
-	            taggedGroup = new TaggedBranchGroup("Spheroid");
-//			    System.out.println("Rendering agent: " + agent + " " + agent.getXcoor());
-	            // Define appearance.  The color is modified  with public TaggedAppearance getAppearance
-	            Appearance appearance = new Appearance();
-	            ColoringAttributes colorAttr = new ColoringAttributes(new Color3f(1f,1f,1f), ColoringAttributes.SHADE_GOURAUD);
-	            appearance.setColoringAttributes(colorAttr);
+	        // Shared appearance
+	        Appearance appearance = new Appearance();
+	        ColoringAttributes colorAttr = new ColoringAttributes(new Color3f(1f, 1f, 1f), ColoringAttributes.SHADE_GOURAUD);
+	        appearance.setColoringAttributes(colorAttr);
 
-	            // Create a sphere proportional to the volume.
-	            double size = Math.pow((agent.volume*3d/4d/Math.PI),1d/3d)*2E-4d;
-//	            System.out.println("SIZE  "+size);
-	            Sphere sphere = new Sphere((float) size, Primitive.GENERATE_NORMALS, 64, appearance);
-	            Shape3D shape = new Shape3D(sphere.getShape().getGeometry(),appearance);
-				shape.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
-				shape.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
-				shape.setCapability(Shape3D.ALLOW_GEOMETRY_READ);
+	        // Shared sphere (reuse across agents)
+	        Sphere sphere = new Sphere(0.002f, Primitive.GENERATE_NORMALS, 16, appearance);
+	        Shape3D shape = new Shape3D(sphere.getShape().getGeometry(), appearance);
 
-	            // Create a TransformGroup for scaling
-	            TransformGroup tg = new TransformGroup();
+	        // Remove unnecessary capabilities
+			shape.setCapability(Shape3D.ALLOW_APPEARANCE_READ);
+			shape.setCapability(Shape3D.ALLOW_APPEARANCE_WRITE);
+			shape.setCapability(Shape3D.ALLOW_GEOMETRY_READ);
 
-	            // Create a scale transformation for a spheroid
-//	            Transform3D transform = new Transform3D();
-//	            transform.setScale(new Vector3d(1.0, 10.0 , 1.0)); // Example: squish along the Y-axis
+	        // TransformGroup for scaling
+	        Transform3D transform = new Transform3D();
+	        double size = Math.pow((agent.volume * 3d / 4d / Math.PI), 1d / 3d) * 2E-1d;
+	        transform.setScale(new Vector3d(size, size, size));
 
-	            // Apply the transformation
-	//            tg.setTransform(transform);
-
-	            // Add the sphere to the TransformGroup
-	            tg.addChild(shape);
-
-	            // Add the TransformGroup to the branch group
-	            taggedGroup.getBranchGroup().addChild(tg);
-	        }
-	        return taggedGroup;
+	        TransformGroup tg = new TransformGroup();
+	        tg.setTransform(transform);
+	        tg.addChild(shape);
+	        taggedGroup.getBranchGroup().addChild(tg);
 	    }
+	    return taggedGroup;
+	}
+
     
 	 public float[] getRotation(Endosome agent) {
 		    // Convert angles to radians
@@ -146,13 +134,13 @@ public class SpheroidNodeStyle implements Style3D<Endosome> {
                     AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), Color.YELLOW); // TGN
                     break;
                 case "RabF":
-                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), new Color(225, 128, 0)); // trans-Golgi
+                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), Color.LIGHT_GRAY);// Color(188, 144, 100)); // trans-Golgi
                     break;
                 case "RabG":
-                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), new Color(191, 96, 0)); // medial-Golgi
+                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), Color.GRAY);// Color(172, 123, 74)); // medial-Golgi
                     break;
                 case "RabH":
-                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), new Color(128, 64, 0)); // cis-Golgi
+                    AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), Color.DARK_GRAY);// Color(126, 90, 54)); // cis-Golgi
                     break;
                 case "RabI":
                     AppearanceFactory.setMaterialAppearance(taggedAppearance.getAppearance(), Color.MAGENTA); // ERGIC

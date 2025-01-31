@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
+import repast.simphony.util.ContextUtils;
 
 public class OrganelleMove {
 
@@ -18,6 +20,7 @@ public class OrganelleMove {
 	public static double cellLimit = 3 * Cell.orgScale;
 	
 	public static void moveTowards(Endosome endosome) {
+//		System.out.println(endosome.headingP + " polar CISTERN HEADING");
 
 		if ( endosome.area >= Cell.minCistern/20//era 20  minimal cistern Golgi absolute Scale hacer constante
 				&& isGolgi(endosome))
@@ -39,13 +42,13 @@ public class OrganelleMove {
 //		if it is not a Golgi cistern, move as a regular organelle
 		else {
 			moveNormal(endosome);
-//			NdPoint myPoint = space.getLocation(endosome);
-//			double x = myPoint.getX();
-//			endosome.setXcoor(x);
-//			double y = myPoint.getY();
-//			endosome.setYcoor(y);
-//			double z = myPoint.getZ();
-//			endosome.setZcoor(z);
+			NdPoint myPoint = space.getLocation(endosome);
+			double x = myPoint.getX();
+			endosome.setXcoor(x);
+			double y = myPoint.getY();
+			endosome.setYcoor(y);
+			double z = myPoint.getZ();
+			endosome.setZcoor(z);
 
 		}
 	}
@@ -68,7 +71,7 @@ public class OrganelleMove {
 		String maxRab = Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
 		String organelleName = ModelProperties.getInstance().rabOrganelle.get(maxRab);
 		double between = 4*scale;//distance between cisterna Math.random();
-		double high = 29;//distance from the bottom
+		double high = 32;//distance from the bottom
 //		endosome.setHeading(-90d);// = -90d;			
 //		System.out.println(endosome.headingP + " polar CISTERN HEADING");
 //		System.out.println(endosome.headingA + "  azimuthal CISTERN HEADING");
@@ -91,7 +94,11 @@ public class OrganelleMove {
 
 
 	public static void moveNormal(Endosome endosome) {
-//		if (endosome.area > 200000) return;
+//		if (endosome.area > 100000) {
+//		space.moveTo(endosome, 25.1d, 25d, 13.1d);
+//		grid.moveTo(endosome, (int) 25, (int) 25, (int)13);
+//		return;
+//		}
 		space = endosome.getSpace();
 		grid = endosome.getGrid();
 		/*
@@ -106,25 +113,23 @@ public class OrganelleMove {
 		 */
 
 		NdPoint myPoint = space.getLocation(endosome);
-//		NdPoint myPoint = endosome.getEndosomeLocation(endosome);
-//		System.out.println("ESTO FALLA "+myPoint.getX());
 		double x = myPoint.getX();
 		double y = myPoint.getY();
 		double z = myPoint.getZ();
-
+//		System.out.println(z +" z inicial ");
 //		If near the border, change heading randomly (100%) and stop move with 10% probability
 		if (!isPointInEllipsoid(x, y, z))
 		// cellSize- 5 cellLimit)) 
 		{ // near the cell border  LARGECELL
 //	    	System.out.println(" en el borde  " + x+"  " + y);
 			changeDirectionRnd(endosome);
-//		return;	
+		return;	
 		}
 //		If near the nucleus, change heading randomly (5%) and stop move with 10% probability
-
+//		If in the nucleus move out
 	
 		else if (isPointInCircle(x, y, z)) { // near the nucleus
-			changeDirectionRnd(endosome);
+//			changeDirectionRnd(endosome);
 			
 //				if (Math.random() < 0.05) {
 //					endosome.headingP = Math.random()*360;
@@ -136,12 +141,12 @@ public class OrganelleMove {
 //				endosome.headingA = headingOut[1];
 //				endosome.speed = 200d/endosome.size * Cell.orgScale/Cell.timeScale;//was 20d
 //
-//			double[] headingOut = moveAwayFromCenter(x,y,z);
-//			space.moveTo(endosome, headingOut[0], headingOut[1], headingOut[2]);
-//			grid.moveTo(endosome, (int) headingOut[0], (int) headingOut[1], (int)headingOut[2]);
-//		    System.out.println(headingOut[0] + " out of   in circle " + headingOut[1] + "    "+headingOut[2]);
+			double[] moveOut = outNucleus(x,y,z);
+			space.moveTo(endosome, moveOut[0], moveOut[1], moveOut[2]);
+			grid.moveTo(endosome, (int) moveOut[0], (int) moveOut[1], (int)moveOut[2]);
+//		    System.out.println(moveOut[3]+"    "+moveOut[0] + " out of   in circle " + moveOut[1] + "    "+moveOut[2]);
 			
-				
+		return;
 				
 				
 			}
@@ -154,7 +159,7 @@ public class OrganelleMove {
 		
 //		Having the heading and speed, make the movement.  If out of the space, limit
 //		the movement
-			if (endosome.speed == 0) return;// random movement 90% of the time return speed=0
+//			if (endosome.speed == 0) return;// random movement 90% of the time return speed=0
 		    double xx = x + Math.cos(endosome.headingP * Math.PI / 180d)
 			* endosome.speed*Cell.orgScale/Cell.timeScale;
 		    double yy = y + Math.sin(endosome.headingP * Math.PI / 180d)
@@ -165,6 +170,7 @@ public class OrganelleMove {
 		 if (isOccupied((int)xx, (int)yy, (int)zz, endosome)) {;   
 		 endosome.headingP =  - endosome.headingP;
 		 endosome.headingA =  - endosome.headingA;
+		 return;
 		 }
 
 //		    if move out the cell, goes to the center of the cell and change heading randomly
@@ -577,8 +583,36 @@ return new double[] { closestX, closestY, closestZ };
             // Return the new coordinates
             return new double[]{x1, y1, z1};
         }
+        public static double[] outNucleus(double x, double y, double z) {
+            // Compute the vector from the nucleus center to the agent
+            double x0 = CellBuilder.xWorld / 2;
+            double y0 = CellBuilder.yWorld / 2;
+            double z0 = CellBuilder.zWorld / 2;
+            double r = 0.5 * z0;
+            double dx = x - x0;
+            double dy = y - y0;
+            double dz = z - z0;
 
+            // Compute the current distance of the agent from the nucleus center
+            double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+            if (distance == 0d){
+            	return new double[]{10, 25, 13};
+            }
 
+            // Compute the scale factor to place the agent exactly on the nuclear boundary
+            double scale = r / distance;
+
+            // Compute the new coordinates at the periphery of the nucleus
+            double xNew = x0 + dx * scale;
+            double yNew = y0 + dy * scale;
+            double zNew = z0 + dz * scale;
+            dx = xNew - x0;
+            dy = yNew - y0;
+            dz = zNew - z0;
+            distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            return new double[]{xNew, yNew, zNew, distance};
+        }
 
 }
 

@@ -378,7 +378,7 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 
 		
 		if (RunEnvironment.getInstance().isBatch()) {
-			RunEnvironment.getInstance().endAt(60100);
+			RunEnvironment.getInstance().endAt(30100);
 		}
 
 		collection = context.getObjects(Endosome.class);// se guardan los objetos de la clase endosoma, supongo que seran endosomas
