@@ -124,7 +124,7 @@ public class RecycleStep {
 //			to delete the recycled endosome.
 			Context<Object> context = ContextUtils.getContext(endosome);
 			context.remove(endosome);
-			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 
 		}
 		}
@@ -181,7 +181,7 @@ public class RecycleStep {
 //				System.out.println("SECRETION TGN OR RE" + plasmaMembrane);
 			Context<Object> context = ContextUtils.getContext(endosome);
 			context.remove(endosome);
-			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 			}
 			else {// if it is not deleted, it forms an empty tubule
 			endosome.membraneContent.clear();
@@ -255,7 +255,7 @@ public class RecycleStep {
 //			to delete the recycled EE endosome.
 			Context<Object> context = ContextUtils.getContext(endosome);
 			context.remove(endosome);
-			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 
 		}
 

@@ -99,7 +99,7 @@ public class Cell {
 	@ScheduledMethod(start = 1, interval = 1)
 //	0.01/2d)// era /3 y luego /1, pero demasiado uptake desde PM
 	public void uptake() {
-		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+	//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 		System.out.println("Memory usage: " + Runtime.getRuntime().totalMemory() / (1024 * 1024) + " MB");
 
 		if (Math.random() <ModelProperties.getInstance().getActionProbabilities().get("p_ERUptake"))

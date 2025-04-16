@@ -6,19 +6,24 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.environment.RunState;
+import repast.simphony.query.WithinDistance;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.space.projection.Projection;
 import repast.simphony.util.ContextUtils;
 import repast.simphony.visualization.IDisplay;
 import repast.simphony.visualization.visualization3D.Display3D;
+import repast.simphony.query.space.continuous.ContinuousWithin;
 
 public class FusionStep {
 	private static ContinuousSpace<Object> space;
@@ -55,26 +60,45 @@ public class FusionStep {
 	}
 
 	private static void fusionNoGolgi(Endosome endosome) {
-		GridPoint pt = grid.getLocation(endosome);
+//		GridPoint pt = grid.getLocation(endosome);
 		// The 50 x 50 grid is equivalent to a 750 x 750 space units
 		// Hence, size/15 is in grid units
-		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
-		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
-				Endosome.class, gridSize, gridSize, gridSize);
-//		System.out.println("SIZE           "+gridSize);
-
-		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
+		double gridSize = endosome.size*Cell.orgScale / 15d;
 		List<Endosome> endosomes_to_delete = new ArrayList<Endosome>();
-		for (GridCell<Endosome> gr : cellList) {
-			// include all endosomes
-			for (Endosome end : gr.items()) {
-				if (end != endosome && (end.volume <= endosome.volume)
-						&& (EndosomeAssessCompatibility.compatibles(endosome, end))) {
-					endosomes_to_delete.add(end);
-				}
-//				System.out.println(endosomes_to_delete.size());
+		ContinuousWithin<Endosome> endosomeList = new ContinuousWithin<Endosome>(ContextUtils.getContext(endosome), endosome, gridSize);
+//		Iterable<Endosome> endosomes = endosomeList.query();
+		List<Endosome> endosomes = new ArrayList<>();
+		for (Object obj : endosomeList.query()) {
+		    if (obj instanceof Endosome) {
+		        endosomes.add((Endosome) obj);
+		    }
+		}
+		
+		for (Endosome end : endosomes) {
+//			System.out.println(end + "  ENDOSOMAS EN EL RADIO DE ACCION " + endosome);
+
+			if ( (end.volume <= endosome.volume)
+					&& (EndosomeAssessCompatibility.compatibles(endosome, end))) {
+				endosomes_to_delete.add(end);
 			}
 		}
+//		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
+//				Endosome.class, gridSize, gridSize, gridSize);
+//		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
+//
+////		WithinDistance<Endosome> endosomeList = new WithinDistance (ContextUtils.getContext(endosome), gridSize, endosome);
+//		List<Endosome> endosomes_to_delete = new ArrayList<Endosome>();
+//		for (GridCell<Endosome> gr : cellList) {
+//
+//			for (Endosome end : gr.items()) {
+//				System.out.println(end + " GRID LIST SIZE");
+//				if (end != endosome && (end.volume <= endosome.volume)
+//						&& (EndosomeAssessCompatibility.compatibles(endosome, end))) {
+//					endosomes_to_delete.add(end);
+//				}
+////				System.out.println(endosomes_to_delete.size());
+//			}
+//		}
 //		System.out.println("endosomas que se fusionan" + endosomes_to_delete.size());
 		for (Endosome endosome2 : endosomes_to_delete) {
 			// System.out.println(endosome.area+"  AREAS A SUMAR AREAS A SUMAR"+
@@ -88,7 +112,7 @@ public class FusionStep {
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
 			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
-			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 
 //			context.getProjections().remove(endosome2);
 //			context.getObjectsAsStream(Endosome.class).count();
@@ -104,7 +128,7 @@ public class FusionStep {
 		//Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();
-		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 //		endosomes_to_delete.clear();
 		
 //		The time series will be re-calculated by COPASI call in the next tick
@@ -112,41 +136,69 @@ public class FusionStep {
 	}
 
 	private static void fusionGolgi(Endosome endosome) {
-		GridPoint pt = grid.getLocation(endosome);
+//		GridPoint pt = grid.getLocation(endosome);
 		// I calculated that the 50 x 50 grid is equivalent to a 750 x 750 nm
 		// square
 		// Hence, size/15 is in grid units
-		int gridSize = (int) Math.round(endosome.size*Cell.orgScale / 15d);
-		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
-				Endosome.class, gridSize, gridSize, gridSize);
+		double gridSize = endosome.size*Cell.orgScale / 15d;
+//		GridCellNgh<Endosome> nghCreator = new GridCellNgh<Endosome>(grid, pt,
+//				Endosome.class, gridSize, gridSize, gridSize);
 		// System.out.println("SIZE           "+gridSize);
 
-		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
+//		List<GridCell<Endosome>> cellList = nghCreator.getNeighborhood(true);
 		List<Endosome> endosomes_to_delete = new ArrayList<Endosome>();
-
-// it is assumed that the selected endosome is large and a cistern
-		for (GridCell<Endosome> gr : cellList) {
-			// include all endosomes
-			for (Endosome end : gr.items()) {
-				if (end.equals(endosome)) continue;// if it is itself 
-//				double rendo = ModelProperties.getInstance().getCellK().get("rendo");//35.0; // radius vesicle/ 15393,804
-				boolean isGolgi2 = isGolgi(end);				
-//If the second organelle is Golgi and it is large (cistern) only fuse if it is homotypic fusion
-				if (isGolgi2 // it is a Golgi structure
-						&& (end.area > minEn)// it is larger than a vesicle.  If it is small, it can fuse homotypically
-						&& // and they DO NOT share the same maximal Rab domain
-  	 				    !(Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey().equals
-						(Collections.max(end.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()))
-						){continue;};
-				if (!EndosomeAssessCompatibility.compatibles(endosome, end))// they are not compatible
-						{continue;};
-			endosomes_to_delete.add(end);	
-//			 System.out.println(
-//						Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()
-//
-//					+ " FUSIONA CON GOLGI   " + end.area + maxRab + isGolgi);
-			}
+		ContinuousWithin<Endosome> endosomeList = new ContinuousWithin<Endosome>(ContextUtils.getContext(endosome), endosome, gridSize);
+//		Iterable<Endosome> endosomes = endosomeList.query();
+		List<Endosome> endosomes = new ArrayList<>();
+		for (Object obj : endosomeList.query()) {
+		    if (obj instanceof Endosome) {
+		        endosomes.add((Endosome) obj);
+		    }
 		}
+//// it is assumed that the selected endosome is large and a cistern
+//		for (GridCell<Endosome> gr : cellList) {
+//			// include all endosomes
+//			for (Endosome end : gr.items()) {
+//				if (end.equals(endosome)) continue;// if it is itself 
+////				double rendo = ModelProperties.getInstance().getCellK().get("rendo");//35.0; // radius vesicle/ 15393,804
+//				boolean isGolgi2 = isGolgi(end);				
+////If the second organelle is Golgi and it is large (cistern) only fuse if it is homotypic fusion
+//				if (isGolgi2 // it is a Golgi structure
+//						&& (end.area > minEn)// it is larger than a vesicle.  If it is small, it can fuse homotypically
+//						&& // and they DO NOT share the same maximal Rab domain
+//  	 				    !(Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey().equals
+//						(Collections.max(end.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()))
+//						){continue;};
+//				if (!EndosomeAssessCompatibility.compatibles(endosome, end))// they are not compatible
+//						{continue;};
+//			endosomes_to_delete.add(end);	
+////			 System.out.println(
+////						Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()
+////
+////					+ " FUSIONA CON GOLGI   " + end.area + maxRab + isGolgi);
+//			}
+//		}
+		
+		for (Endosome end : endosomes) {
+//			System.out.println(end + "  Golgi EN EL RADIO DE ACCION " + endosome);
+//		if (end.equals(endosome)) continue;// if it is itself 
+//		double rendo = ModelProperties.getInstance().getCellK().get("rendo");//35.0; // radius vesicle/ 15393,804
+		boolean isGolgi2 = isGolgi(end);				
+//If the second organelle is Golgi and it is large (cistern) only fuse if it is homotypic fusion
+		if (isGolgi2 // it is a Golgi structure
+				&& (end.area > minEn)// it is larger than a vesicle.  If it is small, it can fuse homotypically
+				&& // and they DO NOT share the same maximal Rab domain
+				    !(Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey().equals
+				(Collections.max(end.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()))
+				){continue;};
+		if (!EndosomeAssessCompatibility.compatibles(endosome, end))// they are not compatible
+				{continue;};
+	endosomes_to_delete.add(end);	
+//	 System.out.println(
+//				Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey()
+//
+//			+ " FUSIONA CON GOLGI   " + end.area + maxRab + isGolgi);
+	}
 		for (Endosome endosome2 : endosomes_to_delete) {
 			// System.out.println(endosome.area+"  AREAS A SUMAR AREAS A SUMAR"+
 			// endosome.area);
@@ -159,7 +211,7 @@ public class FusionStep {
 			endosome.solubleContent = sumSolubleContent(endosome, endosome2);
 			Context<Object> context = ContextUtils.getContext(endosome2);
 			context.remove(endosome2);
-			RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//	RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 
 //			context.getObjectsAsStream(Endosome.class).count();
 			}
@@ -170,7 +222,7 @@ public class FusionStep {
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();		
 		endosomes_to_delete.clear();
-		RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
+		//RunState.getInstance().getGUIRegistry().getDisplays().forEach(display -> display.update());
 //		The time series will be re-calculated by COPASI call in the next tick
 	}
 
@@ -240,7 +292,7 @@ public class FusionStep {
 		return solSum;
 	}
 	
-	
+
 	private static boolean isGolgi(Endosome endosome) {
 		double areaGolgi = 0d;
 		ModelProperties modelProperties = ModelProperties.getInstance();
@@ -254,5 +306,8 @@ public class FusionStep {
 		}
 		return isGolgi;	
 	}
+	
+	
+
 
 }

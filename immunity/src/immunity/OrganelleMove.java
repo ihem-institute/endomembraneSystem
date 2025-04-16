@@ -240,25 +240,31 @@ public class OrganelleMove {
 		double dist = 1000;
 		MT mt = null;
 //RULE 19-7-2021.  The organelle will sense the MT around it and select the closest one (minimal absolute distance)
-		for (MT mmt : mts) {
-			double ndist = distance(endosome, mmt);
-//			The distance is in space units from 0 to 50. At scale 1, the space is 1500 nm.  At 
-//			scale 0.5 it is 3000 nm.
-//			Hence to convert to nm, I must multiply by 45 (2250/50) and divide by scale. An organelle will sense MT
-//			at a distance less than its size.
-			if (ndist <= dist) {
-				dist = ndist; 
-				mt = mmt;
-			}
-		}
-// Check if near MT.  If it is, then move on MT according to organelle domains and if it is or not a tubule
+		  double closeEnoughThreshold = 2 * endosome.size / 30d * Cell.orgScale; // Define a threshold for "close enough"
+		    for (MT mmt : mts) {
+		        double ndist = distance(endosome, mmt);
 
-		//		If far from  Mts, then random
-		if (dist*30d/Cell.orgScale > 2*endosome.size) {
-			changeDirectionRnd(endosome);
-			return;
-			
-		}
+		        // If the MT is close enough, break the loop
+		        if (ndist * 30d / Cell.orgScale <= closeEnoughThreshold) {
+		            mt = mmt;
+		            dist = ndist;
+		            break;
+		        }
+
+		        // Otherwise, keep track of the closest MT
+		        if (ndist <= dist) {
+		            dist = ndist;
+		            mt = mmt;
+		        }
+		    }
+
+		    // If no MT is close enough, use random movement
+		    if (mt == null || dist * 30d / Cell.orgScale > 2 * endosome.size) {
+		        changeDirectionRnd(endosome);
+		        return;
+		    }
+
+
 
 //			if (isGolgi(endosome)) 
 //			{
@@ -340,44 +346,44 @@ public class OrganelleMove {
 		}
 
 
-public static double[] closestMTpoint(double x, double y, double z, 
-            double xmin, double ymin, double zmin, 
-            double xmax, double ymax, double zmax) {
-// Line segment vector
-double dx = xmax - xmin;
-double dy = ymax - ymin;
-double dz = zmax - zmin;
+	public static double[] closestMTpoint(double x, double y, double z, 
+			double xmin, double ymin, double zmin, 
+			double xmax, double ymax, double zmax) {
+		// Line segment vector
+		double dx = xmax - xmin;
+		double dy = ymax - ymin;
+		double dz = zmax - zmin;
 
-// Vector from segment start to the given point
-double px = x - xmin;
-double py = y - ymin;
-double pz = z - zmin;
+		// Vector from segment start to the given point
+		double px = x - xmin;
+		double py = y - ymin;
+		double pz = z - zmin;
 
-// Calculate the length squared of the segment
-double lineLengthSquared = dx * dx + dy * dy + dz * dz;
+		// Calculate the length squared of the segment
+		double lineLengthSquared = dx * dx + dy * dy + dz * dz;
 
-// Handle edge case: if the segment is a single point
-if (lineLengthSquared == 0.0) {
-return new double[] { xmin, ymin, zmin };
-}
+		// Handle edge case: if the segment is a single point
+		if (lineLengthSquared == 0.0) {
+			return new double[] { xmin, ymin, zmin };
+		}
 
-// Projection of point onto the line (parameter t)
-double dotProduct = px * dx + py * dy + pz * dz;
-double t = dotProduct / lineLengthSquared;
+		// Projection of point onto the line (parameter t)
+		double dotProduct = px * dx + py * dy + pz * dz;
+		double t = dotProduct / lineLengthSquared;
 
-// Clamp t to the range [0, 1] to stay within the segment
-t = Math.max(0, Math.min(1, t));
+		// Clamp t to the range [0, 1] to stay within the segment
+		t = Math.max(0, Math.min(1, t));
 
-// Compute the closest point on the segment
-double closestX = xmin + t * dx;
-double closestY = ymin + t * dy;
-double closestZ = zmin + t * dz;
+		// Compute the closest point on the segment
+		double closestX = xmin + t * dx;
+		double closestY = ymin + t * dy;
+		double closestZ = zmin + t * dz;
 
-// Debugging output (optional)
-//System.out.println("Closest point: (" + closestX + ", " + closestY + ", " + closestZ + ")");
+		// Debugging output (optional)
+		//System.out.println("Closest point: (" + closestX + ", " + closestY + ", " + closestZ + ")");
 
-return new double[] { closestX, closestY, closestZ };
-}
+		return new double[] { closestX, closestY, closestZ };
+	}
 
 	private static void moveGolgiVesicles(Endosome endosome) {
 		double deltaX = Math.random()*6-3;//when near MT rnd en zona Golgi
