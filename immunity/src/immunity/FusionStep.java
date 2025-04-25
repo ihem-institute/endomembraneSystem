@@ -124,7 +124,7 @@ public class FusionStep {
 
 		double rsphere = Math.pow(endosome.volume * 3d / 4d / Math.PI, (1d / 3d));
 		double size = rsphere;
-		endosome.speed = 1d/ size;
+		endosome.speed = 20d/size* Cell.orgScale/Cell.timeScale;;
 		//Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();
@@ -217,7 +217,7 @@ public class FusionStep {
 			}
 		double rsphere = Math.pow(endosome.volume * 3d / 4d / Math.PI, (1d / 3d));
 		double size = rsphere;
-		endosome.speed = 1d/ size;
+		endosome.speed = 20d/size* Cell.orgScale/Cell.timeScale;
 		Endosome.endosomeShape(endosome);
 		endosome.getEndosomeTimeSeries().clear();
 		endosome.getRabTimeSeries().clear();		

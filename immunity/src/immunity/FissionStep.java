@@ -167,7 +167,7 @@ public class FissionStep {
 		
 		endosome.size = Math.pow(endosome.volume * 3d / 4d / PI, (1d / 3d));
 
-		endosome.speed = 1d / endosome.size;
+		endosome.speed = 20d/endosome.size* Cell.orgScale/Cell.timeScale;
 //		Time series are re calculated in the next tick
 		endosome.getRabTimeSeries().clear();
 		endosome.getEndosomeTimeSeries().clear();

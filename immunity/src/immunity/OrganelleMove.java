@@ -21,6 +21,7 @@ public class OrganelleMove {
 	
 	public static void moveTowards(Endosome endosome) {
 //		System.out.println(endosome.headingP + " polar CISTERN HEADING");
+		
 
 		if ( endosome.area >= Cell.minCistern/20//era 20  minimal cistern Golgi absolute Scale hacer constante
 				&& isGolgi(endosome))
@@ -94,6 +95,7 @@ public class OrganelleMove {
 
 
 	public static void moveNormal(Endosome endosome) {
+		
 //		if (endosome.area > 100000) {
 //		space.moveTo(endosome, 25.1d, 25d, 13.1d);
 //		grid.moveTo(endosome, (int) 25, (int) 25, (int)13);
@@ -101,6 +103,7 @@ public class OrganelleMove {
 //		}
 		space = endosome.getSpace();
 		grid = endosome.getGrid();
+		
 		/*
 		 * Direction in Repast 0 to the right 180 to the left -90 down +90 up
 		 * Move with random speed inversely proportional to the radius of an sphere with the endosome
@@ -117,13 +120,13 @@ public class OrganelleMove {
 		double y = myPoint.getY();
 		double z = myPoint.getZ();
 //		System.out.println(z +" z inicial ");
-//		If near the border, change heading randomly (100%) and stop move with 10% probability
+//		If near the border, change heading randomly (100%) and stop move with 1% probability
 		if (!isPointInEllipsoid(x, y, z))
 		// cellSize- 5 cellLimit)) 
 		{ // near the cell border  LARGECELL
 //	    	System.out.println(" en el borde  " + x+"  " + y);
 			changeDirectionRnd(endosome);
-		return;	
+		
 		}
 //		If near the nucleus, change heading randomly (5%) and stop move with 10% probability
 //		If in the nucleus move out
@@ -146,12 +149,12 @@ public class OrganelleMove {
 			grid.moveTo(endosome, (int) moveOut[0], (int) moveOut[1], (int)moveOut[2]);
 //		    System.out.println(moveOut[3]+"    "+moveOut[0] + " out of   in circle " + moveOut[1] + "    "+moveOut[2]);
 			
-		return;
+		
 				
 				
 			}
 		else
-//			if not near the borders
+//			if not near the borders or the nucleus, check if near a microtubule
 		{
 			changeDirectionMt(endosome);
 
@@ -167,6 +170,7 @@ public class OrganelleMove {
 		    double zz = z + Math.sin(endosome.headingA * Math.PI / 180d)
 			* endosome.speed * Cell.orgScale/Cell.timeScale;
 //	    	System.out.println("coordenadas  " + xx+"  " + yy+ "  "+ zz);
+//		    if it is occupied, change the heading and do not move
 		 if (isOccupied((int)xx, (int)yy, (int)zz, endosome)) {;   
 		 endosome.headingP =  - endosome.headingP;
 		 endosome.headingA =  - endosome.headingA;
@@ -222,11 +226,14 @@ public class OrganelleMove {
 			endosome.speed = 0;
 			endosome.headingP = Math.random()*360;
 			endosome.headingA = Math.random()*360;
-			return;
+	
 		}
+		else {
 // The speed is random between 0 and a value inversely proportional to the endosome size
-			endosome.speed = 20d/endosome.size*Math.random()* Cell.orgScale/Cell.timeScale;
-			return;
+			endosome.speed = 20d/endosome.size* Cell.orgScale/Cell.timeScale;
+			
+		}
+		return;
 		}
 	
 	public static void changeDirectionMt(Endosome endosome){
@@ -264,14 +271,7 @@ public class OrganelleMove {
 		        return;
 		    }
 
-
-
-//			if (isGolgi(endosome)) 
-//			{
-//				moveGolgiVesicles(endosome);
-//				return;
-//			}
-//			else
+			else
 			{boolean isTubule = (endosome.volume/(endosome.area - 2*Math.PI*Cell.rcyl*Cell.rcyl) <=Cell.rcyl/2); // should be /2
 			// select a mtDir according with the domains present in the endosome.  Larger probability for the more aboundant domain
 			// 0 means to plus endo of MT (to PM); +1 means to the minus end of MT (to nucleus)
@@ -321,7 +321,7 @@ public class OrganelleMove {
 			double x = myPoint.getX();
 			double y = myPoint.getY();
 			double z = myPoint.getZ();
-			
+//			move the organelle to the closest point of the MT segment
 			double[] point = closestMTpoint(
 					x,y,z,
 					mt.getXorigin(), mt.getYorigin(), mt.getZorigin(),
@@ -341,6 +341,7 @@ public class OrganelleMove {
 			endosome.speed = 1d*Cell.orgScale/Cell.timeScale;
 			endosome.headingP = -(mtDir * 180f + mt.getMtheading()+270f);
 			endosome.headingA = 0;
+//		the movement is done in the moveNormal method
 //				System.out.println(endosome.rabContent +" endosome heading "+ endosome.headingP+" MTheading " + mt.getMtheading());
 			return;
 		}

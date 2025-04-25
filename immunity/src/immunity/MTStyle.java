@@ -26,7 +26,7 @@ public class MTStyle implements StyleOGL2D<MT> {
 		double hh = h * Math.PI /180;
 		int length = (int) object.getLength()*750/50;
 
-		int diameterMT = (int) (12*Cell.orgScale);
+		int diameterMT = (int) (12*Cell.orgScale);// era 12*...
 //		System.out.println(diameterMT + " di le " + length);
 		VSpatial createRectangle = this.factory.createRectangle(diameterMT, length);
 		return createRectangle;
