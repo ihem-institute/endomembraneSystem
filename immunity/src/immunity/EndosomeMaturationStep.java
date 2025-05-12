@@ -10,7 +10,7 @@ public class EndosomeMaturationStep {
 //		if (Math.random() > endosome.tickCount / 3000) {return;}
 		String maxRab = Collections.max(endosome.rabContent.entrySet(), Map.Entry.comparingByValue()).getKey();
 //		if the maxRab is not prevalent, return
-		if (endosome.rabContent.get(maxRab)/endosome.area < 0.5) return; //LUIS ERA 0.9
+		if (endosome.rabContent.get(maxRab)/endosome.area < 0.3) return; //LUIS ERA 0.9 luego 0.5
 //		Maturation according to the maxRab. First argument (oldRab) is the Rab that matures to the second argument (newRab)
 //		The third argument is the proportion of the total domain that matures.  Most for Rab5-Rab7 and the Golgi domains.  Only
 //		10% for Rab5-Rab22).5% for RabB-RabC
@@ -31,7 +31,7 @@ public class EndosomeMaturationStep {
 			break;
 		case "RabI":
 //			if too young return
-			if (Math.random() > endosome.tickCount / 3000) {return;}
+			if (Math.random() > endosome.tickCount / 1) {return;}
 			mature(endosome, "RabI", "RabH", 0.8);//ERGIC to cisG was 0.9 for all Golgi
 			break;
 		case "RabH":
@@ -50,7 +50,7 @@ public class EndosomeMaturationStep {
 		case "RabB":
 //			if too young return
 			if (Math.random() > endosome.tickCount / 3000) {return;}
-			mature(endosome, "RabB", "RabC", 0.08);//SE to RE era 0.04//12/8/24 0.08
+			mature(endosome, "RabB", "RabC", 0.16);//SE to RE era 0.04//12/8/24 0.08 4-25 0.16
 			break;			
 			
 		 default: return;

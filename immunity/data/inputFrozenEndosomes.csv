@@ -10180,11 +10180,11 @@ endosome2544A,initRabContent,RabH,7539.822368615503
 endosome2544A,initMembraneContent,exCxEn,0.0,R-TfaEn,9.630776041973377E-4,oMHCIEn,0.0,membraneMarker,0.0,cMHCIEn,0.0,R-TfEn,8.402252671484423E-4,pepMHCIEn,0.0,REn,3.0910443951437383E-4,imCxEn,0.0
 endosome2544A,initSolubleContent,ovaEn,0.0,protonEn,11.112465901671385,TfaEn,1.614495473776234E-4,solubleMarker,0.0,mvb,0.0,FeEn,8.66038648415779E-6,TfEn,1.0652816418538994E-8,pepEn,0.0
 plasmaMembrane,initOrgProp,area,4.970562354439111E8,volume,9.19E11,
-plasmaMembrane,initMembraneContent,exCxEn,0.0,R-TfaEn,1715.8256821802024,oMHCIEn,0.0,membraneMarker,0.0,cMHCIEn,0.0,R-TfEn,1493.5558198512483,pepMHCIEn,0.0,REn,554.3885796928786,imCxEn,0.0
+plasmaMembrane,initMembraneContent,exCxEn,0.0,R-TfaEn,1715.8256821802024,oMHCIEn,0.0,membraneMarker,0.0,cMHCIEn,0.0,R-TfEn,1493.5558198512483,pepMHCIEn,0.0,REn,55400.3885796928786,imCxEn,0.0
 plasmaMembrane,initSolubleContent,ovaEn,0.0,protonEn,9.396069052827337E25,TfaEn,69.15117063618369,solubleMarker,0.0,mvb,3985.347029390769,FeEn,14.361566776042064,TfEn,0.005435519753452915,pepEn,0.0
 EReticulum,initOrgProp,area,5.872935E9,volume,1.01E11,
 EReticulum,initMembraneContent,exCxEn,0.0,R-TfaEn,9.921759148400401,oMHCIEn,0.0,membraneMarker,0.0,cMHCIEn,0.0,R-TfEn,3.0187955323358397,pepMHCIEn,0.0,REn,24.98864919258576,imCxEn,0.0
 EReticulum,initSolubleContent,ovaEn,0.0,protonEn,50777.830372264376,TfaEn,1.519534323269966,solubleMarker,0.0,mvb,2.262244796685339E-22,FeEn,0.032178706900508086,TfEn,4.3365408967418466E-5,pepEn,0.0
-CyCell,initOrgProp,area,9000000.0,volume,7.2E9,
+CyCell,initOrgProp,area,495669666,volume,918271706000,
 CyCell,initMembraneContent,
 CyCell,initSolubleContent,pepCy,0.0,ovaCy,0.0,FeCy,2.8E-6,protonCy,1.0E-4

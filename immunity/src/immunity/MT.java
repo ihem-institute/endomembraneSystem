@@ -58,18 +58,25 @@ public class MT {
 		xorigin= CellBuilder.xWorld/2;
 		yorigin = CellBuilder.yWorld/2;
 		zorigin = CellBuilder.zWorld/2;
-		
-		double[] randomMTend = getRandomPointOnCircle(CellBuilder.xWorld/2);
-		xend = randomMTend[0]+ xorigin;
-		yend = randomMTend[1] + yorigin;
-		zend = zorigin;
-		mtheading = Math.atan2(xend-25, yend-25)*180/Math.PI; //-mth;
+        double a = CellBuilder.xWorld / 2; // Semi-major axis
+        double b = CellBuilder.zWorld / 2; // Semi-minor axis
+		double[] randomMTend = getRandomPointOnSpheroid(xorigin, yorigin, zorigin, a, b);
+		xend = randomMTend[0];
+		yend = randomMTend[1];
+        zend = randomMTend[2];
+        length = Math.sqrt((xend - xorigin) * (xend - xorigin) +
+                (yend - yorigin) * (yend - yorigin) +
+                (zend - zorigin) * (zend - zorigin));
+        mtheading = 90 - Math.atan2(yend - yorigin, xend - xorigin) * 180 / Math.PI;//-mth;
 		double x = (xend + xorigin)/2 ;//25 * Math.cos(mtheading*Math.PI / 180);
 		double y = (yend + yorigin)/2 ;//25 * Math.sin(mtheading*Math.PI / 180);
-		double z = CellBuilder.zWorld/2;
+        double z = (zend + zorigin) / 2;
 		space.moveTo(mt, x, y, z);
 		grid.moveTo(mt, (int) x, (int) y, (int) z);
-		length = Math.sqrt((xend-xorigin)*(xend-xorigin)+(yend-yorigin)*(yend-yorigin));
+        length = Math.sqrt((xend - xorigin) * (xend - xorigin) +
+                (yend - yorigin) * (yend - yorigin) +
+                (zend - zorigin) * (zend - zorigin));
+        double inclinationAngle = Math.acos((zend + zorigin) / length) * 180.0 / Math.PI;
 //System.out.println(mtheading + "  "+xend +" XY al azar del cuadrado  "+ yend);		
 //writing to a xml file.  It works, but I will not be able to use to strart a simulation
 //		XStream xstream = new XStream();
@@ -82,6 +89,29 @@ public class MT {
 //		}
 		
 	}
+    public static double[] getRandomPointOnSpheroid(double x0, double y0, double z0, double a, double b) {
+        Random random = new Random();
+        double goldenAngle = Math.PI * (3 - Math.sqrt(5)); // Golden angle in radians
+
+        // Generate a random index for uniform distribution
+        int i = random.nextInt(100); // Adjust as needed for more points
+        double t = (double) i / 100;
+        double inclination = Math.acos(1 - 2 * t); // Inclination angle
+        double azimuth = i * goldenAngle; // Azimuthal angle
+
+        // Spherical coordinates
+        double x = Math.sin(inclination) * Math.cos(azimuth);
+        double y = Math.sin(inclination) * Math.sin(azimuth);
+        double z = Math.cos(inclination);
+
+        // Scale to oblate spheroid and translate to center
+        double spheroidX = x0 + a * x;
+        double spheroidY = y0 + a * y;
+        double spheroidZ = z0 + b * z;
+
+        return new double[] { spheroidX, spheroidY, spheroidZ };
+    }
+	
     public static double[] getRandomPointOnCircle(double r) {
         Random random = new Random();
 

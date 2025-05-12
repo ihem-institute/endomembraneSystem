@@ -96,11 +96,6 @@ public class OrganelleMove {
 
 	public static void moveNormal(Endosome endosome) {
 		
-//		if (endosome.area > 100000) {
-//		space.moveTo(endosome, 25.1d, 25d, 13.1d);
-//		grid.moveTo(endosome, (int) 25, (int) 25, (int)13);
-//		return;
-//		}
 		space = endosome.getSpace();
 		grid = endosome.getGrid();
 		
@@ -148,10 +143,7 @@ public class OrganelleMove {
 			space.moveTo(endosome, moveOut[0], moveOut[1], moveOut[2]);
 			grid.moveTo(endosome, (int) moveOut[0], (int) moveOut[1], (int)moveOut[2]);
 //		    System.out.println(moveOut[3]+"    "+moveOut[0] + " out of   in circle " + moveOut[1] + "    "+moveOut[2]);
-			
 		
-				
-				
 			}
 		else
 //			if not near the borders or the nucleus, check if near a microtubule
@@ -558,44 +550,44 @@ public class OrganelleMove {
             return new double[]{theta, phi};
         }
         
-        public static double[] moveAwayFromCenter(double x, double y, double z) {
-            // Calculate the relative position of the point to the sphere center
-            double x0 = CellBuilder.xWorld / 2;
-            double y0 = CellBuilder.yWorld / 2;
-            double z0 = CellBuilder.zWorld / 2;
-            double dx = x - x0;
-            double dy = y - y0;
-            double dz = z - z0;
-//            double initialDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-            // Compute the magnitude of the vector
-            double magnitude = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            // Handle the edge case where the magnitude is zero (point at the center)
-            if (magnitude == 0) {
-                throw new IllegalArgumentException("The point is at the center of the sphere, no valid direction.");
-            }
-
-            // Normalize the direction vector
-            double unitDx = dx / magnitude;
-            double unitDy = dy / magnitude;
-            double unitDz = dz / magnitude;
-            double d = 1d;
-
-            // Scale the unit vector by the distance d
-            double x1 = x + unitDx * d;
-            double y1 = y + unitDy * d;
-            double z1 = z + unitDz * d;
-//           double finalDistance = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0) + (z1 - z0) * (z1 - z0));
-//            System.out.println( initialDistance+"  Distance from Center: " + finalDistance);
-            // Return the new coordinates
-            return new double[]{x1, y1, z1};
-        }
+//        public static double[] moveAwayFromCenter(double x, double y, double z) {
+//            // Calculate the relative position of the point to the sphere center
+//            double x0 = CellBuilder.xWorld / 2;
+//            double y0 = CellBuilder.yWorld / 2;
+//            double z0 = CellBuilder.zWorld / 2;
+//            double dx = x - x0;
+//            double dy = y - y0;
+//            double dz = z - z0;
+////            double initialDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+//            // Compute the magnitude of the vector
+//            double magnitude = Math.sqrt(dx * dx + dy * dy + dz * dz);
+//
+//            // Handle the edge case where the magnitude is zero (point at the center)
+//            if (magnitude == 0) {
+//                throw new IllegalArgumentException("The point is at the center of the sphere, no valid direction.");
+//            }
+//
+//            // Normalize the direction vector
+//            double unitDx = dx / magnitude;
+//            double unitDy = dy / magnitude;
+//            double unitDz = dz / magnitude;
+//            double d = 1d;
+//
+//            // Scale the unit vector by the distance d
+//            double x1 = x + unitDx * d;
+//            double y1 = y + unitDy * d;
+//            double z1 = z + unitDz * d;
+////           double finalDistance = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0) + (z1 - z0) * (z1 - z0));
+////            System.out.println( initialDistance+"  Distance from Center: " + finalDistance);
+//            // Return the new coordinates
+//            return new double[]{x1, y1, z1};
+//        }
         public static double[] outNucleus(double x, double y, double z) {
             // Compute the vector from the nucleus center to the agent
             double x0 = CellBuilder.xWorld / 2;
             double y0 = CellBuilder.yWorld / 2;
             double z0 = CellBuilder.zWorld / 2;
-            double r = 0.5 * z0;
+            double r = 0.5 * z0;// radius of the nucleus 0.25 of cell height
             double dx = x - x0;
             double dy = y - y0;
             double dz = z - z0;
@@ -603,6 +595,7 @@ public class OrganelleMove {
             // Compute the current distance of the agent from the nucleus center
             double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
             if (distance == 0d){
+            	System.out.println("Distance is 0");
             	return new double[]{10, 25, 13};
             }
 

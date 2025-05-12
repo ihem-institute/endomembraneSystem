@@ -138,7 +138,7 @@ public class CellBuilder implements ContextBuilder<Object> { // contextbuilder e
 		// Microtubules (MT)
 //		Los MT están en el plano xy (z= zWorld/2) y llegan al borde de la elipse del plano central
 //		del oblato
-		for (int i = 0; i < (int)6* 1/Cell.orgScale; i++) {// change the number of MT 3 for 6 MT
+		for (int i = 0; i < (int)12* 1/Cell.orgScale; i++) {// change the number of MT 3 for 6 MT
 //			for (int i = 0; i < 10; i++) {// change the number of MT 3 for 6 MT
 			context.add(new MT(space, grid));
 		}
