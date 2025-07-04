@@ -127,6 +127,7 @@ public class UptakeStep2 {
         for (String mem : membraneMet) {
             if (EndoplasmicReticulum.getInstance().getMembraneRecycle().containsKey(mem)) {
                 double valueER = EndoplasmicReticulum.getInstance().getMembraneRecycle().get(mem);
+                System.out.println("valueER mem  " + mem);
                 double secreted = valueER * ModelProperties.getInstance().getSecretionRate().get(mem) * area / EndoplasmicReticulum.getInstance().getEndoplasmicReticulumArea();
                 secreted = Math.min(secreted, area);
                 membraneContent.put(mem, secreted);

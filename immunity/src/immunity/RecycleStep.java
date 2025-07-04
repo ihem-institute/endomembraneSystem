@@ -47,6 +47,7 @@ public class RecycleStep {
             case "RE":
             case "SE":
             case "TGN":
+            case "GSV":
                 recycleRE(endosome, maxRab);
                 break;
             default:
@@ -95,7 +96,7 @@ public class RecycleStep {
         recycleContent(endosome, pm.getMembraneRecycle(), pm.getSolubleRecycle());
 
         double prob = ModelProperties.getInstance().getCellK().get("fullFusionREprob");
-        if ("RabE".equals(maxRab) || ("RabC".equals(maxRab) && Math.random() < prob)) {
+        if ("RabE".equals(maxRab) || "RabL".equals(maxRab)|| ("RabC".equals(maxRab) && Math.random() < prob)) {
             pm.setPlasmaMembraneArea(endosome.area + pm.getPlasmaMembraneArea());
             removeEndosome(endosome);
         } else {

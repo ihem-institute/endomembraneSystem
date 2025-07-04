@@ -46,6 +46,7 @@ public class EndoplasmicReticulum {
 		double orgScale = modelProperties.getCellK().get("orgScale");
 		
 		initialERProperties = modelProperties.getInitERProperties();
+		System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ endoplasmicReticulumArea);
 		endoplasmicReticulumArea = initialERProperties.get("endoplasmicReticulumArea");// 
 //		System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII "+ endoplasmicReticulumArea);
 

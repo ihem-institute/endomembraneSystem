@@ -96,11 +96,18 @@ public class OrganelleMove {
         // If near the border, change heading randomly and stop move with 10% probability
         if (!isPointInSquare(x, y, cellCenterX, cellCenterY, cellSize - 5 * cellLimit)) {
             endosome.heading = Math.random() * 360;
-            changeDirectionRnd(endosome);
+//            changeDirectionRnd(endosome);
         } else if (isPointInCircle(x, y, nucleusCenterX, nucleusCenterY, nucleusSize)) {
-            // If near the nucleus, change heading randomly and stop move with 10% probability
-            if (Math.random() < 0.05) endosome.heading = Math.random() * 360;
-            changeDirectionRnd(endosome);
+            // If near the nucleus, 90% change heading randomly 10% move out nucleus and heading randomly
+        	if (Math.random()<0.001) 
+        	{
+            double[] newPoint = movePointAway(x,y,nucleusCenterX, nucleusCenterY, nucleusSize);
+        	space.moveTo(endosome, newPoint[0], newPoint[1]);
+        	grid.moveTo(endosome, (int) newPoint[0], (int) newPoint[1]);
+        	}
+        	endosome.heading = Math.random() * 360;
+        	return;
+        	
         } else {
             // If not near the borders, change direction based on MT
             changeDirectionMt(endosome);
@@ -110,7 +117,9 @@ public class OrganelleMove {
         moveEndosome(endosome, x, y, cellCenterX, cellCenterY, cellSize);
     }
 
-    // Method to move the endosome based on the heading and speed
+
+
+	// Method to move the endosome based on the heading and speed
     private static void moveEndosome(Endosome endosome, double x, double y, double cellCenterX, double cellCenterY, double cellSize) {
         if (endosome.speed == 0) return;
 
@@ -284,7 +293,40 @@ public class OrganelleMove {
 
         return new double[]{newX, newY};
     }
+//    // Method to move a point away of a target point by a certain distance
+//    public static double[] movePointAway(double x, double y, double x0, double y0, double d) {
+//        double dx = x0 - x;
+//        double dy = y0 - y;
+//        double distance = Math.sqrt(dx * dx + dy * dy);
+//
+//        double ratio = d - distance;
+//        double newX = x - ratio * dx;
+//        double newY = y - ratio * dy;
+//
+//        return new double[]{newX, newY};
+//    }
+//  // Method to move a point away of a target point by a certain distance (away of nucleus)
+//   The distance is increased by a random value between 0 and 1
+    public static double[] movePointAway(double x, double y, double x0, double y0, double d) {
+        double dx = x - x0;
+        double dy = y - y0;
+        double distance = Math.sqrt(dx * dx + dy * dy);
 
+        // If the distance is zero, move the point directly along the x-axis by d
+        if (distance == 0) {
+            return new double[]{x + d, y};
+        }
+
+        // Scale the vector to move the point exactly d units away
+        double ratio = (d + Math.random()) / distance;
+        double newX = x0 + dx * ratio;
+        double newY = y0 + dy * ratio;
+
+        return new double[]{newX, newY};
+    }
+    
+    
+    
     // Method to update the coordinates of the endosome
     private static void updateCoordinates(Endosome endosome) {
         NdPoint myPoint = space.getLocation(endosome);

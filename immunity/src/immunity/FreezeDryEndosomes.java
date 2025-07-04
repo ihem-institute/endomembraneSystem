@@ -168,6 +168,7 @@ tick.  This class also restores the endosomes reading the inputFrozenEndosomes.c
 //				System.out.println("AQUI PARA  "+b[1]);
 				switch (b[1]) {
 				case "initOrgProp": {
+					System.out.println("AQUI PARA  "+b[3]);
 					EndoplasmicReticulum.getInstance().setEndoplasmicReticulumArea(Double.parseDouble(b[3]));
 					EndoplasmicReticulum.getInstance().setEndoplasmicReticulumVolume(Double.parseDouble(b[5]));
 					break;
