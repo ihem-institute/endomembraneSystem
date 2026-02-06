@@ -253,7 +253,7 @@ public class ModelProperties {
 			}
 			case "initPMsolubleRecycle": {
 				for (int i = 1; i < b.length; i = i + 2) {
-					System.out.println(b[i] + b[i+1]);
+				System.out.println(b[i] + b[i+1]);
 				modelProperties.getInitPMsolubleRecycle().put(b[i], Double.parseDouble(b[i+1]));
 
 				}

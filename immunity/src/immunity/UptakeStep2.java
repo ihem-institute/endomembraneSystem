@@ -338,6 +338,7 @@ public class UptakeStep2 {
 
 
 		}
+		System.out.println("MEMBRANE CONTENT UPTAKE " + membraneContent);
 		HashMap<String, Double> solubleContent = new HashMap<String,Double>();
 		Set<String> solubleMet = new HashSet<String>(ModelProperties.getInstance().getSolubleMet());
 		for (String sol : solubleMet){

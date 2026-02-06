@@ -33,7 +33,7 @@ public class EndosomeLysosomalDigestionStep {
 	private static void squeezeOrganelle(Endosome endosome) {		
 //The Organelle volume is decreased.  Controls that it has enough volume to allocate the mvb and a bead
 		double r = rcyl;		
-		double newVolume = endosome.volume * 0.999;	//era 0.99	
+		double newVolume = endosome.volume * 0.99;	//era 0.99	
 		double minV = Cell.mincyl;//		minimal volume
 		if (endosome.getSolubleContent().containsKey("mvb")) {
 			minV = minV + endosome.getSolubleContent().get("mvb")* 4/3 * Math.PI * r * r * r;

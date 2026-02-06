@@ -28,7 +28,7 @@ public class PlasmaMembraneStyle implements StyleOGL2D<PlasmaMembrane> {
 		// 15 measure the size of the grid.  The world is 50*15 X 50*15 or 750 X 750
 		double initialAreaPM = object.getInitialPlasmaMembraneArea();
 		double areaPM = object.getPlasmaMembraneArea();		
-//		System.out.println(areaPM + "areas PM  " + initialAreaPM);
+		System.out.println(areaPM + "areas PM  " + initialAreaPM);
 		VSpatial createRectangle = this.factory.createRectangle((int) (areaPM/initialAreaPM*750), (int) (20d*Cell.orgScale));
 		return createRectangle;
 	}

@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- generated with COPASI 4.24 (Build 197) (http://www.copasi.org) at 2022-06-16 20:15:54 UTC -->
+<!-- generated with COPASI 4.45 (Build 298) (http://www.copasi.org) at 2025-12-30T15:00:48Z -->
 <?oxygen RNGSchema="http://www.copasi.org/static/schema/CopasiML.rng" type="xml"?>
-<COPASI xmlns="http://www.copasi.org/static/schema" versionMajor="4" versionMinor="24" versionDevel="197" copasiSourcesModified="0">
+<COPASI xmlns="http://www.copasi.org/static/schema" versionMajor="4" versionMinor="45" versionDevel="298" copasiSourcesModified="0">
   <ListOfFunctions>
     <Function key="Function_6" name="Constant flux (irreversible)" type="PreDefined" reversible="false">
+      <MiriamAnnotation>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Function_6">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         v
       </Expression>
@@ -71,10 +77,10 @@ Reaction scheme where the products are created from the reactants and the change
         <ParameterDescription key="FunctionParameter_79" name="product" order="3" role="product"/>
       </ListOfParameterDescriptions>
     </Function>
-    <Function key="Function_40" name="pH-2sLogistic" type="UserDefined" reversible="unspecified">
+    <Function key="Function_81" name="pH-2sLogistic" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Function_40">
+  <rdf:Description rdf:about="#Function_81">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2018-01-24T16:54:18Z</dcterms:W3CDTF>
@@ -87,18 +93,18 @@ Reaction scheme where the products are created from the reactants and the change
         substrate1 *substrate2* k /(1+EXP( - enhancer* (pH-pHlimit)))
       </Expression>
       <ListOfParameterDescriptions>
-        <ParameterDescription key="FunctionParameter_264" name="substrate1" order="0" role="substrate"/>
-        <ParameterDescription key="FunctionParameter_263" name="substrate2" order="1" role="substrate"/>
-        <ParameterDescription key="FunctionParameter_262" name="k" order="2" role="constant"/>
-        <ParameterDescription key="FunctionParameter_261" name="enhancer" order="3" role="constant"/>
-        <ParameterDescription key="FunctionParameter_250" name="pH" order="4" role="constant"/>
-        <ParameterDescription key="FunctionParameter_265" name="pHlimit" order="5" role="constant"/>
+        <ParameterDescription key="FunctionParameter_677" name="substrate1" order="0" role="substrate"/>
+        <ParameterDescription key="FunctionParameter_676" name="substrate2" order="1" role="substrate"/>
+        <ParameterDescription key="FunctionParameter_675" name="k" order="2" role="constant"/>
+        <ParameterDescription key="FunctionParameter_674" name="enhancer" order="3" role="constant"/>
+        <ParameterDescription key="FunctionParameter_673" name="pH" order="4" role="constant"/>
+        <ParameterDescription key="FunctionParameter_672" name="pHlimit" order="5" role="constant"/>
       </ListOfParameterDescriptions>
     </Function>
-    <Function key="Function_41" name="pH-1s-Logistic [1]" type="UserDefined" reversible="unspecified">
+    <Function key="Function_82" name="pH-1s-Logistic [1]" type="UserDefined" reversible="unspecified">
       <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about="#Function_41">
+  <rdf:Description rdf:about="#Function_82">
     <dcterms:created>
       <rdf:Description>
         <dcterms:W3CDTF>2018-01-24T16:54:18Z</dcterms:W3CDTF>
@@ -111,11 +117,11 @@ Reaction scheme where the products are created from the reactants and the change
         substrate1 * k /(1+EXP( - enhancer* (pH-pHlimit)))
       </Expression>
       <ListOfParameterDescriptions>
-        <ParameterDescription key="FunctionParameter_271" name="substrate1" order="0" role="substrate"/>
-        <ParameterDescription key="FunctionParameter_270" name="k" order="1" role="constant"/>
-        <ParameterDescription key="FunctionParameter_269" name="enhancer" order="2" role="constant"/>
-        <ParameterDescription key="FunctionParameter_268" name="pH" order="3" role="constant"/>
-        <ParameterDescription key="FunctionParameter_267" name="pHlimit" order="4" role="constant"/>
+        <ParameterDescription key="FunctionParameter_679" name="substrate1" order="0" role="substrate"/>
+        <ParameterDescription key="FunctionParameter_678" name="k" order="1" role="constant"/>
+        <ParameterDescription key="FunctionParameter_668" name="enhancer" order="2" role="constant"/>
+        <ParameterDescription key="FunctionParameter_669" name="pH" order="3" role="constant"/>
+        <ParameterDescription key="FunctionParameter_670" name="pHlimit" order="4" role="constant"/>
       </ListOfParameterDescriptions>
     </Function>
   </ListOfFunctions>
@@ -208,7 +214,7 @@ import y export no dependen de pH como antes
       </Compartment>
     </ListOfCompartments>
     <ListOfMetabolites>
-      <Metabolite key="Metabolite_0" name="ovaEn" simulationType="reactions" compartment="Compartment_0" addNoise="false">
+      <Metabolite key="Metabolite_0" name="ovaEn" simulationType="reactions" compartment="Compartment_1" addNoise="false">
         <MiriamAnnotation>
 <rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_0">
@@ -236,9 +242,7 @@ import y export no dependen de pH como antes
       </Metabolite>
       <Metabolite key="Metabolite_2" name="ovaCy" simulationType="reactions" compartment="Compartment_0" addNoise="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_2">
     <dcterms:created>
       <rdf:Description>
@@ -247,7 +251,6 @@ import y export no dependen de pH como antes
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
       <Metabolite key="Metabolite_3" name="pepEn" simulationType="reactions" compartment="Compartment_0" addNoise="false">
@@ -330,9 +333,7 @@ import y export no dependen de pH como antes
       </Metabolite>
       <Metabolite key="Metabolite_9" name="pepCy" simulationType="reactions" compartment="Compartment_0" addNoise="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_9">
     <dcterms:created>
       <rdf:Description>
@@ -341,7 +342,6 @@ import y export no dependen de pH como antes
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
       <Metabolite key="Metabolite_10" name="imCxEn" simulationType="reactions" compartment="Compartment_1" addNoise="false">
@@ -411,9 +411,7 @@ import y export no dependen de pH como antes
       </Metabolite>
       <Metabolite key="Metabolite_15" name="TfaEn" simulationType="reactions" compartment="Compartment_0" addNoise="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Metabolite_15">
     <dcterms:created>
       <rdf:Description>
@@ -422,7 +420,6 @@ import y export no dependen de pH como antes
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
       </Metabolite>
       <Metabolite key="Metabolite_16" name="R-TfEn" simulationType="reactions" compartment="Compartment_1" addNoise="false">
@@ -553,6 +550,68 @@ import y export no dependen de pH como antes
 </rdf:RDF>
         </MiriamAnnotation>
       </ModelValue>
+      <ModelValue key="ModelValue_8" name="kMHCIloating" simulationType="assignment" addNoise="false">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelValue_8">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Reference=InitialVolume>*6E6/3e4
+        </Expression>
+      </ModelValue>
+      <ModelValue key="ModelValue_9" name="kMHCipepOpening" simulationType="assignment" addNoise="false">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelValue_9">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Reference=InitialVolume>*6E3/3e4
+        </Expression>
+      </ModelValue>
+      <ModelValue key="ModelValue_10" name="kOvaOut" simulationType="assignment" addNoise="false">
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Reference=InitialVolume>*1E6*1E-2/3e4
+        </Expression>
+      </ModelValue>
+      <ModelValue key="ModelValue_11" name="kpepImp" simulationType="assignment" addNoise="false">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelValue_11">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Reference=InitialVolume>*1E5/3e4
+        </Expression>
+      </ModelValue>
+      <ModelValue key="ModelValue_12" name="kFreeTf" simulationType="assignment" addNoise="false">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelValue_12">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Reference=InitialVolume>*1E5/3e4
+        </Expression>
+      </ModelValue>
+      <ModelValue key="ModelValue_13" name="kOvaDig" simulationType="assignment" addNoise="false">
+        <Expression>
+          &lt;CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabD],Reference=InitialConcentration>
+        </Expression>
+      </ModelValue>
     </ListOfModelValues>
     <ListOfReactions>
       <Reaction key="Reaction_0" name="OVAout" reversible="false" fast="false" addNoise="false">
@@ -579,12 +638,12 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_1" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5395" name="k1" value="1e+06"/>
+          <Constant key="Parameter_0" name="k1" value="1e+06"/>
         </ListOfConstants>
         <KineticLaw function="Function_13" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_80">
-              <SourceParameter reference="Parameter_5395"/>
+              <SourceParameter reference="ModelValue_10"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_81">
               <SourceParameter reference="Metabolite_0"/>
@@ -613,29 +672,29 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_5" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5394" name="k" value="6e+06"/>
-          <Constant key="Parameter_5393" name="pH" value="7"/>
-          <Constant key="Parameter_5392" name="pHlimit" value="6.5"/>
-          <Constant key="Parameter_5391" name="enhancer" value="6.4"/>
+          <Constant key="Parameter_1" name="k" value="6e+06"/>
+          <Constant key="Parameter_2" name="pH" value="7"/>
+          <Constant key="Parameter_3" name="pHlimit" value="6.5"/>
+          <Constant key="Parameter_4" name="enhancer" value="6.4"/>
         </ListOfConstants>
-        <KineticLaw function="Function_40" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
+        <KineticLaw function="Function_81" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_264">
+            <CallParameter functionParameter="FunctionParameter_677">
               <SourceParameter reference="Metabolite_4"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_263">
+            <CallParameter functionParameter="FunctionParameter_676">
               <SourceParameter reference="Metabolite_3"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_262">
-              <SourceParameter reference="Parameter_5394"/>
+            <CallParameter functionParameter="FunctionParameter_675">
+              <SourceParameter reference="ModelValue_8"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_261">
+            <CallParameter functionParameter="FunctionParameter_674">
               <SourceParameter reference="ModelValue_2"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_250">
+            <CallParameter functionParameter="FunctionParameter_673">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_265">
+            <CallParameter functionParameter="FunctionParameter_672">
               <SourceParameter reference="ModelValue_6"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -657,7 +716,7 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_6" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5390" name="v" value="0"/>
+          <Constant key="Parameter_5" name="v" value="0"/>
         </ListOfConstants>
         <KineticLaw function="Function_6" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
@@ -686,19 +745,19 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_6" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5389" name="k1" value="0.04"/>
-          <Constant key="Parameter_5388" name="k2" value="0.04"/>
+          <Constant key="Parameter_6" name="k1" value="0.04"/>
+          <Constant key="Parameter_7" name="k2" value="0.04"/>
         </ListOfConstants>
         <KineticLaw function="Function_14" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_69">
-              <SourceParameter reference="Parameter_5389"/>
+              <SourceParameter reference="Parameter_6"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_68">
               <SourceParameter reference="Metabolite_7"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_78">
-              <SourceParameter reference="Parameter_5388"/>
+              <SourceParameter reference="Parameter_7"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_79">
               <SourceParameter reference="Metabolite_6"/>
@@ -725,26 +784,26 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_4" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5387" name="k" value="6000"/>
-          <Constant key="Parameter_5386" name="pH" value="7"/>
-          <Constant key="Parameter_5385" name="pHlimit" value="5.4"/>
-          <Constant key="Parameter_5384" name="enhancer" value="-9.2"/>
+          <Constant key="Parameter_8" name="k" value="6000"/>
+          <Constant key="Parameter_9" name="pH" value="7"/>
+          <Constant key="Parameter_10" name="pHlimit" value="5.4"/>
+          <Constant key="Parameter_11" name="enhancer" value="-9.2"/>
         </ListOfConstants>
-        <KineticLaw function="Function_41" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
+        <KineticLaw function="Function_82" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_271">
+            <CallParameter functionParameter="FunctionParameter_679">
               <SourceParameter reference="Metabolite_8"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_270">
-              <SourceParameter reference="Parameter_5387"/>
+            <CallParameter functionParameter="FunctionParameter_678">
+              <SourceParameter reference="Parameter_8"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_269">
+            <CallParameter functionParameter="FunctionParameter_668">
               <SourceParameter reference="ModelValue_7"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_268">
+            <CallParameter functionParameter="FunctionParameter_669">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_267">
+            <CallParameter functionParameter="FunctionParameter_670">
               <SourceParameter reference="ModelValue_3"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -770,26 +829,26 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_3" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5383" name="k" value="6000"/>
-          <Constant key="Parameter_5382" name="pH" value="7"/>
-          <Constant key="Parameter_5381" name="pHlimit" value="5.4"/>
-          <Constant key="Parameter_5380" name="enhancer" value="-9.2"/>
+          <Constant key="Parameter_12" name="k" value="6000"/>
+          <Constant key="Parameter_13" name="pH" value="7"/>
+          <Constant key="Parameter_14" name="pHlimit" value="5.4"/>
+          <Constant key="Parameter_15" name="enhancer" value="-9.2"/>
         </ListOfConstants>
-        <KineticLaw function="Function_41" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
+        <KineticLaw function="Function_82" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_271">
+            <CallParameter functionParameter="FunctionParameter_679">
               <SourceParameter reference="Metabolite_5"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_270">
-              <SourceParameter reference="Parameter_5383"/>
+            <CallParameter functionParameter="FunctionParameter_678">
+              <SourceParameter reference="ModelValue_9"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_269">
+            <CallParameter functionParameter="FunctionParameter_668">
               <SourceParameter reference="ModelValue_7"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_268">
+            <CallParameter functionParameter="FunctionParameter_669">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_267">
+            <CallParameter functionParameter="FunctionParameter_670">
               <SourceParameter reference="ModelValue_3"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -811,7 +870,7 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_6" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5379" name="v" value="0"/>
+          <Constant key="Parameter_16" name="v" value="0"/>
         </ListOfConstants>
         <KineticLaw function="Function_6" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
@@ -840,26 +899,26 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_8" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5378" name="k" value="6000"/>
-          <Constant key="Parameter_5377" name="pH" value="7"/>
-          <Constant key="Parameter_5376" name="pHlimit" value="6.5"/>
-          <Constant key="Parameter_5375" name="enhancer" value="6.4"/>
+          <Constant key="Parameter_17" name="k" value="6000"/>
+          <Constant key="Parameter_18" name="pH" value="7"/>
+          <Constant key="Parameter_19" name="pHlimit" value="6.5"/>
+          <Constant key="Parameter_20" name="enhancer" value="6.4"/>
         </ListOfConstants>
-        <KineticLaw function="Function_41" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
+        <KineticLaw function="Function_82" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_271">
+            <CallParameter functionParameter="FunctionParameter_679">
               <SourceParameter reference="Metabolite_4"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_270">
-              <SourceParameter reference="Parameter_5378"/>
+            <CallParameter functionParameter="FunctionParameter_678">
+              <SourceParameter reference="Parameter_17"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_269">
+            <CallParameter functionParameter="FunctionParameter_668">
               <SourceParameter reference="ModelValue_2"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_268">
+            <CallParameter functionParameter="FunctionParameter_669">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_267">
+            <CallParameter functionParameter="FunctionParameter_670">
               <SourceParameter reference="ModelValue_6"/>
             </CallParameter>
           </ListOfCallParameters>
@@ -886,12 +945,12 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_10" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5374" name="k1" value="100000"/>
+          <Constant key="Parameter_21" name="k1" value="100000"/>
         </ListOfConstants>
         <KineticLaw function="Function_13" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_80">
-              <SourceParameter reference="Parameter_5374"/>
+              <SourceParameter reference="ModelValue_11"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_81">
               <SourceParameter reference="Metabolite_9"/>
@@ -902,9 +961,7 @@ import y export no dependen de pH como antes
       </Reaction>
       <Reaction key="Reaction_9" name="proteosome" reversible="false" fast="false" addNoise="false">
         <MiriamAnnotation>
-<rdf:RDF
-   xmlns:dcterms="http://purl.org/dc/terms/"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <rdf:Description rdf:about="#Reaction_9">
     <dcterms:created>
       <rdf:Description>
@@ -913,7 +970,6 @@ import y export no dependen de pH como antes
     </dcterms:created>
   </rdf:Description>
 </rdf:RDF>
-
         </MiriamAnnotation>
         <ListOfSubstrates>
           <Substrate metabolite="Metabolite_2" stoichiometry="1"/>
@@ -922,12 +978,12 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_9" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5373" name="k1" value="0.01"/>
+          <Constant key="Parameter_22" name="k1" value="0.01"/>
         </ListOfConstants>
         <KineticLaw function="Function_13" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
             <CallParameter functionParameter="FunctionParameter_80">
-              <SourceParameter reference="Parameter_5373"/>
+              <SourceParameter reference="Parameter_22"/>
             </CallParameter>
             <CallParameter functionParameter="FunctionParameter_81">
               <SourceParameter reference="Metabolite_2"/>
@@ -955,27 +1011,27 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_15" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5372" name="k" value="100000"/>
-          <Constant key="Parameter_5371" name="enhancer" value="18"/>
-          <Constant key="Parameter_5370" name="pH" value="7"/>
-          <Constant key="Parameter_5369" name="pHlimit" value="7.3"/>
+          <Constant key="Parameter_23" name="k" value="100000"/>
+          <Constant key="Parameter_24" name="enhancer" value="18"/>
+          <Constant key="Parameter_25" name="pH" value="7"/>
+          <Constant key="Parameter_26" name="pHlimit" value="7.3"/>
         </ListOfConstants>
-        <KineticLaw function="Function_41" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
+        <KineticLaw function="Function_82" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_271">
+            <CallParameter functionParameter="FunctionParameter_679">
               <SourceParameter reference="Metabolite_13"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_270">
-              <SourceParameter reference="Parameter_5372"/>
+            <CallParameter functionParameter="FunctionParameter_678">
+              <SourceParameter reference="ModelValue_12"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_269">
-              <SourceParameter reference="Parameter_5371"/>
+            <CallParameter functionParameter="FunctionParameter_668">
+              <SourceParameter reference="Parameter_24"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_268">
+            <CallParameter functionParameter="FunctionParameter_669">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_267">
-              <SourceParameter reference="Parameter_5369"/>
+            <CallParameter functionParameter="FunctionParameter_670">
+              <SourceParameter reference="Parameter_26"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -999,27 +1055,53 @@ import y export no dependen de pH como antes
           <Product metabolite="Metabolite_13" stoichiometry="1"/>
         </ListOfProducts>
         <ListOfConstants>
-          <Constant key="Parameter_5368" name="k" value="0.766"/>
-          <Constant key="Parameter_5367" name="enhancer" value="-9"/>
-          <Constant key="Parameter_5366" name="pH" value="7"/>
-          <Constant key="Parameter_5365" name="pHlimit" value="5.7"/>
+          <Constant key="Parameter_27" name="k" value="0.766"/>
+          <Constant key="Parameter_28" name="enhancer" value="-9"/>
+          <Constant key="Parameter_29" name="pH" value="7"/>
+          <Constant key="Parameter_30" name="pHlimit" value="5.7"/>
         </ListOfConstants>
-        <KineticLaw function="Function_41" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
+        <KineticLaw function="Function_82" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
           <ListOfCallParameters>
-            <CallParameter functionParameter="FunctionParameter_271">
+            <CallParameter functionParameter="FunctionParameter_679">
               <SourceParameter reference="Metabolite_16"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_270">
-              <SourceParameter reference="Parameter_5368"/>
+            <CallParameter functionParameter="FunctionParameter_678">
+              <SourceParameter reference="Parameter_27"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_269">
-              <SourceParameter reference="Parameter_5367"/>
+            <CallParameter functionParameter="FunctionParameter_668">
+              <SourceParameter reference="Parameter_28"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_268">
+            <CallParameter functionParameter="FunctionParameter_669">
               <SourceParameter reference="ModelValue_0"/>
             </CallParameter>
-            <CallParameter functionParameter="FunctionParameter_267">
-              <SourceParameter reference="Parameter_5365"/>
+            <CallParameter functionParameter="FunctionParameter_670">
+              <SourceParameter reference="Parameter_30"/>
+            </CallParameter>
+          </ListOfCallParameters>
+        </KineticLaw>
+      </Reaction>
+      <Reaction key="Reaction_12" name="OvaDigestion" reversible="false" fast="false" addNoise="false">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Reaction_12">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
+        <ListOfSubstrates>
+          <Substrate metabolite="Metabolite_0" stoichiometry="1"/>
+        </ListOfSubstrates>
+        <ListOfConstants>
+          <Constant key="Parameter_31" name="k1" value="0.1"/>
+        </ListOfConstants>
+        <KineticLaw function="Function_13" unitType="Default" scalingCompartment="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane]">
+          <ListOfCallParameters>
+            <CallParameter functionParameter="FunctionParameter_80">
+              <SourceParameter reference="ModelValue_13"/>
+            </CallParameter>
+            <CallParameter functionParameter="FunctionParameter_81">
+              <SourceParameter reference="Metabolite_0"/>
             </CallParameter>
           </ListOfCallParameters>
         </KineticLaw>
@@ -1027,6 +1109,14 @@ import y export no dependen de pH como antes
     </ListOfReactions>
     <ListOfModelParameterSets activeSet="ModelParameterSet_1">
       <ModelParameterSet key="ModelParameterSet_1" name="Initial State">
+        <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelParameterSet_1">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=AntigenPresentation" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -1036,18 +1126,18 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario]" value="1" type="Compartment" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Species Values" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn]" value="0" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn]" value="1445314029600000" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[exCxEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaCy]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[pepEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[oMHCIEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[pepMHCIEn]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn]" value="289062805920" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn]" value="289062805919.99988" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonCy]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[cMHCIEn]" value="0" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[cMHCIEn]" value="14453140296000" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[pepCy]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[imCxEn]" value="0" type="Species" simulationType="reactions"/>
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabD]" value="0" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[imCxEn]" value="1445314029600" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabD]" value="85634.856253799997" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabA]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[R-TfaEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[REn]" value="0" type="Species" simulationType="reactions"/>
@@ -1059,17 +1149,31 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kpH]" value="0.00020000000000000001" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[enhancer]" value="6.4000000000000004" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[acidpH]" value="5.4000000000000004" type="ModelValue" simulationType="fixed"/>
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[RabDpump]" value="0" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[RabDpump]" value="0.00011376" type="ModelValue" simulationType="assignment"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[RabApump]" value="0" type="ModelValue" simulationType="assignment"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[alkpH]" value="6.5" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[enhancerNegative]" value="-9.1999999999999993" type="ModelValue" simulationType="fixed"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kMHCIloating]" value="480000000" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kMHCipepOpening]" value="480000" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kOvaOut]" value="800000" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kpepImp]" value="8000000" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kFreeTf]" value="8000000" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kOvaDig]" value="0.14219999999999999" type="ModelValue" simulationType="assignment"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Kinetic Parameters" type="Group">
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[OVAout]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[OVAout],ParameterGroup=Parameters,Parameter=k1" value="1000000" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[OVAout],ParameterGroup=Parameters,Parameter=k1" value="800000" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kOvaOut],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=k" value="6000000" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=k" value="480000000" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kMHCIloating],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=pH" value="7" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
@@ -1087,7 +1191,7 @@ import y export no dependen de pH como antes
             </ModelParameter>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonPumpRabD]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonPumpRabD],ParameterGroup=Parameters,Parameter=v" value="0" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonPumpRabD],ParameterGroup=Parameters,Parameter=v" value="0.00011376" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[RabDpump],Reference=InitialValue>
               </InitialExpression>
@@ -1116,7 +1220,11 @@ import y export no dependen de pH como antes
             </ModelParameter>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=k" value="480000" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kMHCipepOpening],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=pH" value="7" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
@@ -1159,13 +1267,21 @@ import y export no dependen de pH como antes
             </ModelParameter>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[pepImport]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[pepImport],ParameterGroup=Parameters,Parameter=k1" value="100000" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[pepImport],ParameterGroup=Parameters,Parameter=k1" value="8000000" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kpepImp],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[proteosome]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[proteosome],ParameterGroup=Parameters,Parameter=k1" value="0.01" type="ReactionParameter" simulationType="fixed"/>
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeTf]" type="Reaction">
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeTf],ParameterGroup=Parameters,Parameter=k" value="100000" type="ReactionParameter" simulationType="fixed"/>
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeTf],ParameterGroup=Parameters,Parameter=k" value="8000000" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kFreeTf],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeTf],ParameterGroup=Parameters,Parameter=enhancer" value="18" type="ReactionParameter" simulationType="fixed"/>
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeTf],ParameterGroup=Parameters,Parameter=pH" value="7" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
@@ -1184,9 +1300,22 @@ import y export no dependen de pH como antes
             </ModelParameter>
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[FreeFe],ParameterGroup=Parameters,Parameter=pHlimit" value="5.7000000000000002" type="ReactionParameter" simulationType="fixed"/>
           </ModelParameterGroup>
+          <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[OvaDigestion]" type="Reaction">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[OvaDigestion],ParameterGroup=Parameters,Parameter=k1" value="0.14219999999999999" type="ReactionParameter" simulationType="assignment">
+              <InitialExpression>
+                &lt;CN=Root,Model=AntigenPresentation,Vector=Values[kOvaDig],Reference=InitialValue>
+              </InitialExpression>
+            </ModelParameter>
+          </ModelParameterGroup>
         </ModelParameterGroup>
       </ModelParameterSet>
       <ModelParameterSet key="ModelParameterSet_3" name="Parameter Set 2021-09-02 10:10:27">
+        <MiriamAnnotation>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelParameterSet_3">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=AntigenPresentation" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -1194,7 +1323,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]" value="1000000" type="Compartment" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Species Values" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn]" value="6.02214179e+17" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn]" value="6.02214179e+17" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[exCxEn]" value="6022141790000000" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaCy]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[bMGEn]" value="6022141790000000" type="Species" simulationType="reactions"/>
@@ -1294,6 +1423,12 @@ import y export no dependen de pH como antes
         </ModelParameterGroup>
       </ModelParameterSet>
       <ModelParameterSet key="ModelParameterSet_4" name="Parameter Set 2021-09-03 10:07:48">
+        <MiriamAnnotation>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelParameterSet_4">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=AntigenPresentation" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -1301,7 +1436,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble]" value="1000000" type="Compartment" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Species Values" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn]" value="6.02214179e+17" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn]" value="6.02214179e+17" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[exCxEn]" value="6022141790000000" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaCy]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[bMGEn]" value="6022141790000000" type="Species" simulationType="reactions"/>
@@ -1401,6 +1536,12 @@ import y export no dependen de pH como antes
         </ModelParameterGroup>
       </ModelParameterSet>
       <ModelParameterSet key="ModelParameterSet_5" name="Parameter Set 2022-02-25 12:03:24">
+        <MiriamAnnotation>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelParameterSet_5">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=AntigenPresentation" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -1410,7 +1551,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario]" value="1" type="Compartment" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Species Values" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn]" value="0" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[exCxEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaCy]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[bMGEn]" value="0" type="Species" simulationType="reactions"/>
@@ -1426,7 +1567,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabA]" value="0" type="Species" simulationType="reactions"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Global Quantities" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[pH]" value="INF" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[pH]" value="0" type="ModelValue" simulationType="assignment"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kpH]" value="0.00020000000000000001" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[enhancer]" value="6.4000000000000004" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[acidpH]" value="5.4000000000000004" type="ModelValue" simulationType="fixed"/>
@@ -1441,7 +1582,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=k" value="6000000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1470,7 +1611,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1488,7 +1629,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1513,7 +1654,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1538,6 +1679,12 @@ import y export no dependen de pH como antes
         </ModelParameterGroup>
       </ModelParameterSet>
       <ModelParameterSet key="ModelParameterSet_6" name="Parameter Set 2022-02-25 16:23:42">
+        <MiriamAnnotation>
+<rdf:RDF xmlns:dcterms="http://purl.org/dc/terms/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#ModelParameterSet_6">
+</rdf:Description>
+</rdf:RDF>
+        </MiriamAnnotation>
         <ModelParameterGroup cn="String=Initial Time" type="Group">
           <ModelParameter cn="CN=Root,Model=AntigenPresentation" value="0" type="Model" simulationType="time"/>
         </ModelParameterGroup>
@@ -1547,7 +1694,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario]" value="1" type="Compartment" simulationType="fixed"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Species Values" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn]" value="0" type="Species" simulationType="reactions"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[exCxEn]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaCy]" value="0" type="Species" simulationType="reactions"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[bMGEn]" value="0" type="Species" simulationType="reactions"/>
@@ -1563,7 +1710,7 @@ import y export no dependen de pH como antes
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabA]" value="0" type="Species" simulationType="reactions"/>
         </ModelParameterGroup>
         <ModelParameterGroup cn="String=Initial Global Quantities" type="Group">
-          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[pH]" value="INF" type="ModelValue" simulationType="assignment"/>
+          <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[pH]" value="0" type="ModelValue" simulationType="assignment"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[kpH]" value="0.00020000000000000001" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[enhancer]" value="6.4000000000000004" type="ModelValue" simulationType="fixed"/>
           <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Values[acidpH]" value="5.4000000000000004" type="ModelValue" simulationType="fixed"/>
@@ -1578,7 +1725,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=k" value="6000000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-loading],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1607,7 +1754,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIopening],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1625,7 +1772,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCI-peptOpening],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1650,7 +1797,7 @@ import y export no dependen de pH como antes
           </ModelParameterGroup>
           <ModelParameterGroup cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing]" type="Reaction">
             <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=k" value="6000" type="ReactionParameter" simulationType="fixed"/>
-            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=pH" value="INF" type="ReactionParameter" simulationType="assignment">
+            <ModelParameter cn="CN=Root,Model=AntigenPresentation,Vector=Reactions[MHCIclosing],ParameterGroup=Parameters,Parameter=pH" value="0" type="ReactionParameter" simulationType="assignment">
               <InitialExpression>
                 &lt;CN=Root,Model=AntigenPresentation,Vector=Values[pH],Reference=InitialValue>
               </InitialExpression>
@@ -1679,20 +1826,26 @@ import y export no dependen de pH como antes
       <StateTemplateVariable objectReference="Model_1"/>
       <StateTemplateVariable objectReference="Metabolite_4"/>
       <StateTemplateVariable objectReference="Metabolite_6"/>
-      <StateTemplateVariable objectReference="Metabolite_2"/>
+      <StateTemplateVariable objectReference="Metabolite_9"/>
+      <StateTemplateVariable objectReference="Metabolite_0"/>
       <StateTemplateVariable objectReference="Metabolite_13"/>
       <StateTemplateVariable objectReference="Metabolite_3"/>
-      <StateTemplateVariable objectReference="Metabolite_9"/>
+      <StateTemplateVariable objectReference="Metabolite_2"/>
       <StateTemplateVariable objectReference="Metabolite_7"/>
       <StateTemplateVariable objectReference="Metabolite_15"/>
-      <StateTemplateVariable objectReference="Metabolite_5"/>
-      <StateTemplateVariable objectReference="Metabolite_0"/>
+      <StateTemplateVariable objectReference="Metabolite_8"/>
       <StateTemplateVariable objectReference="Metabolite_16"/>
       <StateTemplateVariable objectReference="Metabolite_14"/>
-      <StateTemplateVariable objectReference="Metabolite_8"/>
+      <StateTemplateVariable objectReference="Metabolite_5"/>
       <StateTemplateVariable objectReference="ModelValue_0"/>
       <StateTemplateVariable objectReference="ModelValue_4"/>
       <StateTemplateVariable objectReference="ModelValue_5"/>
+      <StateTemplateVariable objectReference="ModelValue_8"/>
+      <StateTemplateVariable objectReference="ModelValue_9"/>
+      <StateTemplateVariable objectReference="ModelValue_10"/>
+      <StateTemplateVariable objectReference="ModelValue_11"/>
+      <StateTemplateVariable objectReference="ModelValue_12"/>
+      <StateTemplateVariable objectReference="ModelValue_13"/>
       <StateTemplateVariable objectReference="Metabolite_1"/>
       <StateTemplateVariable objectReference="Metabolite_10"/>
       <StateTemplateVariable objectReference="Metabolite_11"/>
@@ -1707,12 +1860,12 @@ import y export no dependen de pH como antes
       <StateTemplateVariable objectReference="ModelValue_7"/>
     </StateTemplate>
     <InitialState type="initialState">
-      0 0 289062805920 0 0 0 0 0 0 0 0 1445314029600 0 0 7 0 0 0 0 0 0 4800000000 2400000 1 0.00020000000000000001 6.4000000000000004 5.4000000000000004 6.5 -9.1999999999999993 
+      0 0 289062805919.99988 0 1445314029600000 0 0 0 0 0 14453140296000 1445314029600 0 0 7 0.00011376 0 480000000 480000 800000 8000000 8000000 0.14219999999999999 0 1445314029600 85634.856253799997 0 4800000000 2400000 1 0.00020000000000000001 6.4000000000000004 5.4000000000000004 6.5 -9.1999999999999993 
     </InitialState>
   </Model>
   <ListOfTasks>
-    <Task key="Task_14" name="Steady-State" type="steadyState" scheduled="false" updateModel="false">
-      <Report reference="Report_9" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_17" name="Steady-State" type="steadyState" scheduled="false" updateModel="false">
+      <Report reference="Report_11" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="JacobianRequested" type="bool" value="1"/>
         <Parameter name="StabilityAnalysisRequested" type="bool" value="1"/>
@@ -1727,19 +1880,22 @@ import y export no dependen de pH como antes
         <Parameter name="Iteration Limit" type="unsignedInteger" value="50"/>
         <Parameter name="Maximum duration for forward integration" type="unsignedFloat" value="1000000000"/>
         <Parameter name="Maximum duration for backward integration" type="unsignedFloat" value="1000000"/>
+        <Parameter name="Target Criterion" type="string" value="Distance and Rate"/>
       </Method>
     </Task>
-    <Task key="Task_15" name="Time-Course" type="timeCourse" scheduled="false" updateModel="false">
-      <Report reference="Report_9" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_18" name="Time-Course" type="timeCourse" scheduled="false" updateModel="false">
+      <Report reference="Report_11" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="AutomaticStepSize" type="bool" value="0"/>
-        <Parameter name="StepNumber" type="unsignedInteger" value="1200"/>
-        <Parameter name="StepSize" type="float" value="100"/>
-        <Parameter name="Duration" type="float" value="120000"/>
+        <Parameter name="StepNumber" type="unsignedInteger" value="1"/>
+        <Parameter name="StepSize" type="float" value="60"/>
+        <Parameter name="Duration" type="float" value="60"/>
         <Parameter name="TimeSeriesRequested" type="bool" value="0"/>
         <Parameter name="OutputStartTime" type="float" value="0"/>
         <Parameter name="Output Event" type="bool" value="0"/>
         <Parameter name="Start in Steady State" type="bool" value="0"/>
+        <Parameter name="Use Values" type="bool" value="0"/>
+        <Parameter name="Values" type="string" value=""/>
         <Parameter name="Continue on Simultaneous Events" type="bool" value="0"/>
       </Problem>
       <Method name="Deterministic (LSODA)" type="Deterministic(LSODA)">
@@ -1750,7 +1906,7 @@ import y export no dependen de pH como antes
         <Parameter name="Max Internal Step Size" type="unsignedFloat" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_16" name="Scan" type="scan" scheduled="false" updateModel="false">
+    <Task key="Task_19" name="Scan" type="scan" scheduled="false" updateModel="false">
       <Problem>
         <Parameter name="Subtask" type="unsignedInteger" value="1"/>
         <ParameterGroup name="ScanItems">
@@ -1761,23 +1917,26 @@ import y export no dependen de pH como antes
             <Parameter name="Object" type="cn" value="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn],Reference=InitialConcentration"/>
             <Parameter name="Type" type="unsignedInteger" value="1"/>
             <Parameter name="log" type="bool" value="1"/>
+            <Parameter name="Use Values" type="bool" value="0"/>
+            <Parameter name="Values" type="string" value=""/>
           </ParameterGroup>
         </ParameterGroup>
-        <Parameter name="Output in subtask" type="bool" value="1"/>
+        <Parameter name="Subtask Output" type="string" value="subTaskDuring"/>
         <Parameter name="Adjust initial conditions" type="bool" value="0"/>
+        <Parameter name="Continue on Error" type="bool" value="0"/>
       </Problem>
       <Method name="Scan Framework" type="ScanFramework">
       </Method>
     </Task>
-    <Task key="Task_17" name="Elementary Flux Modes" type="fluxMode" scheduled="false" updateModel="false">
-      <Report reference="Report_10" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_20" name="Elementary Flux Modes" type="fluxMode" scheduled="false" updateModel="false">
+      <Report reference="Report_12" target="" append="1" confirmOverwrite="1"/>
       <Problem>
       </Problem>
       <Method name="EFM Algorithm" type="EFMAlgorithm">
       </Method>
     </Task>
-    <Task key="Task_18" name="Optimization" type="optimization" scheduled="false" updateModel="false">
-      <Report reference="Report_11" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_21" name="Optimization" type="optimization" scheduled="false" updateModel="false">
+      <Report reference="Report_13" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="Subtask" type="cn" value="CN=Root,Vector=TaskList[Steady-State]"/>
         <ParameterText name="ObjectiveExpression" type="expression">
@@ -1790,6 +1949,7 @@ import y export no dependen de pH como antes
         </ParameterGroup>
         <ParameterGroup name="OptimizationConstraintList">
         </ParameterGroup>
+        <Parameter name="DisplayPoplations" type="bool" value="0"/>
       </Problem>
       <Method name="Random Search" type="RandomSearch">
         <Parameter name="Log Verbosity" type="unsignedInteger" value="0"/>
@@ -1798,8 +1958,8 @@ import y export no dependen de pH como antes
         <Parameter name="Seed" type="unsignedInteger" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_19" name="Parameter Estimation" type="parameterFitting" scheduled="false" updateModel="false">
-      <Report reference="Report_12" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_22" name="Parameter Estimation" type="parameterFitting" scheduled="false" updateModel="false">
+      <Report reference="Report_14" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="Maximize" type="bool" value="0"/>
         <Parameter name="Randomize Start Values" type="bool" value="0"/>
@@ -1808,9 +1968,12 @@ import y export no dependen de pH como antes
         </ParameterGroup>
         <ParameterGroup name="OptimizationConstraintList">
         </ParameterGroup>
+        <Parameter name="DisplayPoplations" type="bool" value="0"/>
         <Parameter name="Steady-State" type="cn" value="CN=Root,Vector=TaskList[Steady-State]"/>
         <Parameter name="Time-Course" type="cn" value="CN=Root,Vector=TaskList[Time-Course]"/>
         <Parameter name="Create Parameter Sets" type="bool" value="0"/>
+        <Parameter name="Use Time Sens" type="bool" value="0"/>
+        <Parameter name="Time-Sens" type="cn" value=""/>
         <ParameterGroup name="Experiment Set">
         </ParameterGroup>
         <ParameterGroup name="Validation Set">
@@ -1827,10 +1990,10 @@ import y export no dependen de pH como antes
         <Parameter name="Stop after # Stalled Generations" type="unsignedInteger" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_20" name="Metabolic Control Analysis" type="metabolicControlAnalysis" scheduled="false" updateModel="false">
-      <Report reference="Report_13" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_23" name="Metabolic Control Analysis" type="metabolicControlAnalysis" scheduled="false" updateModel="false">
+      <Report reference="Report_15" target="" append="1" confirmOverwrite="1"/>
       <Problem>
-        <Parameter name="Steady-State" type="key" value="Task_14"/>
+        <Parameter name="Steady-State" type="key" value="Task_17"/>
       </Problem>
       <Method name="MCA Method (Reder)" type="MCAMethod(Reder)">
         <Parameter name="Modulation Factor" type="unsignedFloat" value="1.0000000000000001e-09"/>
@@ -1838,8 +2001,8 @@ import y export no dependen de pH como antes
         <Parameter name="Use Smallbone" type="bool" value="1"/>
       </Method>
     </Task>
-    <Task key="Task_21" name="Lyapunov Exponents" type="lyapunovExponents" scheduled="false" updateModel="false">
-      <Report reference="Report_14" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_24" name="Lyapunov Exponents" type="lyapunovExponents" scheduled="false" updateModel="false">
+      <Report reference="Report_16" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="ExponentNumber" type="unsignedInteger" value="3"/>
         <Parameter name="DivergenceRequested" type="bool" value="1"/>
@@ -1853,8 +2016,8 @@ import y export no dependen de pH como antes
         <Parameter name="Max Internal Steps" type="unsignedInteger" value="10000"/>
       </Method>
     </Task>
-    <Task key="Task_22" name="Time Scale Separation Analysis" type="timeScaleSeparationAnalysis" scheduled="false" updateModel="false">
-      <Report reference="Report_15" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_25" name="Time Scale Separation Analysis" type="timeScaleSeparationAnalysis" scheduled="false" updateModel="false">
+      <Report reference="Report_17" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="StepNumber" type="unsignedInteger" value="100"/>
         <Parameter name="StepSize" type="float" value="0.01"/>
@@ -1866,8 +2029,8 @@ import y export no dependen de pH como antes
         <Parameter name="Deuflhard Tolerance" type="unsignedFloat" value="9.9999999999999995e-07"/>
       </Method>
     </Task>
-    <Task key="Task_23" name="Sensitivities" type="sensitivities" scheduled="false" updateModel="false">
-      <Report reference="Report_16" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_26" name="Sensitivities" type="sensitivities" scheduled="false" updateModel="false">
+      <Report reference="Report_18" target="" append="1" confirmOverwrite="1"/>
       <Problem>
         <Parameter name="SubtaskType" type="unsignedInteger" value="1"/>
         <ParameterGroup name="TargetFunctions">
@@ -1890,13 +2053,14 @@ import y export no dependen de pH como antes
         <Parameter name="Delta minimum" type="unsignedFloat" value="9.9999999999999998e-13"/>
       </Method>
     </Task>
-    <Task key="Task_24" name="Moieties" type="moieties" scheduled="false" updateModel="false">
+    <Task key="Task_27" name="Moieties" type="moieties" scheduled="false" updateModel="false">
+      <Report reference="Report_21" target="" append="1" confirmOverwrite="1"/>
       <Problem>
       </Problem>
       <Method name="Householder Reduction" type="Householder">
       </Method>
     </Task>
-    <Task key="Task_25" name="Cross Section" type="crosssection" scheduled="false" updateModel="false">
+    <Task key="Task_28" name="Cross Section" type="crosssection" scheduled="false" updateModel="false">
       <Problem>
         <Parameter name="AutomaticStepSize" type="bool" value="0"/>
         <Parameter name="StepNumber" type="unsignedInteger" value="100"/>
@@ -1906,6 +2070,8 @@ import y export no dependen de pH como antes
         <Parameter name="OutputStartTime" type="float" value="0"/>
         <Parameter name="Output Event" type="bool" value="0"/>
         <Parameter name="Start in Steady State" type="bool" value="0"/>
+        <Parameter name="Use Values" type="bool" value="0"/>
+        <Parameter name="Values" type="string" value=""/>
         <Parameter name="LimitCrossings" type="bool" value="0"/>
         <Parameter name="NumCrossingsLimit" type="unsignedInteger" value="0"/>
         <Parameter name="LimitOutTime" type="bool" value="0"/>
@@ -1931,17 +2097,42 @@ import y export no dependen de pH como antes
         <Parameter name="Max Internal Step Size" type="unsignedFloat" value="0"/>
       </Method>
     </Task>
-    <Task key="Task_26" name="Linear Noise Approximation" type="linearNoiseApproximation" scheduled="false" updateModel="false">
-      <Report reference="Report_17" target="" append="1" confirmOverwrite="1"/>
+    <Task key="Task_29" name="Linear Noise Approximation" type="linearNoiseApproximation" scheduled="false" updateModel="false">
+      <Report reference="Report_19" target="" append="1" confirmOverwrite="1"/>
       <Problem>
-        <Parameter name="Steady-State" type="key" value="Task_14"/>
+        <Parameter name="Steady-State" type="key" value="Task_17"/>
       </Problem>
       <Method name="Linear Noise Approximation" type="LinearNoiseApproximation">
       </Method>
     </Task>
+    <Task key="Task_30" name="Time-Course Sensitivities" type="timeSensitivities" scheduled="false" updateModel="false">
+      <Problem>
+        <Parameter name="AutomaticStepSize" type="bool" value="0"/>
+        <Parameter name="StepNumber" type="unsignedInteger" value="100"/>
+        <Parameter name="StepSize" type="float" value="0.01"/>
+        <Parameter name="Duration" type="float" value="1"/>
+        <Parameter name="TimeSeriesRequested" type="bool" value="1"/>
+        <Parameter name="OutputStartTime" type="float" value="0"/>
+        <Parameter name="Output Event" type="bool" value="0"/>
+        <Parameter name="Start in Steady State" type="bool" value="0"/>
+        <Parameter name="Use Values" type="bool" value="0"/>
+        <Parameter name="Values" type="string" value=""/>
+        <ParameterGroup name="ListOfParameters">
+        </ParameterGroup>
+        <ParameterGroup name="ListOfTargets">
+        </ParameterGroup>
+      </Problem>
+      <Method name="LSODA Sensitivities" type="Sensitivities(LSODA)">
+        <Parameter name="Integrate Reduced Model" type="bool" value="0"/>
+        <Parameter name="Relative Tolerance" type="unsignedFloat" value="9.9999999999999995e-07"/>
+        <Parameter name="Absolute Tolerance" type="unsignedFloat" value="9.9999999999999998e-13"/>
+        <Parameter name="Max Internal Steps" type="unsignedInteger" value="10000"/>
+        <Parameter name="Max Internal Step Size" type="unsignedFloat" value="0"/>
+      </Method>
+    </Task>
   </ListOfTasks>
   <ListOfReports>
-    <Report key="Report_9" name="Steady-State" taskType="steadyState" separator="&#x09;" precision="6">
+    <Report key="Report_11" name="Steady-State" taskType="steadyState" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -1949,7 +2140,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Steady-State]"/>
       </Footer>
     </Report>
-    <Report key="Report_10" name="Elementary Flux Modes" taskType="fluxMode" separator="&#x09;" precision="6">
+    <Report key="Report_12" name="Elementary Flux Modes" taskType="fluxMode" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -1957,7 +2148,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Elementary Flux Modes],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_11" name="Optimization" taskType="optimization" separator="&#x09;" precision="6">
+    <Report key="Report_13" name="Optimization" taskType="optimization" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -1981,7 +2172,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Optimization],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_12" name="Parameter Estimation" taskType="parameterFitting" separator="&#x09;" precision="6">
+    <Report key="Report_14" name="Parameter Estimation" taskType="parameterFitting" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2005,7 +2196,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Parameter Estimation],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_13" name="Metabolic Control Analysis" taskType="metabolicControlAnalysis" separator="&#x09;" precision="6">
+    <Report key="Report_15" name="Metabolic Control Analysis" taskType="metabolicControlAnalysis" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2017,7 +2208,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Metabolic Control Analysis],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_14" name="Lyapunov Exponents" taskType="lyapunovExponents" separator="&#x09;" precision="6">
+    <Report key="Report_16" name="Lyapunov Exponents" taskType="lyapunovExponents" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2029,7 +2220,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Lyapunov Exponents],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_15" name="Time Scale Separation Analysis" taskType="timeScaleSeparationAnalysis" separator="&#x09;" precision="6">
+    <Report key="Report_17" name="Time Scale Separation Analysis" taskType="timeScaleSeparationAnalysis" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2041,7 +2232,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Time Scale Separation Analysis],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_16" name="Sensitivities" taskType="sensitivities" separator="&#x09;" precision="6">
+    <Report key="Report_18" name="Sensitivities" taskType="sensitivities" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2053,7 +2244,7 @@ import y export no dependen de pH como antes
         <Object cn="CN=Root,Vector=TaskList[Sensitivities],Object=Result"/>
       </Footer>
     </Report>
-    <Report key="Report_17" name="Linear Noise Approximation" taskType="linearNoiseApproximation" separator="&#x09;" precision="6">
+    <Report key="Report_19" name="Linear Noise Approximation" taskType="linearNoiseApproximation" separator="&#x09;" precision="6">
       <Comment>
         Automatically generated report.
       </Comment>
@@ -2063,6 +2254,29 @@ import y export no dependen de pH como antes
       <Footer>
         <Object cn="String=&#x0a;"/>
         <Object cn="CN=Root,Vector=TaskList[Linear Noise Approximation],Object=Result"/>
+      </Footer>
+    </Report>
+    <Report key="Report_20" name="Time-Course" taskType="timeCourse" separator="&#x09;" precision="6">
+      <Comment>
+        Automatically generated report.
+      </Comment>
+      <Header>
+        <Object cn="CN=Root,Vector=TaskList[Time-Course],Object=Description"/>
+      </Header>
+      <Footer>
+        <Object cn="CN=Root,Vector=TaskList[Time-Course],Object=Result"/>
+      </Footer>
+    </Report>
+    <Report key="Report_21" name="Moieties" taskType="moieties" separator="&#x09;" precision="6">
+      <Comment>
+        Automatically generated report.
+      </Comment>
+      <Header>
+        <Object cn="CN=Root,Vector=TaskList[Moieties],Object=Description"/>
+      </Header>
+      <Footer>
+        <Object cn="String=&#x0a;"/>
+        <Object cn="CN=Root,Vector=TaskList[Moieties],Object=Result"/>
       </Footer>
     </Report>
   </ListOfReports>
@@ -2122,7 +2336,7 @@ import y export no dependen de pH como antes
           <Parameter name="Recording Activity" type="string" value="during"/>
           <ListOfChannels>
             <ChannelSpec cn="CN=Root,Model=AntigenPresentation,Reference=Time"/>
-            <ChannelSpec cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[ovaEn],Reference=Concentration"/>
+            <ChannelSpec cn="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[ovaEn],Reference=Concentration"/>
           </ListOfChannels>
         </PlotItem>
         <PlotItem name="[exCxEn]" type="Curve2D">
@@ -2358,38 +2572,77 @@ import y export no dependen de pH como antes
   </ListOfPlots>
   <GUI>
     <ListOfSliders>
-      <Slider key="Slider_0" associatedEntityKey="Task_16" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn],Reference=InitialConcentration" objectType="float" objectValue="0.0001" minValue="0.0001" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_1" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn],Reference=InitialConcentration" objectType="float" objectValue="0.0001" minValue="0.0001" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_2" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonLeak],ParameterGroup=Parameters,Parameter=k1,Reference=Value" objectType="float" objectValue="0.04" minValue="5e-05" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_3" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonLeak],ParameterGroup=Parameters,Parameter=k2,Reference=Value" objectType="float" objectValue="0.04" minValue="5e-05" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_4" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[cMHCIEn],Reference=InitialConcentration" objectType="float" objectValue="0" minValue="0" maxValue="1" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_5" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[oMHCIEn],Reference=InitialConcentration" objectType="float" objectValue="0" minValue="0" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_6" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabD],Reference=InitialConcentration" objectType="float" objectValue="0" minValue="0" maxValue="1.8" tickNumber="1000" tickFactor="100" scaling="linear"/>
-      <Slider key="Slider_7" associatedEntityKey="Task_15" objectCN="CN=Root,Model=AntigenPresentation,Vector=Reactions[OVAout],ParameterGroup=Parameters,Parameter=k1,Reference=Value" objectType="float" objectValue="1e+06" minValue="1e+06" maxValue="1e+11" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_0" associatedEntityKey="Task_19" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn],Reference=InitialConcentration" objectType="float" objectValue="0.0001" minValue="0.0001" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_1" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[soluble],Vector=Metabolites[protonEn],Reference=InitialConcentration" objectType="float" objectValue="0.0001" minValue="0.0001" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_2" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonLeak],ParameterGroup=Parameters,Parameter=k1,Reference=Value" objectType="float" objectValue="0.04" minValue="5e-05" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_3" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Reactions[ProtonLeak],ParameterGroup=Parameters,Parameter=k2,Reference=Value" objectType="float" objectValue="0.04" minValue="5e-05" maxValue="0.1" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_4" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[cMHCIEn],Reference=InitialConcentration" objectType="float" objectValue="10" minValue="0" maxValue="10" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_5" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[membrane],Vector=Metabolites[oMHCIEn],Reference=InitialConcentration" objectType="float" objectValue="0" minValue="0" maxValue="2" tickNumber="1000" tickFactor="100" scaling="linear"/>
+      <Slider key="Slider_6" associatedEntityKey="Task_18" objectCN="CN=Root,Model=AntigenPresentation,Vector=Compartments[imaginario],Vector=Metabolites[RabD],Reference=InitialConcentration" objectType="float" objectValue="0.1422" minValue="0" maxValue="1.8" tickNumber="1000" tickFactor="100" scaling="linear"/>
     </ListOfSliders>
   </GUI>
   <ListOfUnitDefinitions>
-    <UnitDefinition key="Unit_0" name="meter" symbol="m">
+    <UnitDefinition key="Unit_1" name="meter" symbol="m">
+      <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Unit_0">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         m
       </Expression>
     </UnitDefinition>
-    <UnitDefinition key="Unit_2" name="second" symbol="s">
+    <UnitDefinition key="Unit_5" name="second" symbol="s">
+      <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Unit_4">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         s
       </Expression>
     </UnitDefinition>
-    <UnitDefinition key="Unit_6" name="Avogadro" symbol="Avogadro">
+    <UnitDefinition key="Unit_13" name="Avogadro" symbol="Avogadro">
+      <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Unit_12">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         Avogadro
       </Expression>
     </UnitDefinition>
-    <UnitDefinition key="Unit_8" name="item" symbol="#">
+    <UnitDefinition key="Unit_17" name="item" symbol="#">
+      <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Unit_16">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         #
       </Expression>
     </UnitDefinition>
-    <UnitDefinition key="Unit_20" name="mole" symbol="mol">
+    <UnitDefinition key="Unit_41" name="mole" symbol="mol">
+      <MiriamAnnotation>
+<rdf:RDF
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<rdf:Description rdf:about="#Unit_40">
+</rdf:Description>
+</rdf:RDF>
+      </MiriamAnnotation>
       <Expression>
         Avogadro*#
       </Expression>

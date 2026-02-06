@@ -108,7 +108,7 @@ public class FreezeDryEndosomes {
 					for (int i = 2; i < b.length; i = i + 2) {
 						if (!ModelProperties.getInstance().getMembraneMet().contains(b[i]))continue;
 
-						System.out.println("VALOR MALO" + b[i] + "" + b[i+1]);
+//						System.out.println("VALOR MALO" + b[i] + "" + b[i+1]);
 						value.put(b[i], Double.parseDouble(b[i + 1]));
 					}
 					inOr.getInitMembraneContent().put(b[0], value);
@@ -141,13 +141,13 @@ public class FreezeDryEndosomes {
 				case "initMembraneContent": {
 					HashMap<String, Double> value = new HashMap<String, Double>();
 					for (int i = 2; i < b.length; i = i + 2) {
-						if (!ModelProperties.getInstance().getInitPMmembraneRecycle().containsKey(b[i]))continue;
-						if (!ModelProperties.getInstance().getInitPMmembraneRecycle().get(b[i]).equals(0.0))continue;
-
+		//				if (!ModelProperties.getInstance().getInitPMmembraneRecycle().containsKey(b[i]))continue;
+		//				if (!ModelProperties.getInstance().getInitPMmembraneRecycle().get(b[i]).equals(0.0))continue;
 //						System.out.println("VALOR MALO PM " + b[i] + " " + b[i+1]);
 						value.put(b[i], Double.parseDouble(b[i + 1]));
 					}
 					PlasmaMembrane.getInstance().getMembraneRecycle().putAll(value);
+					System.out.println("VALORes " + PlasmaMembrane.getInstance().getMembraneRecycle());
 					break;
 				}
 				default: {
