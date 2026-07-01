@@ -32,6 +32,7 @@ import repast.simphony.ui.table.AgentTableFactory;
 import repast.simphony.ui.table.SpreadsheetUtils;
 import repast.simphony.ui.table.TablePanel;
 import repast.simphony.util.FileUtils;
+import repast.simphony.util.collections.IndexedIterable;
 
 public class Results {
 	/*	
@@ -322,7 +323,6 @@ public class Results {
 		HashMap<String, Double> solubleSecretion = EndoplasmicReticulum.getInstance().getSolubleRecycle();
 		HashMap<String, Double> membraneSecretion = EndoplasmicReticulum.getInstance().getMembraneRecycle();
 		HashMap<String, Double> solubleCell = Cell.getInstance().getSolubleCell();
-		System.out.println(solubleCell + " VEAMOS ANTES Y DESPUES" + Cell.getInstance().getSolubleCell());
 		for (String sol : solubleRecycle.keySet()) {
 //			System.out.println(" soluble "+ sol);
 			double value = solubleRecycle.get(sol);
@@ -362,8 +362,9 @@ public class Results {
 //		in the system is calculated.  And the total volume that correspond to the Rab domain adding
 //		all volumes proportional to the rab area of each organelle
 		allEndosomes.clear();
-		for (Object obj : grid.getObjects()) {
-			if (obj instanceof Endosome) {
+		IndexedIterable endosomeCollection = CellBuilder.getCollection();
+		if (endosomeCollection != null) {
+			for (Object obj : endosomeCollection) {
 				allEndosomes.add((Endosome) obj);
 			}
 		}

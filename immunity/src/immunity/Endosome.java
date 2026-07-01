@@ -149,7 +149,7 @@ public class Endosome {
 		if (this.solubleContent.containsKey("protonEn"))
 		{
 			return (-Math.log10((this.solubleContent.get("protonEn")+1)/this.volume * 1E-3));// concentration in mM
-// entiendo que el +1 es solo para evitar división por cero		
+// entiendo que el +1 es solo para evitar divisiï¿½n por cero		
 		}
 		else return 10;
 	}
@@ -160,15 +160,16 @@ public class Endosome {
 //		ACTIONS PERFORMED BY EACH ORGANELLE
 		OrganelleMove.moveTowards(this);
 		ModelProperties modelProperties = ModelProperties.getInstance();
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeTetherStep"))EndosomeTetherStep.tether(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeInternalVesicleStep"))EndosomeInternalVesicleStep.internalVesicle(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_FusionStep"))FusionStep.fusion(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_FissionStep"))FissionStep.split(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeLysosomalDigestionStep"))EndosomeLysosomalDigestionStep.lysosomalDigestion(this);
-		String name =  modelProperties .getCopasiFiles().get("endosomeCopasi");
-		if (Math.random() < 1 && name.endsWith(".cps"))EndosomeCopasiStep.antPresTimeSeriesLoad(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeRecycleStep"))RecycleStep.recycle(this);
-		if (Math.random()<modelProperties .getActionProbabilities().get("p_EndosomeMaturationStep"))EndosomeMaturationStep.matureCheck(this); //	
+		HashMap<String, Double> actionProbabilities = modelProperties.getActionProbabilities();
+		if (Math.random() < actionProbabilities.get("p_EndosomeTetherStep")) EndosomeTetherStep.tether(this);
+		if (Math.random() < actionProbabilities.get("p_EndosomeInternalVesicleStep")) EndosomeInternalVesicleStep.internalVesicle(this);
+		if (Math.random() < actionProbabilities.get("p_FusionStep")) FusionStep.fusion(this);
+		if (Math.random() < actionProbabilities.get("p_FissionStep")) FissionStep.split(this);
+		if (Math.random() < actionProbabilities.get("p_EndosomeLysosomalDigestionStep")) EndosomeLysosomalDigestionStep.lysosomalDigestion(this);
+		String endosomeCopasiFile = modelProperties.getCopasiFiles().get("endosomeCopasi");
+		if (endosomeCopasiFile.endsWith(".cps")) EndosomeCopasiStep.antPresTimeSeriesLoad(this);
+		if (Math.random() < actionProbabilities.get("p_EndosomeRecycleStep")) RecycleStep.recycle(this);
+		if (Math.random() < actionProbabilities.get("p_EndosomeMaturationStep")) EndosomeMaturationStep.matureCheck(this);
 	}
 
 	public static void endosomeShape(Endosome end) {
