@@ -149,7 +149,7 @@ public class Endosome {
 		if (this.solubleContent.containsKey("protonEn"))
 		{
 			return (-Math.log10((this.solubleContent.get("protonEn")+1)/this.volume * 1E-3));// concentration in mM
-// entiendo que el +1 es solo para evitar divisi�n por cero		
+// entiendo que el +1 es solo para evitar división por cero		
 		}
 		else return 10;
 	}

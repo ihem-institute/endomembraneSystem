@@ -50,6 +50,9 @@ public class EndosomeCopasi {
 	
 	protected EndosomeCopasi() {
 
+		System.out.println("Instantiation Once " + ModelProperties.getInstance().getCopasiFiles().get("endosomeCopasi"));
+		
+		// to defeat instantiation
 		assert CCopasiRootContainer.getRoot() != null;
         // create a new datamodel
 		dataModel = CCopasiRootContainer.addDatamodel();
@@ -70,15 +73,54 @@ public class EndosomeCopasi {
         
         model = dataModel.getModel();
         assert model != null;
+        System.out.println("Model statistics for model \"" + model.getObjectName() + "\".");
+        
+     // output number and names of all compartments
+        int i, iMax = (int)model.getCompartments().size();
+        System.out.println("Number of Compartments: " + (new Integer(iMax)).toString());
+        System.out.println("Compartments: ");
+        for (i = 0;i < iMax;++i)
+        {
+            CCompartment compartment = model.getCompartment(i);
+            assert compartment != null;
+            System.out.println("\t" + compartment.getObjectName()+ compartment.getInitialValue());
+        }
 
-        int iMax = (int)model.getMetabolites().size();
-        for (int i = 0; i < iMax; ++i)
+        // output number and names of all metabolites
+        iMax = (int)model.getMetabolites().size();
+        System.out.println("Number of Metabolites: " + (new Integer(iMax)).toString());
+        System.out.println("Metabolites: ");
+        for (i = 0;i < iMax;++i)
         {
             CMetab metab = model.getMetabolite(i);
             assert metab != null;
             nameMetabs.put(metab.getObjectName(), metab);
+            System.out.println(metab.getObjectName());
+        }
+        // SET INITIAL CONCENTRATIONS
+        // SET INITIAL CONCENTRATIONS
+        // SET INITIAL CONCENTRATIONS
+        // SET INITIAL CONCENTRATIONS
+        //Endosome endosome = Endosome.getEndosome();
+        //setInitialConcentration("RabA", 0);//
+        //setInitialConcentration("RabB", 0);
+        
+        for (String s : nameMetabs.keySet()) {
+        	CMetab metab = nameMetabs.get(s);
+        	System.out.println("\t" + metab.getObjectName() + "\t" + metab.getInitialConcentration() + "\t" + metab.getInitialValue());
         }
 
+        // output number and names of all reactions
+        iMax = (int)model.getReactions().size();
+        System.out.println("Number of Reactions: " + (new Integer(iMax)).toString());
+        System.out.println("Reactions: ");
+        for (i = 0;i < iMax;++i)
+        {
+            CReaction reaction = model.getReaction(i);
+            assert reaction != null;
+            System.out.println("\t" + reaction.getObjectName());
+        }
+        
         setUpReport();
         setUpTask();
 	}
@@ -88,13 +130,13 @@ public class EndosomeCopasi {
         // time.
         CReportDefinitionVector reports = dataModel.getReportDefinitionList();
         // create a new report definition object
-//        report = reports.createReportDefinition("Report", "Output for timecourse");
-//        // set the task type for the report definition to timecourse
-//        report.setTaskType(CCopasiTask.timeCourse);
-//        // we don't want a table
-//        report.setIsTable(false);
-//        // the entries in the output should be seperated by a ", "
-//        report.setSeparator(new CCopasiReportSeparator(", "));
+        report = reports.createReportDefinition("Report", "Output for timecourse");
+        // set the task type for the report definition to timecourse
+        report.setTaskType(CCopasiTask.timeCourse);
+        // we don't want a table
+        report.setIsTable(false);
+        // the entries in the output should be seperated by a ", "
+        report.setSeparator(new CCopasiReportSeparator(", "));
         
         // we need a handle to the header and the body
         // the header will display the ids of the metabolites and "time" for

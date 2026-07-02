@@ -1,119 +1,91 @@
 package immunity.config;
 
-import immunity.ModelProperties;
-
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
-import javax.swing.JTable;
-
-
+/**
+ * Edit cargos and Rab domains in InputIntrTransp3.csv.
+ * <p>
+ * Eclipse: Run the launch config "Immunity Config Editor" (see launchers/).
+ * Or Run As &gt; Java Application on this class.
+ */
 public class ImmunityConfigApp {
 
-	private JFrame frame;
-	private JTextField textField;
-	private JTable table;
+	private static JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
+		open();
+	}
+
+	/**
+	 * Opens the config editor, or brings the existing window to the front.
+	 */
+	public static void open() {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ImmunityConfigApp window = new ImmunityConfigApp();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public ImmunityConfigApp() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		Dimension d = new Dimension(600,400);
-		frame.setSize(new Dimension(800, 800)); 
-        frame.setPreferredSize(new Dimension(800, 800));
-		frame.setBounds(100, 100, 800, 800);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-        frame.pack();
-		
-		JButton btnNewButton = new JButton("Ok");
-		btnNewButton.setBounds(336, 227, 117, 29);
-		btnNewButton.addActionListener(new ActionListener() {
-			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				// display/center the jdialog when the button is pressed
-				ObjectMapper objectMapper = new ObjectMapper();
-				double rcyl = Double.parseDouble(textField.getText());
-		        JDialog d = new JDialog(frame, "Hello", true);
-		        d.setLocationRelativeTo(frame);
-		        d.setVisible(true);
-		        
-		        ModelProperties cellProperties = ModelProperties.getInstance();
-		        cellProperties.getCellK().put("rcyl", rcyl);
-		        try {
-					objectMapper.writeValue(new File(ModelProperties.configFilename), cellProperties);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			public void run() {
+				if (frame != null && frame.isDisplayable()) {
+					frame.setVisible(true);
+					frame.toFront();
+					frame.requestFocus();
+					return;
+				}
+				frame = createFrame();
+				frame.setVisible(true);
+			}
+		});
+	}
+
+	private static JFrame createFrame() {
+		JLabel fileLabel = new JLabel("No file loaded");
+		AddCargoPanel cargoPanel = new AddCargoPanel();
+		AddRabDomainPanel rabPanel = new AddRabDomainPanel();
+		ConfigCsvController csvController = new ConfigCsvController(fileLabel, cargoPanel, rabPanel);
+
+		JTabbedPane tabs = new JTabbedPane();
+		tabs.addTab("Cargo", cargoPanel);
+		tabs.addTab("Rab domain", rabPanel);
+		tabs.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				csvController.syncPanelsIfStale();
+			}
+		});
+
+		JButton loadButton = new JButton("Load InputIntrTransp3.csv...");
+		JButton saveButton = new JButton("Save CSV...");
+
+		JPanel toolbar = new JPanel(new BorderLayout(8, 8));
+		toolbar.add(fileLabel, BorderLayout.CENTER);
+		JPanel buttons = new JPanel();
+		buttons.add(loadButton);
+		buttons.add(saveButton);
+		toolbar.add(buttons, BorderLayout.EAST);
+
+		JFrame newFrame = new JFrame("Immunity - Configuration (MVP)");
+		loadButton.addActionListener(e -> csvController.loadCsv(newFrame));
+		saveButton.addActionListener(e -> csvController.saveCsv(newFrame));
+		newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		newFrame.getContentPane().add(toolbar, BorderLayout.NORTH);
+		newFrame.getContentPane().add(tabs, BorderLayout.CENTER);
+		newFrame.setSize(980, 680);
+		newFrame.setLocationRelativeTo(null);
+		newFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosed(java.awt.event.WindowEvent e) {
+				if (newFrame == frame) {
+					frame = null;
 				}
 			}
 		});
-		frame.getContentPane().add(btnNewButton);
-		textField = new JTextField();
-		ObjectMapper objectMapper = new ObjectMapper();
-		try {
-			ModelProperties cellProperties = objectMapper.readValue(new File(ModelProperties.configFilename), ModelProperties.class);
-			textField.setText(Double.toString(cellProperties.getCellK().get("rcyl")));
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		textField.setBounds(126, 37, 134, 28);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblMyLabel = new JLabel("rcyl");
-		lblMyLabel.setBounds(26, 43, 61, 16);
-		frame.getContentPane().add(lblMyLabel);
-		Object rowData[][] = { { "Row1-Column1", "Row1-Column2", "Row1-Column3" },
-		        { "Row2-Column1", "Row2-Column2", "Row2-Column3" } };
-		    Object columnNames[] = { "Column One", "Column Two", "Column Three" };
-		    JTable table = new JTable(rowData, columnNames);
-		    table.setBounds(126, 37, 134, 28);
-		    JScrollPane scrollPane = new JScrollPane(table);
-		    scrollPane.setSize(500, 100);
-		    scrollPane.setLocation(40, 99);
-		    frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
-		    frame.setSize(300, 150);		
-				
+		return newFrame;
 	}
 }
